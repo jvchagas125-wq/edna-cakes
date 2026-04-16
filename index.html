@@ -763,53 +763,6 @@
         left: -250px;
       }
 
-      .natal-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-      }
-
-      .natal-column-left,
-      .natal-column-right {
-        width: 100%;
-      }
-
-      .natal-card {
-        padding: 20px !important;
-      }
-
-      .rabanadas-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-      }
-
-      .rabanadas-grid h3 {
-        font-size: 1.6em !important;
-        grid-column: 1 !important;
-      }
-
-      .rabanadas-grid h3 img {
-        width: 60px !important;
-        height: 60px !important;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .natal-card {
-        padding: 15px !important;
-      }
-
-      .natal-grid {
-        gap: 15px !important;
-      }
-
-      .rabanadas-grid {
-        padding: 10px !important;
-        gap: 15px !important;
-      }
-
-      .rabanadas-grid h3 {
-        font-size: 1.4em !important;
-      }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -823,7 +776,6 @@
     <h3 class="side-menu-title">Menu</h3><button class="close-menu" onclick="closeMenu()" aria-label="Fechar menu">×</button>
    </div>
    <ul class="menu-items">
-    <li class="menu-item"><a href="#natal" class="menu-link" onclick="navigateToSection('natal')"> <span class="menu-icon">🎄</span> <span>Especial de Natal</span> </a></li>
     <li class="menu-item"><a href="#bolos-doces" class="menu-link" onclick="navigateToSection('bolos-doces')"> <span class="menu-icon">🧁</span> <span>Bolos e Doces</span> </a></li>
     <li class="menu-item"><a href="#tortas" class="menu-link" onclick="navigateToSection('tortas')"> <span class="menu-icon">🧁</span> <span>Nossas Tortas</span> </a></li>
     <li class="menu-item"><a href="#paves" class="menu-link" onclick="navigateToSection('paves')"> <span class="menu-icon">🧁</span> <span>Nossos Pavês</span> </a></li>
@@ -838,9 +790,7 @@
    <p class="subtitle" id="hero-subtitle">Delícias artesanais feitas com carinho</p>
   </section>
   <section class="menu-section" style="background: linear-gradient(135deg, #c41e3a 0%, #165b33 50%, #c41e3a 100%); position: relative; overflow: hidden; box-shadow: 0 -30px 60px rgba(196, 30, 58, 0.3), 0 30px 60px rgba(196, 30, 58, 0.3); margin: 40px auto; border-radius: 30px; max-width: 1200px;" id="natal">
-   <div style="position: absolute; top: 20px; left: 5%; font-size: 3em; opacity: 0.2;">
-    🎄
-   </div>
+   
    <div style="position: absolute; top: 50%; right: 5%; font-size: 3em; opacity: 0.2;">
     ⭐
    </div>
@@ -859,63 +809,6 @@
    <div style="position: absolute; bottom: 15%; right: 12%; font-size: 2.2em; opacity: 0.18;">
     ⭐
    </div>
-   <h2 class="menu-title" id="natal-title" style="color: #ffffff; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);">🎄 Especial de Natal 🎄</h2>
-   <p style="text-align: center; color: #ffffff; font-size: 1.2em; margin: -40px 0 40px 0; font-weight: 600; background: rgba(0,0,0,0.2); padding: 12px 20px; border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto;">⏰ Encomendas até o dia 20/12/2024</p><!-- Seção de Panetones -->
-   <div style="margin-bottom: 50px;">
-    <h3 style="color: #ffffff; text-align: center; font-size: 2em; margin-bottom: 30px; text-shadow: 2px 2px 6px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; gap: 15px;"><img src="https://i.imgur.com/zpOEgxu.jpg" alt="Panetones" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" onerror="this.src=''; this.alt=''; this.style.display='none';"> Panetones</h3>
-    <div style="display: grid; grid-template-columns: 1fr; gap: 25px; padding: 20px; max-width: 900px; margin: 0 auto;">
-     <div class="product-card natal-card" style="padding: 25px;">
-      <div class="natal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;"><!-- Coluna Esquerda - Panetones -->
-       <div class="natal-column-left">
-        <h3 class="product-name" style="font-size: 1.6em; margin: 10px 0;">Panetone Tradicional</h3>
-        <p class="product-flavors" style="font-size: 0.95em; min-height: auto; line-height: 1.7;"><strong>Sabores:</strong><br>
-          • Ninho com morango<br>
-          • Ninho<br>
-          • Prestígio<br>
-          • Brigadeiro gourmet<br>
-          • Dois amores gourmet</p>
-        <p class="product-price" style="font-size: 1.4em; margin: 15px 0;">R$ 60,00</p>
-        <h3 class="product-name" style="font-size: 1.6em; margin: 25px 0 10px 0; padding-top: 20px; border-top: 2px solid #ffe8ec;">Panetones Premium</h3>
-        <p class="product-flavors" style="font-size: 0.95em; min-height: auto; line-height: 1.7;"><strong>Sabores:</strong><br>
-          • Laka com Nutella<br>
-          • Ninho com Nutella<br>
-          • Laka<br>
-          • Kit Kat<br>
-          • Doce de leite gourmet</p>
-        <p class="product-price" style="font-size: 1.4em; margin: 15px 0;">R$ 65,00</p>
-       </div><!-- Coluna Direita - Embalagem Especial -->
-       <div class="natal-column-right" style="background: linear-gradient(135deg, #ffe8ec 0%, #fff5f7 100%); padding: 20px; border-radius: 15px; border: 2px solid #d4567a; display: flex; flex-direction: column; justify-content: center;">
-        <div style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; align-items: center;"><img src="https://i.imgur.com/BggzrRb.jpg" alt="Embalagem Especial" style="width: 100%; max-width: 280px; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(212, 86, 122, 0.25);" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';">
-        </div>
-        <h3 style="color: #d4567a; font-size: 1.4em; margin: 0 0 15px 0; text-align: center; font-weight: 600;">Embalagem Especial</h3>
-        <p style="color: #8b4560; font-size: 1em; line-height: 1.6; text-align: center; margin: 0;">Quem quiser adquirir os panetones com essa embalagem, acrescentar somente <strong style="color: #ff6b9d; font-size: 1.2em;">+ R$ 10,00</strong></p>
-       </div>
-      </div><button class="view-photos-btn" onclick="openPanetenesModal()" style="margin-top: 20px;">📸 Ver Fotos</button>
-     </div>
-    </div>
-   </div><!-- Seção de Rabanadas -->
-   <div>
-    <div class="rabanadas-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; padding: 20px; max-width: 900px; margin: 0 auto;">
-     <h3 style="color: #ffffff; font-size: 2em; margin-bottom: 0; text-shadow: 2px 2px 6px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; grid-column: 1 / -1;"><img src="https://i.imgur.com/Rc9DtEp.jpg" alt="Rabanadas" style="width: 90px; height: 90px; object-fit: cover; border-radius: 8px;" onerror="this.src=''; this.alt=''; this.style.display='none';"> Rabanadas</h3>
-     <div class="product-card" style="padding: 25px;">
-      <div class="product-icon" style="font-size: 4em; height: 100px; margin-bottom: 10px; margin-left: 0;">
-       🍞
-      </div>
-      <h3 class="product-name" style="font-size: 1.6em; margin: 10px 0;">Rabanadas</h3>
-      <p class="product-flavors" style="font-size: 0.95em; min-height: 60px;">Tradicional ou Recheada com doce de leite gourmet</p>
-      <p class="product-price" style="font-size: 1.1em; line-height: 1.8;"><strong>Tradicional:</strong> R$ 4,50 (unidade)<br>
-        11 unidades - R$ 45,00<br><br><strong>Recheada:</strong> R$ 5,00 (unidade)<br>
-        11 unidades - R$ 50,00</p>
-      <p style="background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%); padding: 12px 15px; border-radius: 10px; border: 2px solid #d4567a; color: #8b4560; font-size: 0.85em; font-weight: 600; text-align: center; margin-top: 15px;">⚠️ Encomendas de rabanadas no mínimo 5 unidades</p><button class="view-photos-btn" onclick="openRabanadasModal()">📸 Ver Fotos</button>
-     </div>
-     <div class="product-card" style="padding: 25px; background: linear-gradient(135deg, #ffe8ec 0%, #fff5f7 100%); border: 2px solid #d4567a;">
-      <h3 style="color: #d4567a; font-size: 1.5em; margin: 0 0 20px 0; text-align: center; font-weight: 600;">Informações Importantes</h3>
-      <div style="color: #8b4560; font-size: 1em; line-height: 2; text-align: left;">
-       <p style="margin: 10px 0;">• <strong>Retirada no local</strong></p>
-       <p style="margin: 10px 0;">• <strong>Taxa de entrega:</strong> R$ 7,00</p>
-       <p style="margin: 10px 0;">• <strong>Encomendas mediante sinal:</strong> 50% do valor</p>
-       <p style="margin: 10px 0;">• <strong>Aceitamos pagamento em:</strong> Dinheiro e Pix</p>
-       <p style="margin: 15px 0 0 0; padding-top: 15px; border-top: 2px solid #d4567a;">• <strong>Mais informações:</strong> Entre em contato via WhatsApp pelo número <strong style="color: #d4567a;">(22) 99607-9822</strong></p>
       </div>
      </div>
     </div>
