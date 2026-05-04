@@ -518,7 +518,7 @@
     <li><a href="#produtos">Produtos</a></li>
     <li><a href="#contato">Contato</a></li>
     <li>
-      <a href="https://instagram.com" target="_blank" title="Instagram">
+      <a href="https://www.instagram.com/edna_cakes024/" target="_blank" title="Instagram">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="2"/>
           <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
@@ -647,32 +647,53 @@
 
 <!-- MODAL: Naked Cake -->
 <div class="modal-overlay" id="nakedModal" onclick="closeModalOutside(event,'nakedModal')">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:620px;">
     <div class="modal-header">
       <h3>Bolos Naked Cake</h3>
       <button class="modal-close" onclick="closeModal('nakedModal')">✕</button>
     </div>
-    <div class="modal-emoji">🎂</div>
+
+    <!-- Galeria de fotos -->
+    <div style="padding:16px 28px 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border-radius:12px;overflow:hidden;">
+        <img src="https://i.imgur.com/q4bzSpY.png" alt="Naked Cake" style="width:100%;height:160px;object-fit:cover;">
+        <img src="https://i.imgur.com/8fYnnym.png" alt="Naked Cake" style="width:100%;height:160px;object-fit:cover;">
+        <img src="https://i.imgur.com/k0BZbki.png" alt="Naked Cake" style="width:100%;height:160px;object-fit:cover;">
+        <img src="https://i.imgur.com/mqh1uPV.png" alt="Naked Cake" style="width:100%;height:160px;object-fit:cover;">
+      </div>
+    </div>
+
     <div class="modal-body">
       <div class="modal-section">
-        <h4>Sabores disponíveis</h4>
+        <h4>Tamanhos & Valores</h4>
+        <span class="price-tag">15cm (10–12 fatias) – R$ 120,00</span>
+        <span class="price-tag">20cm (25–30 fatias) – R$ 180,00</span>
+        <span class="price-tag">25cm (35–40 fatias) – R$ 240,00</span>
+        <span class="price-tag">30cm (45–50 fatias) – R$ 290,00</span>
+      </div>
+      <div class="modal-section">
+        <h4>Massas</h4>
         <ul>
-          <li>Baunilha com morango</li>
-          <li>Chocolate com brigadeiro</li>
-          <li>Red Velvet com cream cheese</li>
-          <li>Limão siciliano com merengue</li>
-          <li>Cenoura com chocolate</li>
+          <li>Baunilha</li>
+          <li>Chocolate</li>
         </ul>
       </div>
       <div class="modal-section">
-        <h4>Tamanhos & Valores</h4>
-        <span class="price-tag">P (15cm) – R$ 80</span>
-        <span class="price-tag">M (20cm) – R$ 130</span>
-        <span class="price-tag">G (25cm) – R$ 180</span>
+        <h4>Recheios</h4>
+        <ul>
+          <li>Ninho gourmet</li>
+          <li>Brigadeiro de chocolate gourmet</li>
+          <li>Beijinho gourmet</li>
+          <li>Doce de leite gourmet</li>
+        </ul>
       </div>
       <div class="modal-section">
-        <h4>Especificações</h4>
-        <p>Bolo artesanal com camadas de recheio cremoso e cobertura rústica. Ideal para festas e datas especiais. Decorações personalizadas sob consulta. Prazo mínimo de 48h.</p>
+        <h4>Adicionais</h4>
+        <ul>
+          <li>Morango – a partir de R$ 7,00</li>
+          <li>Nutella – a partir de R$ 10,00</li>
+          <li>Docinhos gourmet – R$ 1,00 a unidade</li>
+        </ul>
       </div>
     </div>
     <div class="modal-footer">
@@ -723,32 +744,37 @@
 
 <!-- MODAL: Palha Italiana -->
 <div class="modal-overlay" id="palhaModal" onclick="closeModalOutside(event,'palhaModal')">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:620px;">
     <div class="modal-header">
       <h3>Palha Italiana</h3>
       <button class="modal-close" onclick="closeModal('palhaModal')">✕</button>
     </div>
-    <div class="modal-emoji">🍬</div>
+
+    <!-- Galeria de fotos -->
+    <div style="padding:16px 28px 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border-radius:12px;overflow:hidden;">
+        <img src="https://i.imgur.com/kTVijqk.png" alt="Palha Italiana" style="width:100%;height:160px;object-fit:cover;">
+        <img src="https://i.imgur.com/V01Yxxs.png" alt="Palha Italiana" style="width:100%;height:160px;object-fit:cover;">
+      </div>
+    </div>
+
     <div class="modal-body">
       <div class="modal-section">
-        <h4>Sabores disponíveis</h4>
+        <h4>Sabores Simples – R$ 7,00 a unidade</h4>
         <ul>
-          <li>Clássica (chocolate ao leite)</li>
-          <li>Oreo & chocolate branco</li>
-          <li>Maracujá</li>
-          <li>Paçoca</li>
-          <li>Pistache</li>
+          <li>Ninho com brigadeiro</li>
+          <li>Ninho com morango</li>
         </ul>
       </div>
       <div class="modal-section">
-        <h4>Valores</h4>
-        <span class="price-tag">20 unid – R$ 50</span>
-        <span class="price-tag">40 unid – R$ 95</span>
-        <span class="price-tag">60 unid – R$ 140</span>
+        <h4>Sabores Premium – R$ 10,00 a unidade</h4>
+        <ul>
+          <li>Ninho com Nutella</li>
+        </ul>
       </div>
       <div class="modal-section">
-        <h4>Especificações</h4>
-        <p>Pedaços cortados individualmente com chocolate de qualidade. Embalagem para presente disponível. Validade de 15 dias em local fresco e seco.</p>
+        <h4>Observação</h4>
+        <p>⚠️ Encomendas a partir de no mínimo <strong>10 palhas italianas</strong>.</p>
       </div>
     </div>
     <div class="modal-footer">
@@ -762,32 +788,32 @@
 
 <!-- MODAL: Brownie -->
 <div class="modal-overlay" id="brownieModal" onclick="closeModalOutside(event,'brownieModal')">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:620px;">
     <div class="modal-header">
       <h3>Brownie</h3>
       <button class="modal-close" onclick="closeModal('brownieModal')">✕</button>
     </div>
-    <div class="modal-emoji">🍫</div>
+
+    <!-- Galeria de fotos -->
+    <div style="padding:16px 28px 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border-radius:12px;overflow:hidden;">
+        <img src="https://i.imgur.com/YIP9Sbd.png" alt="Brownie" style="width:100%;height:160px;object-fit:cover;">
+        <img src="https://i.imgur.com/NWXxCQX.png" alt="Brownie" style="width:100%;height:160px;object-fit:cover;">
+      </div>
+    </div>
+
     <div class="modal-body">
       <div class="modal-section">
-        <h4>Sabores disponíveis</h4>
+        <h4>Recheios disponíveis – R$ 6,00 a unidade</h4>
         <ul>
-          <li>Clássico ao chocolate meio amargo</li>
-          <li>Nozes & chocolate</li>
-          <li>Doce de leite</li>
-          <li>Oreo recheado</li>
-          <li>Red Velvet</li>
+          <li>Brigadeiro gourmet</li>
+          <li>Doce de leite gourmet</li>
+          <li>Ninho gourmet</li>
         </ul>
       </div>
       <div class="modal-section">
-        <h4>Valores</h4>
-        <span class="price-tag">Unitário – R$ 8</span>
-        <span class="price-tag">Caixa 6 – R$ 45</span>
-        <span class="price-tag">Caixa 12 – R$ 85</span>
-      </div>
-      <div class="modal-section">
-        <h4>Especificações</h4>
-        <p>Brownie denso e úmido, aprox. 80g cada. Ideal para presentes e eventos corporativos. Validade de 7 dias em temperatura ambiente.</p>
+        <h4>Observação</h4>
+        <p>⚠️ Encomendas no mínimo de <strong>10 Brownies</strong>.</p>
       </div>
     </div>
     <div class="modal-footer">
@@ -801,32 +827,39 @@
 
 <!-- MODAL: Tortas -->
 <div class="modal-overlay" id="tortaModal" onclick="closeModalOutside(event,'tortaModal')">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:620px;">
     <div class="modal-header">
       <h3>Tortas</h3>
       <button class="modal-close" onclick="closeModal('tortaModal')">✕</button>
     </div>
-    <div class="modal-emoji">🥧</div>
+
+    <!-- Galeria de fotos -->
+    <div style="padding:16px 28px 0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-radius:12px;overflow:hidden;">
+        <img src="https://i.imgur.com/vVGr32H.png" alt="Torta" style="width:100%;height:140px;object-fit:cover;">
+        <img src="https://i.imgur.com/P4wLSU8.png" alt="Torta" style="width:100%;height:140px;object-fit:cover;">
+        <img src="https://i.imgur.com/CAqcU9R.png" alt="Torta" style="width:100%;height:140px;object-fit:cover;">
+      </div>
+    </div>
+
     <div class="modal-body">
       <div class="modal-section">
-        <h4>Sabores disponíveis</h4>
-        <ul>
-          <li>Torta de Limão</li>
-          <li>Torta de Morango</li>
-          <li>Torta de Maracujá</li>
-          <li>Banoffee (banana + toffee)</li>
-          <li>Torta de Chocolate belga</li>
-        </ul>
-      </div>
-      <div class="modal-section">
-        <h4>Tamanhos & Valores</h4>
-        <span class="price-tag">P (6 fatias) – R$ 70</span>
-        <span class="price-tag">M (10 fatias) – R$ 110</span>
-        <span class="price-tag">G (14 fatias) – R$ 150</span>
-      </div>
-      <div class="modal-section">
-        <h4>Especificações</h4>
-        <p>Base crocante de biscoito com recheio cremoso. Necessita refrigeração. Validade de 4 dias na geladeira. Prazo mínimo de 48h para encomenda.</p>
+        <h4>Tortas Doces</h4>
+
+        <p style="margin-bottom:6px;"><strong>Bannofe</strong></p>
+        <p style="margin-bottom:8px;font-size:0.9em;color:#666;">Farofa de biscoito, doce de leite gourmet, chantininho e banana.</p>
+        <span class="price-tag">Travessa pequena – R$ 40,00</span>
+        <span class="price-tag">Travessa grande – R$ 90,00</span>
+
+        <p style="margin-top:16px;margin-bottom:6px;"><strong>Morangoffe</strong></p>
+        <p style="margin-bottom:8px;font-size:0.9em;color:#666;">Farofa de biscoito, creme de ninho, chantininho e morangos.</p>
+        <span class="price-tag">Travessa pequena – R$ 50,00</span>
+        <span class="price-tag">Travessa grande – R$ 100,00</span>
+
+        <p style="margin-top:16px;margin-bottom:6px;"><strong>Torta de Limão</strong></p>
+        <p style="margin-bottom:8px;font-size:0.9em;color:#666;">Farofa de biscoito, mousse de limão, chantininho e raspas de limão.</p>
+        <span class="price-tag">Travessa pequena – R$ 40,00</span>
+        <span class="price-tag">Travessa grande – R$ 90,00</span>
       </div>
     </div>
     <div class="modal-footer">
