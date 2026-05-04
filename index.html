@@ -238,19 +238,18 @@
 
     .card-emoji-bg {
       width: 100%;
-      min-height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 95px;
+      height: 320px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    .bg-naked   { background: linear-gradient(160deg, #fce8f2, #f5c6d4); }
-    .bg-roca    { background: linear-gradient(160deg, #fde8d5, #f9c8a0); }
-    .bg-palha   { background: linear-gradient(160deg, #fef3cd, #f5d87a); }
-    .bg-brownie { background: linear-gradient(160deg, #5a2810, #3a160a); }
-    .bg-torta   { background: linear-gradient(160deg, #f0e8f8, #d9bff0); }
-    .bg-pave    { background: linear-gradient(160deg, #e0f0fc, #a8d5f0); }
+    .bg-naked   { background-image: url('https://i.imgur.com/VZ7T6Jo.png'); }
+    .bg-roca    { background-image: url('https://i.imgur.com/3owTzQS.png'); }
+    .bg-palha   { background-image: url('https://i.imgur.com/H2ogQSq.png'); }
+    .bg-brownie { background-image: url('https://i.imgur.com/xrvFQgh.png'); }
+    .bg-torta   { background-image: url('https://i.imgur.com/6f4fAIY.png'); }
+    .bg-pave    { background-image: url('https://i.imgur.com/Zz1xL4h.png'); }
 
     .card-overlay {
       position: absolute;
@@ -681,7 +680,7 @@
     <div class="cards-wrapper" id="cardsWrapper">
 
       <div class="card" onclick="openModal('nakedModal')">
-        <div class="card-emoji-bg bg-naked" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/VZ7T6Jo.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Bolos Naked Cake" width="400" height="320" style="width:100%;height:320px;object-fit:cover;display:block;" fetchpriority="high"></div>
+        <div class="card-emoji-bg bg-naked"></div>
         <div class="card-overlay">
           <div class="card-name">Bolos Naked Cake</div>
           <button class="card-btn">Saiba mais</button>
@@ -689,7 +688,7 @@
       </div>
 
       <div class="card" onclick="openModal('rocamboleModal')">
-        <div class="card-emoji-bg bg-roca" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/3owTzQS.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Rocambole" width="400" height="320" loading="lazy" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
+        <div class="card-emoji-bg bg-roca"></div>
         <div class="card-overlay">
           <div class="card-name">Rocambole</div>
           <button class="card-btn">Saiba mais</button>
@@ -697,7 +696,7 @@
       </div>
 
       <div class="card" onclick="openModal('palhaModal')">
-        <div class="card-emoji-bg bg-palha" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/H2ogQSq.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Palha Italiana" width="400" height="320" loading="lazy" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
+        <div class="card-emoji-bg bg-palha"></div>
         <div class="card-overlay">
           <div class="card-name">Palha Italiana</div>
           <button class="card-btn">Saiba mais</button>
@@ -705,7 +704,7 @@
       </div>
 
       <div class="card" onclick="openModal('brownieModal')">
-        <div class="card-emoji-bg bg-brownie" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/xrvFQgh.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Brownie" width="400" height="320" loading="lazy" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
+        <div class="card-emoji-bg bg-brownie"></div>
         <div class="card-overlay">
           <div class="card-name">Brownie</div>
           <button class="card-btn">Saiba mais</button>
@@ -713,7 +712,7 @@
       </div>
 
       <div class="card" onclick="openModal('tortaModal')">
-        <div class="card-emoji-bg bg-torta" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/6f4fAIY.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Tortas" width="400" height="320" loading="lazy" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
+        <div class="card-emoji-bg bg-torta"></div>
         <div class="card-overlay">
           <div class="card-name">Tortas</div>
           <button class="card-btn">Saiba mais</button>
@@ -721,7 +720,7 @@
       </div>
 
       <div class="card" onclick="openModal('paveModal')">
-        <div class="card-emoji-bg bg-pave" style="padding:0;"><img src="https://wsrv.nl/?url=i.imgur.com/Zz1xL4h.png&w=400&h=320&fit=cover&output=webp&q=80" alt="Pavês" width="400" height="320" loading="lazy" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
+        <div class="card-emoji-bg bg-pave"></div>
         <div class="card-overlay">
           <div class="card-name">Pavês</div>
           <button class="card-btn">Saiba mais</button>
