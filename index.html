@@ -1048,8 +1048,26 @@
 
   setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4200);
 
-  // Passive scroll for better mobile performance
-  document.addEventListener('touchstart', ()=>{}, {passive: true});
+  // Touch swipe no SLIDER (banner)
+  const heroSlider = document.querySelector('.hero-slider');
+  let sliderTouchStartX = 0;
+  let sliderTouchEndX = 0;
+
+  heroSlider.addEventListener('touchstart', e => {
+    sliderTouchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  heroSlider.addEventListener('touchend', e => {
+    sliderTouchEndX = e.changedTouches[0].screenX;
+    const diff = sliderTouchStartX - sliderTouchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        goToSlide((currentSlide + 1) % slides.length); // swipe esquerda → próximo
+      } else {
+        goToSlide((currentSlide - 1 + slides.length) % slides.length); // swipe direita → anterior
+      }
+    }
+  }, { passive: true });
 
   // CAROUSEL
   let cardOffset = 0;
@@ -1063,6 +1081,23 @@
     const cardW = cards[0].offsetWidth + gap;
     wrapper.style.transform = `translateX(-${cardOffset * cardW}px)`;
   }
+
+  // Touch swipe no CAROUSEL (cards de produtos)
+  const cardsWrapper = document.getElementById('cardsWrapper');
+  let carouselTouchStartX = 0;
+  let carouselTouchEndX = 0;
+
+  cardsWrapper.addEventListener('touchstart', e => {
+    carouselTouchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  cardsWrapper.addEventListener('touchend', e => {
+    carouselTouchEndX = e.changedTouches[0].screenX;
+    const diff = carouselTouchStartX - carouselTouchEndX;
+    if (Math.abs(diff) > 40) {
+      scrollCards(diff > 0 ? 1 : -1);
+    }
+  }, { passive: true });
 
   // MODALS
   function openModal(id) {
