@@ -46,15 +46,20 @@
     }
 
     .nav-logo-circle {
-      width: 52px;
-      height: 52px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      background: var(--rosa);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--rosa-escuro);
-      font-size: 26px;
+    }
+
+    .nav-logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     .nav-logo-text {
@@ -454,8 +459,9 @@
 <!-- NAVBAR -->
 <nav>
   <a href="#inicio" class="nav-logo">
-    <div class="nav-logo-circle">🎂</div>
-    <span class="nav-logo-text">Edna Cakes</span>
+    <div class="nav-logo-circle">
+      <img src="https://i.imgur.com/anotX1u.png" alt="Edna Cakes Logo">
+    </div>
   </a>
   <ul class="nav-links">
     <li><a href="#inicio">Início</a></li>
@@ -515,7 +521,7 @@
     <div class="cards-wrapper" id="cardsWrapper">
 
       <div class="card" onclick="openModal('nakedModal')">
-        <div class="card-emoji-bg bg-naked">🎂</div>
+        <div class="card-emoji-bg bg-naked" style="padding:0;"><img src="https://i.imgur.com/VZ7T6Jo.png" alt="Bolos Naked Cake" style="width:100%;height:320px;object-fit:cover;display:block;"></div>
         <div class="card-overlay">
           <div class="card-name">Bolos Naked Cake</div>
           <button class="card-btn">Saiba mais</button>
@@ -570,21 +576,15 @@
 <!-- FOOTER -->
 <div class="footer-strip"></div>
 <footer id="contato">
-  <div class="footer-logo">🎂 Edna Cakes</div>
-  <div class="footer-links">
-    <a href="#inicio">Início</a>
-    <a href="#produtos">Produtos</a>
-    <a href="https://wa.me/5522996079822" target="_blank">WhatsApp</a>
-  </div>
-  <div class="footer-social">
-    <a href="https://instagram.com" target="_blank" title="Instagram">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="2"/>
-        <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
-        <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/>
-      </svg>
+  <div class="footer-logo">
+    <a href="#inicio" class="nav-logo" style="text-decoration:none;">
+      <div class="nav-logo-circle">
+        <img src="https://i.imgur.com/anotX1u.png" alt="Edna Cakes Logo">
+      </div>
     </a>
   </div>
+
+
 </footer>
 
 <!-- MODAL: Naked Cake -->
