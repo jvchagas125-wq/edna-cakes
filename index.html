@@ -493,15 +493,91 @@
 
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
       .card { flex: 0 0 calc(50% - 11px); }
       footer { padding: 30px 20px; }
-      .products-carousel { padding: 0 48px; }
+      .products-carousel { padding: 0 44px; }
+      .section-title { padding: 50px 20px 35px; }
+      .section-title h2 { font-size: 2em; }
     }
     @media (max-width: 600px) {
-      .card { flex: 0 0 calc(100%); }
-      .slide h2 { font-size: 1.8em; }
-      .nav-logo-text { font-size: 1.2em; }
+      nav { height: 65px; }
+      .mobile-menu { top: 65px; }
+      .nav-logo-circle { width: 44px; height: 44px; }
+      .hero-slider { height: 360px; }
+      .slide-emoji { font-size: 65px; margin-bottom: 12px; }
+      .slide h2 { font-size: 1.5em; }
+      .slide p { font-size: 0.9em; }
+      .slide-content { padding: 20px 16px; }
+      .card { flex: 0 0 100%; }
+      .products-carousel { padding: 0 38px; }
+      .section-title h2 { font-size: 1.6em; }
+      .section-title { padding: 36px 16px 24px; }
+      footer { padding: 28px 16px; }
+      .btn-whatsapp, .btn-instagram { font-size: 0.88em; padding: 11px 16px; width: 100%; justify-content: center; }
+      .footer-buttons { flex-direction: column; width: 100%; }
+      .footer-contact p { font-size: 0.95em; }
+      .modal-overlay { padding: 10px; align-items: flex-end; }
+      .modal-box { border-radius: 20px 20px 0 0; max-height: 92vh; }
+      .modal-header { padding: 18px 16px 0; }
+      .modal-header h3 { font-size: 1.35em; }
+      .modal-body { padding: 8px 16px 14px; }
+      .modal-footer { padding: 0 16px 20px; }
+      .price-tag { font-size: 0.8em; padding: 3px 10px; }
+      .btn-encomendar { font-size: 0.95em; padding: 14px; }
     }
+
+    /* ===== MOBILE MENU ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--chocolate);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 75px;
+      left: 0; right: 0;
+      background: var(--bege);
+      box-shadow: 0 8px 20px rgba(74,28,42,0.15);
+      z-index: 99;
+      padding: 10px 30px 20px;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--chocolate);
+      font-weight: 700;
+      font-size: 0.95em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--rosa-claro);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--rosa); }
   </style>
 </head>
 <body>
@@ -527,7 +603,18 @@
       </a>
     </li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#inicio" onclick="closeMobileMenu()">🏠 Início</a>
+  <a href="#produtos" onclick="closeMobileMenu()">🎂 Produtos</a>
+  <a href="#contato" onclick="closeMobileMenu()">📞 Contato</a>
+  <a href="https://www.instagram.com/edna_cakes024/" target="_blank">📸 Instagram</a>
+</div>
 
 <!-- HERO SLIDER -->
 <section id="inicio" class="hero-slider">
@@ -911,6 +998,19 @@
 </div>
 
 <script>
+  // MOBILE MENU
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
   // SLIDER
   let currentSlide = 0;
   const slides = document.querySelectorAll('.slide');
