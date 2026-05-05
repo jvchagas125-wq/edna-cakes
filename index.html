@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edna Cakes — Doces feitos com amor</title>
+  <title>Edna Cakes</title>
+  <link rel="icon" id="faviconTag" href="https://i.imgur.com/F6PR9Bu.png" type="image/png">
   <!-- Preconnect to speed up external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1065,6 +1066,13 @@
   function applyData(data) {
     const logo = data.logo || DEFAULT_LOGO;
     document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
+    // Update favicon
+    const favicon = data.favicon || logo;
+    let faviconEl = document.getElementById('faviconTag');
+    if (!faviconEl) { faviconEl = document.createElement('link'); faviconEl.rel = 'icon'; faviconEl.id = 'faviconTag'; document.head.appendChild(faviconEl); }
+    faviconEl.href = favicon;
+    // Update title
+    if (data.siteTitle) document.title = data.siteTitle;
     renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
     renderContacts(data.contatos || DEFAULT_CONTATOS, data.info || DEFAULT_INFO);
   }
