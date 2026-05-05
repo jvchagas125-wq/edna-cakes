@@ -29,29 +29,36 @@
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full font-body bg-rose-50 text-gray-800 overflow-auto"><!-- Mobile Menu Overlay -->
+ <body class="h-full font-body bg-rose-50 text-gray-800 overflow-auto">
+  <!-- Mobile Menu Overlay -->
   <div id="menuOverlay" class="menu-overlay fixed inset-0 bg-black/40 z-40 hidden" onclick="closeMenu()"></div><!-- Side Menu -->
   <nav id="menuPanel" class="menu-panel closed fixed top-0 left-0 w-64 h-full bg-white z-50 shadow-xl flex flex-col">
-   <div class="p-6 border-b border-rose-100"><button onclick="closeMenu()" class="text-rose-400 hover:text-rose-600"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
+   <div class="p-6 border-b border-rose-100">
+    <button onclick="closeMenu()" class="text-rose-400 hover:text-rose-600"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
    </div>
-   <div class="flex flex-col p-6 gap-4"><a href="#inicio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Início</a> <a href="#cardapio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Cardápio</a> <a href="#contatos" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Contatos</a>
+   <div class="flex flex-col p-6 gap-4">
+    <a href="#inicio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Início</a> <a href="#cardapio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Cardápio</a> <a href="#contatos" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Contatos</a>
    </div>
   </nav><!-- Header -->
   <header class="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-sm">
-   <div class="flex items-center px-4 py-3"><button onclick="openMenu()" class="text-rose-500 hover:text-rose-700 mr-3"> <i data-lucide="menu" style="width:28px;height:28px;"></i> </button> <img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-10" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
+   <div class="flex items-center px-4 py-3">
+    <button onclick="openMenu()" class="text-rose-500 hover:text-rose-700 mr-3"> <i data-lucide="menu" style="width:28px;height:28px;"></i> </button> <img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-10" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
    </div>
   </header><!-- Hero Section -->
-  <section id="inicio" class="relative px-6 py-16 text-center bg-gradient-to-b from-rose-100 to-rose-50"><img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-24 mx-auto mb-6 logo-bounce" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
+  <section id="inicio" class="relative px-6 py-16 text-center bg-gradient-to-b from-rose-100 to-rose-50">
+   <img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-24 mx-auto mb-6 logo-bounce" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
    <h1 id="heroTitle" class="font-heading text-3xl md:text-5xl font-bold text-rose-700 fade-in">Doces feitos com amor</h1>
    <p id="heroSubtitle" class="mt-4 text-lg text-rose-500 font-light fade-in-delay">Cada mordida, uma experiência única</p>
-   <div class="mt-8 fade-in-delay"><a href="#cardapio" class="inline-block bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition">Ver Cardápio</a>
+   <div class="mt-8 fade-in-delay">
+    <a href="#cardapio" class="inline-block bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition">Ver Cardápio</a>
    </div>
   </section><!-- Cardápio -->
   <section id="cardapio" class="px-4 py-12">
    <h2 class="font-heading text-2xl md:text-3xl font-bold text-center text-rose-700 mb-8">Nosso Cardápio</h2>
    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-rose-200 to-red-200 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/uFrFZGH.png" alt="Bolos Naked Cake" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Bolos Naked Cake';">
+     <div class="h-40 bg-gradient-to-br from-rose-200 to-red-200 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/uFrFZGH.png" alt="Bolos Naked Cake" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Bolos Naked Cake';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -61,7 +68,8 @@
      </div>
     </div>
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/upiuoy2.png" alt="Rocambole" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Rocambole';">
+     <div class="h-40 bg-gradient-to-br from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/upiuoy2.png" alt="Rocambole" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Rocambole';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -71,7 +79,8 @@
      </div>
     </div>
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-red-100 to-rose-200 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/C0x8ygI.png" alt="Brownie" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Brownie';">
+     <div class="h-40 bg-gradient-to-br from-red-100 to-rose-200 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/C0x8ygI.png" alt="Brownie" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Brownie';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -81,7 +90,8 @@
      </div>
     </div>
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/1qsbV8N.png" alt="Palha Italiana" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Palha Italiana';">
+     <div class="h-40 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/1qsbV8N.png" alt="Palha Italiana" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Palha Italiana';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -91,7 +101,8 @@
      </div>
     </div>
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-red-200 to-rose-100 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/ueszqbk.png" alt="Tortas" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Tortas';">
+     <div class="h-40 bg-gradient-to-br from-red-200 to-rose-100 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/ueszqbk.png" alt="Tortas" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Tortas';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -101,7 +112,8 @@
      </div>
     </div>
     <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-pink-100 to-red-100 flex items-center justify-center overflow-hidden"><img src="https://i.imgur.com/PbSOqNn.png" alt="Pavês" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Pavês';">
+     <div class="h-40 bg-gradient-to-br from-pink-100 to-red-100 flex items-center justify-center overflow-hidden">
+      <img src="https://i.imgur.com/PbSOqNn.png" alt="Pavês" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Pavês';">
      </div>
      <div class="p-5 flex flex-col gap-4">
       <div>
@@ -119,8 +131,7 @@
      <h3 id="modalTitle" class="font-heading text-xl font-bold text-gray-800"></h3><button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
     </div>
     <div class="flex-1 overflow-y-auto">
-     <div class="relative">
-      <button id="galleryPrevBtn" onclick="scrollGallery(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg transition"> <i data-lucide="chevron-left" style="width:24px;height:24px;"></i> </button>
+     <div class="relative"><button id="galleryPrevBtn" onclick="scrollGallery(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg transition"> <i data-lucide="chevron-left" style="width:24px;height:24px;"></i> </button>
       <div id="galleryContainer" class="gallery-scroll flex gap-4 px-16 pt-4 pb-2 h-64 md:h-80 cursor-grab active:cursor-grabbing">
       </div><button id="galleryNextBtn" onclick="scrollGallery(1)" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg transition"> <i data-lucide="chevron-right" style="width:24px;height:24px;"></i> </button>
      </div>
@@ -143,10 +154,8 @@
   </div><!-- Contatos -->
   <section id="contatos" class="px-4 py-12 bg-white">
    <h2 class="font-heading text-2xl md:text-3xl font-bold text-center text-rose-700 mb-8">Contatos</h2>
-   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-    <!-- Lado esquerdo - Contatos -->
-    <div class="flex flex-col gap-4">
-     <a href="https://wa.me/5522996079822" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg font-medium transition"> <i data-lucide="message-circle" style="width:20px;height:20px;"></i> <span>WhatsApp: (22) 99607-9822</span> </a> <a href="https://www.instagram.com/edna_cakes024/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-medium transition"> <i data-lucide="instagram" style="width:20px;height:20px;"></i> <span>Instagram: @edna_cakes024</span> </a>
+   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Lado esquerdo - Contatos -->
+    <div class="flex flex-col gap-4"><a href="https://wa.me/5522996079822" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg font-medium transition"> <i data-lucide="message-circle" style="width:20px;height:20px;"></i> <span>WhatsApp: (22) 99607-9822</span> </a> <a href="https://www.instagram.com/edna_cakes024/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-medium transition"> <i data-lucide="instagram" style="width:20px;height:20px;"></i> <span>Instagram: @edna_cakes024</span> </a>
     </div><!-- Lado direito - Observações -->
     <div class="bg-rose-50 p-6 rounded-lg border-l-4 border-rose-500">
      <h3 class="font-heading text-lg font-semibold text-rose-700 mb-4">Observações Importantes</h3>
@@ -267,7 +276,7 @@
       palhaitaliana: {
         title: 'Palha Italiana',
         description: 'Palha Italiana irresistível e deliciosa, recheios maravilhosos. Uma combinação perfeita de sabores!',
-        images: ['🍫', '🍫', '🍫'],
+        images: ['https://i.imgur.com/KGE6F4j.jpeg', 'https://i.imgur.com/fUCRZP9.jpeg', 'https://i.imgur.com/5y0UeOo.jpeg'],
         prices: [
           { flavor: 'Ninho com Brigadeiro', price: 'R$ 7,00 c/unid' },
           { flavor: 'Ninho com Morango', price: 'R$ 7,00 c/unid' },
@@ -534,5 +543,5 @@
       ])
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f70ae22d44c7eed',t:'MTc3Nzk5MzkxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f70bbb28564cb61',t:'MTc3Nzk5NDQ2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
