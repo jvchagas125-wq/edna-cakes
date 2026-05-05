@@ -1059,49 +1059,40 @@
     { id:'minibolos', title:'Pavês', badge:'', shortDesc:'Deliciosos e irresistíveis', description:'Pavês deliciosos com combinações irresistíveis de sabores!', cardImage:'https://i.imgur.com/PbSOqNnm.png', images:['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Pavê trufado – Pequena',price:'R$ 25,00'},{flavor:'Pavê trufado – Média',price:'R$ 50,00'},{flavor:'Pavê trufado – Grande',price:'R$ 70,00'},{flavor:'Pavê de bombom – Pequena',price:'R$ 30,00'},{flavor:'Pavê de bombom – Média',price:'R$ 60,00'},{flavor:'Pavê de bombom – Grande',price:'R$ 80,00'}], observations:'Pedido mínimo: 24h de antecedência.' }
   ];
 
-  function getSiteData() { return null; } // replaced by Firestore below
-
-  // ── FIRESTORE REAL-TIME ──
-  // Use defaults initially, then apply Firestore data when it loads
+  // ── RENDER WITH DEFAULTS IMMEDIATELY ──
+  // Show default content right away — Firestore will update when ready
   let _initialized = false;
 
-  onSnapshot(doc(db, 'site', 'dados'), (snap) => {
-    if (!snap.exists()) return;
-    const data = snap.data();
-
-    // Update logo
-    const logo = data.logo;
-    if (logo) {
-      document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
-    }
-
-    // Update cards
-    if (data.products && data.products.length) {
-      renderCards(data.products);
-    }
-
-    // Update contacts
-    if (data.contatos) renderContacts(data.contatos, data.info || DEFAULT_INFO);
-    else if (data.info) renderContacts(siteContatos, data.info);
-
+  function applyData(data) {
+    const logo = data.logo || DEFAULT_LOGO;
+    document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
+    renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
+    const c = data.contatos || DEFAULT_CONTATOS;
+    const i = data.info || DEFAULT_INFO;
+    renderContacts(c, i);
     _initialized = true;
+  }
+
+  // Show defaults immediately — no waiting
+  applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
+
+  // Then update with Firestore data when it arrives
+  onSnapshot(doc(db, 'site', 'dados'), (snap) => {
+    if (snap.exists()) {
+      applyData(snap.data());
+    }
+    // If doc doesn't exist yet, defaults are already showing — that's fine
   }, (err) => {
-    console.warn('Firestore offline, using defaults.', err);
-    if (!_initialized) { renderCards(siteProducts); renderContacts(siteContatos, siteInfo); _initialized = true; }
+    console.warn('Firestore error, keeping defaults.', err);
   });
 
-  // Fallback init after 4s in case Firestore is slow
-  setTimeout(() => {
-    if (!_initialized) { renderCards(siteProducts); renderContacts(siteContatos, siteInfo); _initialized = true; }
-  }, 4000);
-
-  // live products reference (updated by Firestore listener)
-  let liveProducts = [...siteProducts];
-  let liveContatos = { ...siteContatos };
+  // live products and contacts — updated by applyData()
+  let liveProducts = [...DEFAULT_PRODUCTS];
+  let liveContatos = { ...DEFAULT_CONTATOS };
 
   // ── RENDER CARDS ──
   function renderCards(products) {
-    liveProducts = products;
+    liveProducts = [...products];
     const grid = document.getElementById('cardsGrid');
     grid.innerHTML = products.map((p, i) => `
       <div class="product-card" onclick="openModal(${i})" tabindex="0" role="button" aria-label="Ver ${p.title}">
@@ -1128,7 +1119,7 @@
 
   // ── RENDER CONTACTS ──
   function renderContacts(c, info) {
-    liveContatos = c;
+    liveContatos = { ...c };
     document.getElementById('contactLinksContainer').innerHTML = `
       <a href="https://wa.me/${c.wppNumber}" target="_blank" rel="noopener noreferrer" class="contact-link contact-wpp">
         <div class="contact-link-icon">
