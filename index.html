@@ -1,547 +1,1389 @@
 <!doctype html>
 <html lang="pt-BR" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doceria</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet">
+  <title>Edna Cakes — Doces feitos com amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    html, body { height: 100%; margin: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #e8607a;
+      --rose-dark: #c94060;
+      --rose-light: #f9d0d8;
+      --rose-pale: #fdf0f2;
+      --cream: #fdf6f0;
+      --gold: #c8975a;
+      --text: #2d1b1e;
+      --text-muted: #8a6b70;
+      --white: #ffffff;
+      --radius: 20px;
+    }
+
+    html, body { height: 100%; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND PATTERN ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-color: var(--cream);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(232,96,122,0.10) 0%, transparent 40%),
+        radial-gradient(circle at 85% 10%, rgba(200,151,90,0.08) 0%, transparent 35%),
+        radial-gradient(circle at 50% 70%, rgba(232,96,122,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(200,151,90,0.06) 0%, transparent 30%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23e8607a' opacity='0.12'/%3E%3Ccircle cx='60' cy='10' r='1' fill='%23c8975a' opacity='0.10'/%3E%3Ccircle cx='110' cy='10' r='1.5' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='35' cy='35' r='1' fill='%23c8975a' opacity='0.12'/%3E%3Ccircle cx='85' cy='35' r='1.5' fill='%23e8607a' opacity='0.10'/%3E%3Ccircle cx='10' cy='60' r='1' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='60' cy='60' r='2' fill='%23c8975a' opacity='0.06'/%3E%3Ccircle cx='110' cy='60' r='1' fill='%23e8607a' opacity='0.10'/%3E%3Ccircle cx='35' cy='85' r='1.5' fill='%23e8607a' opacity='0.12'/%3E%3Ccircle cx='85' cy='85' r='1' fill='%23c8975a' opacity='0.08'/%3E%3Ccircle cx='10' cy='110' r='1' fill='%23c8975a' opacity='0.10'/%3E%3Ccircle cx='60' cy='110' r='1.5' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='110' cy='110' r='1' fill='%23e8607a' opacity='0.12'/%3E%3C/svg%3E");
+    }
+
+    /* ── TYPOGRAPHY ── */
     .font-heading { font-family: 'Playfair Display', serif; }
-    .font-body { font-family: 'Lato', sans-serif; }
-    .menu-overlay { transition: opacity 0.3s ease; }
-    .menu-panel { transition: transform 0.3s ease; }
-    .menu-panel.closed { transform: translateX(-100%); }
-    .fade-in { animation: fadeIn 0.6s ease forwards; opacity: 0; }
-    .fade-in-delay { animation: fadeIn 0.6s ease 0.2s forwards; opacity: 0; }
-    .logo-bounce { animation: logoFloat 3s ease-in-out infinite; }
-    .modal-overlay { animation: fadeIn 0.3s ease forwards; }
-    .modal-content { animation: slideUp 0.3s ease forwards; }
-    .gallery-scroll { scroll-snap-type: x mandatory; overflow-x: auto; scroll-behavior: smooth; }
-    .gallery-item { scroll-snap-align: start; flex-shrink: 0; }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes logoFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253,246,240,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(232,96,122,0.12);
+      padding: 0 1.25rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-logo {
+      height: 40px;
+      object-fit: contain;
+    }
+
+    /* ── HAMBURGER BUTTON ── */
+    .hamburger-btn {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      border-radius: 12px;
+      transition: background 0.2s;
+      padding: 8px;
+    }
+    .hamburger-btn:hover { background: var(--rose-light); }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--rose);
+      border-radius: 2px;
+      transition: transform 0.35s cubic-bezier(.77,0,.175,1), opacity 0.2s;
+      transform-origin: center;
+    }
+    .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── SIDE MENU ── */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45,27,30,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+
+    .menu-panel {
+      position: fixed;
+      top: 0; left: 0;
+      width: min(320px, 85vw);
+      height: 100%;
+      background: var(--white);
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(.77,0,.175,1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .menu-panel.open { transform: translateX(0); }
+
+    .menu-panel-top {
+      background: linear-gradient(135deg, var(--rose) 0%, var(--rose-dark) 100%);
+      padding: 2.5rem 1.75rem 2rem;
+      position: relative;
+    }
+
+    .menu-close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      width: 36px; height: 36px;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: transparent;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .menu-close-btn:hover { background: rgba(255,255,255,0.2); }
+
+    .menu-brand-logo {
+      height: 52px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      margin-bottom: 0.75rem;
+    }
+    .menu-brand-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.85rem;
+    }
+
+    .menu-nav {
+      padding: 1.5rem 0;
+      flex: 1;
+    }
+    .menu-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.95rem 1.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      transition: background 0.2s, color 0.2s, padding-left 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .menu-nav a:hover {
+      background: var(--rose-pale);
+      color: var(--rose);
+      border-left-color: var(--rose);
+      padding-left: 2.25rem;
+    }
+    .menu-nav-icon {
+      width: 18px; height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .menu-footer {
+      padding: 1.25rem 1.75rem;
+      border-top: 1px solid var(--rose-light);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: min(90vh, 680px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,96,122,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,151,90,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Decorative circles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(232,96,122,0.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(232,96,122,0.06);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      height: clamp(90px, 18vw, 140px);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 8px 24px rgba(232,96,122,0.25));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.75rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .hero-title span {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s ease forwards;
+    }
+
+    .hero-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+      margin: 1.5rem auto;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--rose-dark) 100%);
+      color: white;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 24px rgba(232,96,122,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s ease forwards;
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(232,96,122,0.45);
+    }
+    .hero-cta svg { width: 16px; height: 16px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION BRAND LOGO ── */
+    .section-brand-logo {
+      height: clamp(72px, 14vw, 100px);
+      object-fit: contain;
+      margin: 0 auto 1.25rem;
+      display: block;
+      filter: drop-shadow(0 6px 18px rgba(232,96,122,0.22));
+      animation: sectionFloat 3.5s ease-in-out infinite;
+    }
+    @keyframes sectionFloat {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose);
+      background: rgba(232,96,122,0.1);
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* ── CARDÁPIO ── */
+    .cardapio-section {
+      padding: 5rem 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(45,27,30,0.07);
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
+      cursor: pointer;
+      border: 1px solid rgba(232,96,122,0.07);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(232,96,122,0.18);
+    }
+
+    .card-img-wrap {
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(45,27,30,0.15) 0%, transparent 50%);
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .card-img-wrap img { transform: scale(1.05); }
+
+    .card-badge {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      background: rgba(255,255,255,0.92);
+      color: var(--rose);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 50px;
+      z-index: 1;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.35rem 1.35rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .card-btn {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--rose-pale);
+      color: var(--rose);
+      border: 1.5px solid rgba(232,96,122,0.25);
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+    .card-btn:hover {
+      background: var(--rose);
+      color: white;
+      border-color: var(--rose);
+      transform: translateY(-1px);
+    }
+    .card-btn svg { width: 14px; height: 14px; }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    @media (min-width: 640px) {
+      .modal-backdrop {
+        align-items: center;
+        padding: 1rem;
+      }
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(45,27,30,0.55);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-box {
+      position: relative;
+      z-index: 1;
+      background: var(--white);
+      width: 100%;
+      max-width: 640px;
+      max-height: 92vh;
+      border-radius: 28px 28px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(40px);
+      transition: transform 0.4s cubic-bezier(.34,1.2,.64,1);
+      box-shadow: 0 -8px 60px rgba(45,27,30,0.2);
+    }
+    @media (min-width: 640px) {
+      .modal-box {
+        border-radius: 28px;
+        transform: translateY(20px) scale(0.97);
+        max-height: 88vh;
+      }
+    }
+    .modal-backdrop.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Modal drag handle (mobile) */
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: rgba(45,27,30,0.12);
+      border-radius: 4px;
+      margin: 0.85rem auto 0;
+      flex-shrink: 0;
+    }
+    @media (min-width: 640px) { .modal-handle { display: none; } }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(232,96,122,0.1);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      width: 36px; height: 36px;
+      border: none;
+      background: var(--rose-pale);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose);
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--rose-light); transform: rotate(90deg); }
+    .modal-close svg { width: 16px; height: 16px; }
+
+    .modal-scroll {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .modal-scroll::-webkit-scrollbar { width: 4px; }
+    .modal-scroll::-webkit-scrollbar-thumb { background: var(--rose-light); border-radius: 4px; }
+
+    /* Gallery */
+    .modal-gallery {
+      position: relative;
+      background: var(--rose-pale);
+    }
+
+    .gallery-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;
+      scrollbar-width: none;
+    }
+    .gallery-track::-webkit-scrollbar { display: none; }
+
+    .gallery-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: clamp(200px, 40vw, 280px);
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+    .gallery-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 2;
+    }
+    .gallery-nav:hover { background: var(--white); transform: translateY(-50%) scale(1.1); }
+    .gallery-nav.prev { left: 0.75rem; }
+    .gallery-nav.next { right: 0.75rem; }
+    .gallery-nav svg { width: 16px; height: 16px; }
+
+    .gallery-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      padding: 0.65rem;
+    }
+    .gallery-dot {
+      width: 6px; height: 6px;
+      border-radius: 3px;
+      background: rgba(232,96,122,0.25);
+      transition: background 0.2s, width 0.3s;
+      cursor: pointer;
+    }
+    .gallery-dot.active {
+      background: var(--rose);
+      width: 18px;
+    }
+
+    /* Modal Content */
+    .modal-content-inner {
+      padding: 1.25rem 1.5rem 2rem;
+    }
+
+    .modal-section {
+      margin-bottom: 1.5rem;
+    }
+    .modal-section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .modal-section-title::before {
+      content: '';
+      width: 3px; height: 14px;
+      background: var(--rose);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Price items */
+    .price-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0.9rem;
+      background: var(--rose-pale);
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      border: 1px solid rgba(232,96,122,0.1);
+    }
+    .price-flavor {
+      font-size: 0.88rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+    .price-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--rose-dark);
+      white-space: nowrap;
+      margin-left: 0.75rem;
+    }
+
+    .price-item-complex {
+      padding: 0.85rem 0.9rem;
+      background: var(--rose-pale);
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      border: 1px solid rgba(232,96,122,0.1);
+    }
+    .price-item-complex .flavor-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .price-item-complex .flavor-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .variant-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 0.2rem 0;
+    }
+    .variant-row span:last-child { font-weight: 700; color: var(--rose-dark); }
+
+    /* Tags (doughs, fillings) */
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      background: var(--rose-pale);
+      color: var(--rose-dark);
+      border: 1px solid rgba(232,96,122,0.2);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+    }
+
+    /* Observation box */
+    .obs-box {
+      background: linear-gradient(135deg, rgba(232,96,122,0.06), rgba(200,151,90,0.05));
+      border: 1px solid rgba(232,96,122,0.15);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .obs-box strong { color: var(--rose-dark); }
+
+    /* Separator label */
+    .label-row {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0.5rem 0 0.4rem;
+      padding-left: 0.1rem;
+    }
+
+    /* Modal WhatsApp button */
+    .modal-wpp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+    }
+    .modal-wpp-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+    .modal-wpp-btn svg { width: 18px; height: 18px; }
+
+    /* ── CONTATOS ── */
+    .contatos-section {
+      background: var(--white);
+      padding: 5rem 1.25rem;
+      border-top: 1px solid rgba(232,96,122,0.08);
+    }
+    .contatos-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .contatos-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.35rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid transparent;
+    }
+    .contact-link:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-link-icon svg { width: 20px; height: 20px; }
+
+    .contact-wpp { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+    .contact-wpp .contact-link-icon { background: #dcfce7; color: #16a34a; }
+
+    .contact-ig { background: var(--rose-pale); color: var(--rose-dark); border-color: var(--rose-light); }
+    .contact-ig .contact-link-icon { background: var(--rose-light); color: var(--rose); }
+
+    .obs-card {
+      background: var(--rose-pale);
+      border: 1px solid rgba(232,96,122,0.15);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      grid-column: 1 / -1;
+    }
+    @media (min-width: 640px) {
+      .obs-card { grid-column: auto; }
+    }
+    .obs-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--rose-dark);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .obs-list { list-style: none; }
+    .obs-list li {
+      display: flex;
+      gap: 0.6rem;
+      font-size: 0.84rem;
+      color: var(--text);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(232,96,122,0.08);
+    }
+    .obs-list li:last-child { border-bottom: none; }
+    .obs-list li::before { content: '✦'; color: var(--rose); font-size: 0.55rem; margin-top: 0.22rem; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: linear-gradient(135deg, #2d1b1e 0%, #3d2227 100%);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.82rem;
+    }
+    footer strong { color: var(--rose-light); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--rose-light); border-radius: 6px; }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full font-body bg-rose-50 text-gray-800 overflow-auto">
-  <!-- Mobile Menu Overlay -->
-  <div id="menuOverlay" class="menu-overlay fixed inset-0 bg-black/40 z-40 hidden" onclick="closeMenu()"></div><!-- Side Menu -->
-  <nav id="menuPanel" class="menu-panel closed fixed top-0 left-0 w-64 h-full bg-white z-50 shadow-xl flex flex-col">
-   <div class="p-6 border-b border-rose-100">
-    <button onclick="closeMenu()" class="text-rose-400 hover:text-rose-600"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
-   </div>
-   <div class="flex flex-col p-6 gap-4">
-    <a href="#inicio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Início</a> <a href="#cardapio" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Cardápio</a> <a href="#contatos" onclick="closeMenu()" class="text-lg font-heading text-gray-700 hover:text-rose-500 transition">Contatos</a>
-   </div>
-  </nav><!-- Header -->
-  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur shadow-sm">
-   <div class="flex items-center px-4 py-3">
-    <button onclick="openMenu()" class="text-rose-500 hover:text-rose-700 mr-3"> <i data-lucide="menu" style="width:28px;height:28px;"></i> </button> <img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-10" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
-   </div>
-  </header><!-- Hero Section -->
-  <section id="inicio" class="relative px-6 py-16 text-center bg-gradient-to-b from-rose-100 to-rose-50">
-   <img src="https://i.imgur.com/F6PR9Bu.png" alt="Logo Doceria" class="h-24 mx-auto mb-6 logo-bounce" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Logo';">
-   <h1 id="heroTitle" class="font-heading text-3xl md:text-5xl font-bold text-rose-700 fade-in">Doces feitos com amor</h1>
-   <p id="heroSubtitle" class="mt-4 text-lg text-rose-500 font-light fade-in-delay">Cada mordida, uma experiência única</p>
-   <div class="mt-8 fade-in-delay">
-    <a href="#cardapio" class="inline-block bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition">Ver Cardápio</a>
-   </div>
-  </section><!-- Cardápio -->
-  <section id="cardapio" class="px-4 py-12">
-   <h2 class="font-heading text-2xl md:text-3xl font-bold text-center text-rose-700 mb-8">Nosso Cardápio</h2>
-   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-rose-200 to-red-200 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/uFrFZGH.png" alt="Bolos Naked Cake" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Bolos Naked Cake';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Bolos Naked Cake</h3>
-       <p class="text-sm text-gray-500 mt-1">Elegantes e personalizáveis</p>
-      </div><button onclick="openProductModal('cupcakes')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-pink-200 to-rose-200 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/upiuoy2.png" alt="Rocambole" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Rocambole';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Rocambole</h3>
-       <p class="text-sm text-gray-500 mt-1">Doce, macio e irresistível</p>
-      </div><button onclick="openProductModal('bolos')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-red-100 to-rose-200 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/C0x8ygI.png" alt="Brownie" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Brownie';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Brownie</h3>
-       <p class="text-sm text-gray-500 mt-1">Sabores exclusivos e tradicionais</p>
-      </div><button onclick="openProductModal('brigadeiros')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/1qsbV8N.png" alt="Palha Italiana" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Palha Italiana';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Palha Italiana</h3>
-       <p class="text-sm text-gray-500 mt-1">Irresistível e delicioso</p>
-      </div><button onclick="openProductModal('palhaitaliana')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-red-200 to-rose-100 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/ueszqbk.png" alt="Tortas" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Tortas';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Tortas</h3>
-       <p class="text-sm text-gray-500 mt-1">Deliciosas e personalizadas</p>
-      </div><button onclick="openProductModal('tortas')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-     <div class="h-40 bg-gradient-to-br from-pink-100 to-red-100 flex items-center justify-center overflow-hidden">
-      <img src="https://i.imgur.com/PbSOqNn.png" alt="Pavês" class="w-full h-full object-cover" loading="lazy" onerror="console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Pavês';">
-     </div>
-     <div class="p-5 flex flex-col gap-4">
-      <div>
-       <h3 class="font-heading font-semibold text-lg text-gray-800">Pavês</h3>
-       <p class="text-sm text-gray-500 mt-1">Deliciosos e irresistíveis</p>
-      </div><button onclick="openProductModal('minibolos')" class="w-full bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-semibold transition text-sm">Ver mais</button>
-     </div>
-    </div>
-   </div>
-  </section><!-- Modal de Produto -->
-  <div id="productModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-   <div class="modal-overlay fixed inset-0 bg-black/50" onclick="closeProductModal()"></div>
-   <div class="modal-content bg-white rounded-3xl w-full max-w-2xl h-5/6 max-h-screen flex flex-col shadow-2xl">
-    <div class="flex items-center justify-between p-4 border-b border-rose-100">
-     <h3 id="modalTitle" class="font-heading text-xl font-bold text-gray-800"></h3><button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
-    </div>
-    <div class="flex-1 overflow-y-auto">
-     <div class="relative"><button id="galleryPrevBtn" onclick="scrollGallery(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg transition"> <i data-lucide="chevron-left" style="width:24px;height:24px;"></i> </button>
-      <div id="galleryContainer" class="gallery-scroll flex gap-4 px-16 pt-4 pb-2 h-64 md:h-80 cursor-grab active:cursor-grabbing">
-      </div><button id="galleryNextBtn" onclick="scrollGallery(1)" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full shadow-lg transition"> <i data-lucide="chevron-right" style="width:24px;height:24px;"></i> </button>
-     </div>
-     <div id="productInfo" class="px-6 py-6 space-y-4">
-      <div>
-       <h4 class="font-heading text-lg font-semibold text-gray-800 mb-2">Descrição</h4>
-       <p id="modalDescription" class="text-gray-600 text-sm"></p>
+</head>
+<body>
+
+<!-- ── OVERLAY ── -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<!-- ── SIDE MENU ── -->
+<nav class="menu-panel" id="menuPanel">
+  <div class="menu-panel-top">
+    <button class="menu-close-btn" onclick="closeMenu()" aria-label="Fechar menu">✕</button>
+    <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="menu-brand-logo"
+         onerror="this.style.display='none'">
+    <p class="menu-brand-tagline">Doces feitos com amor</p>
+  </div>
+  <div class="menu-nav">
+    <a href="#inicio" onclick="closeMenu()">
+      <svg class="menu-nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Início
+    </a>
+    <a href="#cardapio" onclick="closeMenu()">
+      <svg class="menu-nav-icon" viewBox="0 0 24 24"><path d="M12 2a9 9 0 1 0 0 18A9 9 0 0 0 12 2z"/><path d="M8 12h8M12 8v8"/></svg>
+      Cardápio
+    </a>
+    <a href="#contatos" onclick="closeMenu()">
+      <svg class="menu-nav-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .27.92z"/></svg>
+      Contatos
+    </a>
+  </div>
+  <div class="menu-footer">© Edna Cakes — Feito com ❤️</div>
+</nav>
+
+<!-- ── HEADER ── -->
+<header>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="openMenu()" aria-label="Abrir menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="header-logo"
+       onerror="this.style.display='none'">
+  <a href="#contatos" style="font-size:0.8rem;color:var(--rose);text-decoration:none;font-weight:500;white-space:nowrap;">Encomendar</a>
+</header>
+
+<!-- ── HERO ── -->
+<section id="inicio" class="hero">
+  <div class="hero-ring" style="width:300px;height:300px;"></div>
+  <div class="hero-ring" style="width:500px;height:500px;opacity:0.5;"></div>
+  <div class="hero-ring" style="width:700px;height:700px;opacity:0.3;"></div>
+
+  <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="hero-logo"
+       onerror="this.style.display='none'">
+  <h1 class="hero-title font-heading" id="heroTitle">
+    Doces feitos<br><span>com amor</span>
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-subtitle" id="heroSubtitle">Cada mordida, uma experiência única</p>
+  <div style="margin-top:2rem;opacity:0;animation:fadeUp 0.8s 0.7s ease forwards;">
+    <a href="#cardapio" class="hero-cta">
+      Ver Cardápio
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ── CARDÁPIO ── -->
+<section id="cardapio" class="cardapio-section">
+  <div class="section-header">
+    <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="section-brand-logo" onerror="this.style.display='none'">
+    <div class="section-tag">✦ Nosso menu</div>
+    <h2 class="section-title font-heading">Nosso Cardápio</h2>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Naked Cake -->
+    <div class="product-card" onclick="openModal('cupcakes')" tabindex="0" role="button" aria-label="Ver Bolos Naked Cake">
+      <div class="card-img-wrap">
+        <span class="card-badge">Popular</span>
+        <img src="https://i.imgur.com/uFrFZGH.png" alt="Bolos Naked Cake" loading="lazy">
       </div>
-      <div>
-       <h4 class="font-heading text-lg font-semibold text-gray-800 mb-2">Preços</h4>
-       <div id="pricesContainer" class="space-y-2"></div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Bolos Naked Cake</h3>
+        <p class="card-desc">Elegantes, personalizáveis e irresistíveis</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
-      <div>
-       <h4 class="font-heading text-lg font-semibold text-gray-800 mb-2">Observações</h4>
-       <p id="modalObservations" class="text-gray-600 text-sm"></p>
+    </div>
+
+    <!-- Rocambole -->
+    <div class="product-card" onclick="openModal('bolos')" tabindex="0" role="button" aria-label="Ver Rocambole">
+      <div class="card-img-wrap">
+        <img src="https://i.imgur.com/upiuoy2.png" alt="Rocambole" loading="lazy">
       </div>
-     </div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Rocambole</h3>
+        <p class="card-desc">Doce, macio e irresistível</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
-   </div>
-  </div><!-- Contatos -->
-  <section id="contatos" class="px-4 py-12 bg-white">
-   <h2 class="font-heading text-2xl md:text-3xl font-bold text-center text-rose-700 mb-8">Contatos</h2>
-   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Lado esquerdo - Contatos -->
-    <div class="flex flex-col gap-4"><a href="https://wa.me/5522996079822" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg font-medium transition"> <i data-lucide="message-circle" style="width:20px;height:20px;"></i> <span>WhatsApp: (22) 99607-9822</span> </a> <a href="https://www.instagram.com/edna_cakes024/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-medium transition"> <i data-lucide="instagram" style="width:20px;height:20px;"></i> <span>Instagram: @edna_cakes024</span> </a>
-    </div><!-- Lado direito - Observações -->
-    <div class="bg-rose-50 p-6 rounded-lg border-l-4 border-rose-500">
-     <h3 class="font-heading text-lg font-semibold text-rose-700 mb-4">Observações Importantes</h3>
-     <ul class="space-y-3 text-gray-700 text-sm">
-      <li class="flex gap-3"><span class="text-rose-500 font-bold">•</span> <span>Encomenda mediante entrada de 50%.</span></li>
-      <li class="flex gap-3"><span class="text-rose-500 font-bold">•</span> <span>Topper não incluso no valor.</span></li>
-      <li class="flex gap-3"><span class="text-rose-500 font-bold">•</span> <span>Valor para entrega de R$10,00.</span></li>
-      <li class="flex gap-3"><span class="text-rose-500 font-bold">•</span> <span>Favor realizar as encomendas somente pelo WhatsApp.</span></li>
-     </ul>
+
+    <!-- Brownie -->
+    <div class="product-card" onclick="openModal('brigadeiros')" tabindex="0" role="button" aria-label="Ver Brownie">
+      <div class="card-img-wrap">
+        <img src="https://i.imgur.com/C0x8ygI.png" alt="Brownie" loading="lazy">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Brownie</h3>
+        <p class="card-desc">Sabores exclusivos e tradicionais</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
-   </div>
-  </section><!-- Footer -->
-  <footer class="bg-rose-700 text-white text-center py-6 px-4">
-   <p class="text-sm opacity-80">© Edna Cakes — Feito com ❤️</p>
-  </footer>
-  <script>
-    lucide.createIcons();
 
-    // Gallery drag functionality
-    let isGalleryDragging = false;
-    let galleryStartX = 0;
-    let galleryScrollLeft = 0;
+    <!-- Palha Italiana -->
+    <div class="product-card" onclick="openModal('palhaitaliana')" tabindex="0" role="button" aria-label="Ver Palha Italiana">
+      <div class="card-img-wrap">
+        <img src="https://i.imgur.com/1qsbV8N.png" alt="Palha Italiana" loading="lazy">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Palha Italiana</h3>
+        <p class="card-desc">Irresistível e deliciosa</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
 
-    function initGalleryDrag() {
-      const gallery = document.getElementById('galleryContainer');
-      if (!gallery) return;
+    <!-- Tortas -->
+    <div class="product-card" onclick="openModal('tortas')" tabindex="0" role="button" aria-label="Ver Tortas">
+      <div class="card-img-wrap">
+        <img src="https://i.imgur.com/ueszqbk.png" alt="Tortas" loading="lazy">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Tortas</h3>
+        <p class="card-desc">Deliciosas e personalizadas</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
 
-      gallery.addEventListener('mousedown', startGalleryDrag);
-      gallery.addEventListener('mouseleave', stopGalleryDrag);
-      gallery.addEventListener('mouseup', stopGalleryDrag);
-      gallery.addEventListener('mousemove', dragGallery);
+    <!-- Pavês -->
+    <div class="product-card" onclick="openModal('minibolos')" tabindex="0" role="button" aria-label="Ver Pavês">
+      <div class="card-img-wrap">
+        <img src="https://i.imgur.com/PbSOqNn.png" alt="Pavês" loading="lazy">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title font-heading">Pavês</h3>
+        <p class="card-desc">Deliciosos e irresistíveis</p>
+        <button class="card-btn">
+          Ver detalhes
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
 
-      gallery.addEventListener('touchstart', startGalleryDrag);
-      gallery.addEventListener('touchend', stopGalleryDrag);
-      gallery.addEventListener('touchmove', dragGallery);
+  </div>
+</section>
+
+<!-- ── MODAL ── -->
+<div class="modal-backdrop" id="productModal" role="dialog" aria-modal="true">
+  <div class="modal-bg" onclick="closeModal()"></div>
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+
+    <div class="modal-header">
+      <h3 class="modal-title font-heading" id="modalTitle"></h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-scroll">
+      <!-- Gallery -->
+      <div class="modal-gallery">
+        <div class="gallery-track" id="galleryTrack"></div>
+        <button class="gallery-nav prev" id="galleryPrev" onclick="galleryScroll(-1)" aria-label="Anterior">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gallery-nav next" id="galleryNext" onclick="galleryScroll(1)" aria-label="Próxima">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="modal-content-inner" id="modalContentInner"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTATOS ── -->
+<section id="contatos" class="contatos-section">
+  <div style="max-width:900px;margin:0 auto;">
+    <div class="section-header">
+      <div class="section-tag">✦ Fale conosco</div>
+      <h2 class="section-title font-heading">Contatos</h2>
+    </div>
+    <div class="contatos-inner">
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+        <a href="https://wa.me/5522996079822" target="_blank" rel="noopener noreferrer" class="contact-link contact-wpp">
+          <div class="contact-link-icon">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:600;margin-bottom:0.1rem;">WhatsApp</div>
+            <div style="font-size:0.8rem;opacity:0.8;">(22) 99607-9822</div>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/edna_cakes024/" target="_blank" rel="noopener noreferrer" class="contact-link contact-ig">
+          <div class="contact-link-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:600;margin-bottom:0.1rem;">Instagram</div>
+            <div style="font-size:0.8rem;opacity:0.8;">@edna_cakes024</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-card-title font-heading">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Informações Importantes
+        </div>
+        <ul class="obs-list">
+          <li>Encomenda mediante entrada de 50%.</li>
+          <li>Topper não incluso no valor.</li>
+          <li>Taxa de entrega: R$10,00.</li>
+          <li>Encomendas somente pelo WhatsApp.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© <strong>Edna Cakes</strong> — Feito com ❤️ e muito açúcar</p>
+</footer>
+
+<script>
+  // ── MENU ──
+  function openMenu() {
+    document.getElementById('menuOverlay').classList.add('open');
+    document.getElementById('menuPanel').classList.add('open');
+    document.getElementById('hamburgerBtn').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    document.getElementById('menuOverlay').classList.remove('open');
+    document.getElementById('menuPanel').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── PRODUCT DATA ──
+  const products = {
+    cupcakes: {
+      title: 'Bolos Naked Cake',
+      description: 'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!',
+      images: ['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg','https://i.imgur.com/cMg4k90.jpeg','https://i.imgur.com/rCBqXbc.jpeg'],
+      sizes: [
+        { size: '15 cm', servings: '10–12 fatias', price: 'R$ 120,00' },
+        { size: '20 cm', servings: '25–30 fatias', price: 'R$ 180,00' },
+        { size: '25 cm', servings: '35–40 fatias', price: 'R$ 240,00' },
+        { size: '30 cm', servings: '45–50 fatias', price: 'R$ 290,00' }
+      ],
+      doughs: ['Baunilha','Chocolate'],
+      fillings: ['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'],
+      additionals: [
+        { name: 'Morango', price: 'a partir de R$ 7,00' },
+        { name: 'Nutella', price: 'a partir de R$ 10,00' },
+        { name: 'Nozes', price: 'a partir de R$ 10,00' },
+        { name: 'Docinhos gourmet', price: 'R$ 1,00 a unidade' }
+      ],
+      observations: 'Pedido mínimo com 48h de antecedência. Consulte-nos para criar seu Naked Cake perfeito!'
+    },
+    bolos: {
+      title: 'Rocambole',
+      description: 'Rocambole delicioso e macio, recheado com sabores gourmet! Uma combinação perfeita de massa macia com recheios saborosos.',
+      images: ['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'],
+      prices: [
+        { flavor: 'Doce de Leite Gourmet', price: 'R$ 60,00' },
+        { flavor: 'Ninho Gourmet', price: 'R$ 60,00' },
+        { flavor: 'Brigadeiro de Chocolate Gourmet', price: 'R$ 60,00' },
+        { flavor: 'Beijinho Gourmet', price: 'R$ 60,00' }
+      ],
+      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para sabores especiais!',
+      pricesLabel: 'Preços e Sabores'
+    },
+    brigadeiros: {
+      title: 'Brownie',
+      description: 'Brownies deliciosos com chocolate belga e sabores exclusivos. Perfeitos para sua festa ou como presente especial.',
+      images: ['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'],
+      prices: [
+        { flavor: 'Brigadeiro gourmet', price: 'R$ 6,00/unid' },
+        { flavor: 'Doce de Leite gourmet', price: 'R$ 6,00/unid' },
+        { flavor: 'Ninho gourmet', price: 'R$ 6,00/unid' }
+      ],
+      observations: 'Realizar pedidos de no mínimo 5 unidades.',
+      pricesLabel: 'Preços e Recheios'
+    },
+    palhaitaliana: {
+      title: 'Palha Italiana',
+      description: 'Palha Italiana irresistível e deliciosa, com recheios maravilhosos. Uma combinação perfeita de sabores!',
+      images: ['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'],
+      prices: [
+        { flavor: 'Ninho com Brigadeiro', price: 'R$ 7,00/unid' },
+        { flavor: 'Ninho com Morango', price: 'R$ 7,00/unid' },
+        { flavor: 'Ninho com Nutella', price: 'R$ 10,00/unid' }
+      ],
+      observations: 'Mínimo de 5 unidades. Para Ninho com Nutella, mínimo de 10 unidades.',
+      pricesLabel: 'Preços e Sabores'
+    },
+    tortas: {
+      title: 'Tortas',
+      description: 'Tortas deliciosas com combinações perfeitas de sabores! Escolha entre nossas opções de tortas doces e salgadas.',
+      images: ['https://i.imgur.com/5RithSH.jpeg','https://i.imgur.com/ht4QRky.jpeg','https://i.imgur.com/p8SVwdn.jpeg','https://i.imgur.com/8pRb80Q.jpeg'],
+      prices: [
+        { flavor: 'Bannofe', description: 'Farofa de biscoito, doce de leite gourmet, chantninho e banana', variants: [{name:'Travessa pequena',price:'R$ 40,00'},{name:'Travessa grande',price:'R$ 90,00'}] },
+        { flavor: 'Morangoffe', description: 'Farofa de biscoito, creme de ninho, chantininho e morangos', variants: [{name:'Travessa pequena',price:'R$ 50,00'},{name:'Travessa grande',price:'R$ 100,00'}] },
+        { flavor: 'Torta de Limão', description: 'Farofa de biscoito, mousse de limão, chantininho e raspas de limão', variants: [{name:'Travessa pequena',price:'R$ 40,00'},{name:'Travessa grande',price:'R$ 90,00'}] },
+        { flavor: 'Torta Salgada (1kg)', price: 'R$ 45,00' }
+      ],
+      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
+      pricesLabel: 'Preços e Sabores'
+    },
+    minibolos: {
+      title: 'Pavês',
+      description: 'Pavês deliciosos com combinações irresistíveis de sabores! Perfeito para suas festas e celebrações.',
+      images: ['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'],
+      prices: [
+        { flavor: 'Pavê trufado', description: 'Biscoito de Maisena, creme Belga, creme de chocolate gourmet e ganache.', variants: [{name:'Travessa pequena',price:'R$ 25,00'},{name:'Travessa média',price:'R$ 50,00'},{name:'Travessa grande',price:'R$ 70,00'}] },
+        { flavor: 'Pavê de bombom', description: 'Biscoito de Maisena, creme ninho gourmet, creme de chocolate 50% e bombons.', variants: [{name:'Travessa pequena',price:'R$ 30,00'},{name:'Travessa média',price:'R$ 60,00'},{name:'Travessa grande',price:'R$ 80,00'}] }
+      ],
+      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
+      pricesLabel: 'Preços e Sabores'
     }
+  };
 
-    function startGalleryDrag(e) {
-      isGalleryDragging = true;
-      const gallery = document.getElementById('galleryContainer');
-      galleryStartX = e.pageX || e.touches[0].pageX;
-      galleryScrollLeft = gallery.scrollLeft;
-      gallery.style.cursor = 'grabbing';
-    }
+  // ── GALLERY ──
+  let currentSlide = 0;
+  let totalSlides = 0;
 
-    function stopGalleryDrag() {
-      isGalleryDragging = false;
-      const gallery = document.getElementById('galleryContainer');
-      gallery.style.cursor = 'grab';
-    }
+  function buildGallery(images) {
+    const track = document.getElementById('galleryTrack');
+    const dots = document.getElementById('galleryDots');
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    totalSlides = images.length;
+    currentSlide = 0;
 
-    function dragGallery(e) {
-      if (!isGalleryDragging) return;
-      e.preventDefault();
-
-      const gallery = document.getElementById('galleryContainer');
-      const x = e.pageX || e.touches[0].pageX;
-      const walk = (x - galleryStartX) * 1;
-      gallery.scrollLeft = galleryScrollLeft - walk;
-    }
-
-    function scrollGallery(direction) {
-      const gallery = document.getElementById('galleryContainer');
-      const scrollAmount = 300;
-      gallery.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-
-    // Product data with images and details
-    const products = {
-      cupcakes: {
-        title: 'Bolos Naked Cake',
-        description: 'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!',
-        images: ['https://i.imgur.com/mJ6Krcx.jpeg', 'https://i.imgur.com/VOE52K6.jpeg', 'https://i.imgur.com/qI2w05l.jpeg', 'https://i.imgur.com/0b5QDSW.jpeg', 'https://i.imgur.com/k91fmpf.jpeg', 'https://i.imgur.com/EDCtl46.jpeg', 'https://i.imgur.com/cMg4k90.jpeg', 'https://i.imgur.com/rCBqXbc.jpeg'],
-        sizes: [
-          { size: '15 cm', servings: '10-12 fatias', price: 'R$ 120,00' },
-          { size: '20 cm', servings: '25-30 fatias', price: 'R$ 180,00' },
-          { size: '25 cm', servings: '35-40 fatias', price: 'R$ 240,00' },
-          { size: '30 cm', servings: '45-50 fatias', price: 'R$ 290,00' }
-        ],
-        doughs: ['Baunilha', 'Chocolate'],
-        fillings: ['Ninho gourmet', 'Brigadeiro de chocolate gourmet', 'Beijinho gourmet', 'Doce de leite gourmet', 'Prestígio', 'Ninho com Nutella', 'Ninho com Ouro Branco'],
-        additionals: [
-          { name: 'Morango', price: 'a partir de R$ 7,00' },
-          { name: 'Nutella', price: 'a partir de R$ 10,00' },
-          { name: 'Nozes', price: 'a partir de R$ 10,00' },
-          { name: 'Docinhos gourmet', price: 'R$ 1,00 a unidade' }
-        ],
-        observations: 'Pedido mínimo: 48h de antecedência. Consulte-nos para criar seu Naked Cake perfeito!'
-      },
-      bolos: {
-        title: 'Rocambole',
-        description: 'Rocambole delicioso e macio, recheado com sabores gourmet! Uma combinação perfeita de massa macia com recheios saborosos.',
-        images: ['https://i.imgur.com/3DHYo7Q.jpeg', 'https://i.imgur.com/tBAfCzp.jpeg', 'https://i.imgur.com/hmLo7K6.jpeg'],
-        prices: [
-          { flavor: 'Doce de Leite Gourmet', price: 'R$ 60,00' },
-          { flavor: 'Ninho Gourmet', price: 'R$ 60,00' },
-          { flavor: 'Brigadeiro de Chocolate Gourmet', price: 'R$ 60,00' },
-          { flavor: 'Beijinho Gourmet', price: 'R$ 60,00' }
-        ],
-        observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para sabores especiais!',
-        pricesLabel: 'Preços e Sabores'
-      },
-      brigadeiros: {
-        title: 'Brownie',
-        description: 'Brownies deliciosos com chocolate belga e sabores exclusivos. Perfeitos para sua festa ou como presente especial.',
-        images: ['https://i.imgur.com/KvXeI1D.jpeg', 'https://i.imgur.com/XcukGOY.jpeg'],
-        prices: [
-          { flavor: 'Brigadeiro gourmet', price: 'R$ 6,00 c/unid' },
-          { flavor: 'Doce de Leite gourmet', price: 'R$ 6,00 c/unid' },
-          { flavor: 'Ninho gourmet', price: 'R$ 6,00 c/unid' }
-        ],
-        observations: 'Realizar pedidos de no mínimo 5 unidades.',
-        pricesLabel: 'Preços e Recheios'
-      },
-      palhaitaliana: {
-        title: 'Palha Italiana',
-        description: 'Palha Italiana irresistível e deliciosa, recheios maravilhosos. Uma combinação perfeita de sabores!',
-        images: ['https://i.imgur.com/KGE6F4j.jpeg', 'https://i.imgur.com/fUCRZP9.jpeg', 'https://i.imgur.com/5y0UeOo.jpeg'],
-        prices: [
-          { flavor: 'Ninho com Brigadeiro', price: 'R$ 7,00 c/unid' },
-          { flavor: 'Ninho com Morango', price: 'R$ 7,00 c/unid' },
-          { flavor: 'Ninho com Nutella', price: 'R$ 10,00 c/unid' }
-        ],
-        observations: 'Realizar pedidos de no mínimo 5 unidades. Para a palha de Ninho com Nutella pedidos de no mínimo 10 unidades.',
-        pricesLabel: 'Preços e Sabores'
-      },
-      cookies: {
-        title: 'Cookies Artesanais',
-        description: 'Cookies crocantes por fora e macios por dentro, com ingredientes frescos e naturais.',
-        images: ['🍪', '🍪', '🍪'],
-        prices: [
-          { flavor: 'Chocolate', price: 'R$ 6,00' },
-          { flavor: 'Gotas de Chocolate', price: 'R$ 6,50' },
-          { flavor: 'Amendoim', price: 'R$ 6,50' }
-        ],
-        observations: 'Assados diariamente. Melhor consumir em até 3 dias.'
-      },
-      morangos: {
-        title: 'Morangos Cobertos',
-        description: 'Morangos frescos cobertos com chocolate belga branco ou ao leite, uma combinação perfeita de sabores.',
-        images: ['🍓', '🍓', '🍓'],
-        prices: [
-          { flavor: 'Caixa 6 unidades', price: 'R$ 12,00' },
-          { flavor: 'Caixa 12 unidades', price: 'R$ 22,00' },
-          { flavor: 'Caixa 24 unidades', price: 'R$ 42,00' }
-        ],
-        observations: 'Consumir em até 24 horas após a entrega. Ideal para presentes!'
-      },
-      tortas: {
-        title: 'Tortas',
-        description: 'Tortas deliciosas com combinações perfeitas de sabores! Escolha entre nossas opções de tortas doces e salgadas.',
-        images: ['https://i.imgur.com/5RithSH.jpeg', 'https://i.imgur.com/ht4QRky.jpeg', 'https://i.imgur.com/p8SVwdn.jpeg', 'https://i.imgur.com/8pRb80Q.jpeg'],
-        prices: [
-          { flavor: 'Bannofe (Farofa de biscoito, doce de leite gourmet, chantninho e banana)', variants: [{ name: 'Travessa pequena', price: 'R$ 40,00' }, { name: 'Travessa grande', price: 'R$ 90,00' }] },
-          { flavor: 'Morangoffe (Farofa de biscoito, creme de ninho, chantininho e morangos)', variants: [{ name: 'Travessa pequena', price: 'R$ 50,00' }, { name: 'Travessa grande', price: 'R$ 100,00' }] },
-          { flavor: 'Torta de Limão (Farofa de biscoito, mousse de limão, chantininho e raspas de limão)', variants: [{ name: 'Travessa pequena', price: 'R$ 40,00' }, { name: 'Travessa grande', price: 'R$ 90,00' }] },
-          { flavor: 'Torta Salgada (1kg)', price: 'R$ 45,00' }
-        ],
-        observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
-        pricesLabel: 'Preços e Sabores'
-      },
-      minibolos: {
-        title: 'Pavês',
-        description: 'Pavês deliciosos com combinações irresistíveis de sabores! Perfeito para suas festas e celebrações.',
-        images: ['https://i.imgur.com/gFys2Mf.jpeg', 'https://i.imgur.com/UOl5OpH.jpeg', 'https://i.imgur.com/UDDC6Fv.jpeg', 'https://i.imgur.com/0UPtbAD.jpeg'],
-        prices: [
-          { 
-            flavor: 'Pavê trufado',
-            description: 'Biscoito de Maisena, com creme Belga, creme de chocolate gourmet e ganache.',
-            variants: [
-              { name: 'Travessa pequena', price: 'R$ 25,00' },
-              { name: 'Travessa média', price: 'R$ 50,00' },
-              { name: 'Travessa grande', price: 'R$ 70,00' }
-            ]
-          },
-          { 
-            flavor: 'Pavê de bombom',
-            description: 'Biscoito de Maisena, com creme ninho gourmet, creme de chocolate 50% e bombons.',
-            variants: [
-              { name: 'Travessa pequena', price: 'R$ 30,00' },
-              { name: 'Travessa média', price: 'R$ 60,00' },
-              { name: 'Travessa grande', price: 'R$ 80,00' }
-            ]
-          }
-        ],
-        observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
-        pricesLabel: 'Preços e Sabores'
+    images.forEach((img, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+      if (img.startsWith('http')) {
+        const image = document.createElement('img');
+        image.src = img;
+        image.alt = 'Produto';
+        image.loading = 'lazy';
+        slide.appendChild(image);
+      } else {
+        slide.style.display = 'flex';
+        slide.style.alignItems = 'center';
+        slide.style.justifyContent = 'center';
+        slide.style.fontSize = '5rem';
+        slide.textContent = img;
       }
-    };
+      track.appendChild(slide);
 
-    function openProductModal(productKey) {
-      const product = products[productKey];
-      if (!product) return;
-
-      document.getElementById('modalTitle').textContent = product.title;
-      document.getElementById('modalDescription').textContent = product.description;
-      document.getElementById('modalObservations').textContent = product.observations;
-
-      // Build gallery
-      const gallery = document.getElementById('galleryContainer');
-      gallery.innerHTML = '';
-      product.images.forEach(img => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item flex items-center justify-center bg-gradient-to-br from-rose-100 to-pink-100 w-56 h-72 flex-shrink-0 rounded-lg overflow-hidden';
-        
-        // Check if it's a URL or emoji
-        if (img.startsWith('http')) {
-          const imgElement = document.createElement('img');
-          imgElement.src = img;
-          imgElement.alt = 'Produto';
-          imgElement.className = 'w-full h-full object-cover';
-          imgElement.loading = 'lazy';
-          imgElement.onerror = "console.error('Image failed:', this.src); this.style.background='#fecdd3'; this.alt='Imagem indisponível';";
-          item.appendChild(imgElement);
-        } else {
-          // It's an emoji
-          item.className += ' text-6xl';
-          item.textContent = img;
-        }
-        
-        gallery.appendChild(item);
-      });
-
-      // Initialize drag functionality for this gallery
-      initGalleryDrag();
-
-      // Build prices or sizes and customization options
-      const pricesContainer = document.getElementById('pricesContainer');
-      pricesContainer.innerHTML = '';
-
-      // If it's a Naked Cake with sizes
-      if (product.sizes) {
-        // Sizes section
-        const sizesHeader = document.createElement('div');
-        sizesHeader.className = 'text-sm font-semibold text-gray-700 mb-2 mt-4';
-        sizesHeader.textContent = 'Tamanhos:';
-        pricesContainer.appendChild(sizesHeader);
-
-        product.sizes.forEach(s => {
-          const sizeItem = document.createElement('div');
-          sizeItem.className = 'flex justify-between items-start p-3 bg-rose-50 rounded-lg mb-2';
-          sizeItem.innerHTML = `<div class="text-gray-700"><div class="font-semibold">${s.size}</div><div class="text-xs text-gray-500">(rende ${s.servings})</div></div><span class="font-bold text-rose-600">${s.price}</span>`;
-          pricesContainer.appendChild(sizeItem);
-        });
-
-        // Doughs section
-        const doughsHeader = document.createElement('div');
-        doughsHeader.className = 'text-sm font-semibold text-gray-700 mb-2 mt-4';
-        doughsHeader.textContent = 'Massas:';
-        pricesContainer.appendChild(doughsHeader);
-
-        product.doughs.forEach(d => {
-          const doughItem = document.createElement('div');
-          doughItem.className = 'p-2 bg-gray-100 rounded-lg mb-2 text-gray-700 text-sm';
-          doughItem.textContent = d;
-          pricesContainer.appendChild(doughItem);
-        });
-
-        // Fillings section
-        const fillingsHeader = document.createElement('div');
-        fillingsHeader.className = 'text-sm font-semibold text-gray-700 mb-2 mt-4';
-        fillingsHeader.textContent = 'Recheios:';
-        pricesContainer.appendChild(fillingsHeader);
-
-        product.fillings.forEach(f => {
-          const fillingItem = document.createElement('div');
-          fillingItem.className = 'p-2 bg-gray-100 rounded-lg mb-2 text-gray-700 text-sm';
-          fillingItem.textContent = f;
-          pricesContainer.appendChild(fillingItem);
-        });
-
-        // Additionals section
-        const additionalsHeader = document.createElement('div');
-        additionalsHeader.className = 'text-sm font-semibold text-gray-700 mb-2 mt-4';
-        additionalsHeader.textContent = 'Adicionais:';
-        pricesContainer.appendChild(additionalsHeader);
-
-        product.additionals.forEach(a => {
-          const additionalItem = document.createElement('div');
-          additionalItem.className = 'flex justify-between items-center p-2 bg-gray-100 rounded-lg mb-2';
-          additionalItem.innerHTML = `<span class="text-gray-700 text-sm">${a.name}</span><span class="text-rose-600 text-sm font-semibold">${a.price}</span>`;
-          pricesContainer.appendChild(additionalItem);
-        });
-      } else if (product.prices) {
-        // Custom label for prices header if provided
-        const pricesHeader = document.createElement('div');
-        pricesHeader.className = 'text-sm font-semibold text-gray-700 mb-2 mt-4';
-        pricesHeader.textContent = product.pricesLabel || 'Preços';
-        pricesContainer.appendChild(pricesHeader);
-
-        // Regular prices display for other products
-        product.prices.forEach(p => {
-          const priceItem = document.createElement('div');
-          priceItem.className = 'flex justify-between items-start p-3 bg-rose-50 rounded-lg mb-2';
-          
-          if (p.variants) {
-            // For items with variants (like tortas and pavês)
-            let variantHTML = `<div class="text-gray-700 flex-1"><div class="font-semibold text-sm mb-1">${p.flavor}</div>`;
-            if (p.description) {
-              variantHTML += `<div class="text-xs text-gray-600 mb-2">${p.description}</div>`;
-            }
-            variantHTML += '<div>';
-            p.variants.forEach(v => {
-              variantHTML += `<div class="text-xs text-gray-600 mb-1">${v.name}: <span class="font-semibold text-rose-600">${v.price}</span></div>`;
-            });
-            variantHTML += '</div></div>';
-            priceItem.innerHTML = variantHTML;
-          } else if (p.price) {
-            // For regular items
-            priceItem.innerHTML = `<span class="text-gray-700">${p.flavor}</span><span class="font-bold text-rose-600">${p.price}</span>`;
-          }
-          
-          pricesContainer.appendChild(priceItem);
-        });
-      }
-
-      // Show modal
-      document.getElementById('productModal').classList.remove('hidden');
-      lucide.createIcons();
-    }
-
-    function closeProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-    }
-
-    function openMenu() {
-      document.getElementById('menuOverlay').classList.remove('hidden');
-      document.getElementById('menuPanel').classList.remove('closed');
-    }
-    function closeMenu() {
-      document.getElementById('menuOverlay').classList.add('hidden');
-      document.getElementById('menuPanel').classList.add('closed');
-    }
-
-    const defaultConfig = {
-      hero_title: 'Doces feitos com amor',
-      hero_subtitle: 'Cada mordida, uma experiência única',
-      contact_phone: '(11) 99999-9999',
-      contact_address: 'Rua das Flores, 123',
-      background_color: '#fff1f2',
-      surface_color: '#ffffff',
-      text_color: '#1f2937',
-      primary_action_color: '#f43f5e',
-      secondary_action_color: '#e11d48',
-      font_family: 'Playfair Display',
-      font_size: 16
-    };
-
-    function applyConfig(config) {
-      document.getElementById('heroTitle').textContent = config.hero_title || defaultConfig.hero_title;
-      document.getElementById('heroSubtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
-      document.getElementById('contactPhone').textContent = config.contact_phone || defaultConfig.contact_phone;
-      document.getElementById('contactAddress').textContent = config.contact_address || defaultConfig.contact_address;
-    }
-
-    window.elementSdk.init({
-      defaultConfig,
-      onConfigChange: async (config) => { applyConfig(config); },
-      mapToCapabilities: (config) => ({
-        recolorables: [
-          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-          { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
-          { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-        }
-      }),
-      mapToEditPanelValues: (config) => new Map([
-        ['hero_title', config.hero_title || defaultConfig.hero_title],
-        ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
-        ['contact_phone', config.contact_phone || defaultConfig.contact_phone],
-        ['contact_address', config.contact_address || defaultConfig.contact_address]
-      ])
+      const dot = document.createElement('div');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goToSlide(i);
+      dots.appendChild(dot);
     });
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f70bbb28564cb61',t:'MTc3Nzk5NDQ2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+    // Update dots on scroll
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / track.offsetWidth);
+      updateDots(idx);
+    });
+
+    updateNavBtns();
+  }
+
+  function updateDots(idx) {
+    currentSlide = idx;
+    const dotEls = document.querySelectorAll('.gallery-dot');
+    dotEls.forEach((d, i) => d.classList.toggle('active', i === idx));
+    updateNavBtns();
+  }
+
+  function updateNavBtns() {
+    document.getElementById('galleryPrev').style.opacity = currentSlide === 0 ? '0.4' : '1';
+    document.getElementById('galleryNext').style.opacity = currentSlide >= totalSlides - 1 ? '0.4' : '1';
+  }
+
+  function goToSlide(idx) {
+    const track = document.getElementById('galleryTrack');
+    track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' });
+  }
+
+  function galleryScroll(dir) {
+    const next = Math.max(0, Math.min(totalSlides - 1, currentSlide + dir));
+    goToSlide(next);
+  }
+
+  // ── MODAL ──
+  function openModal(key) {
+    const p = products[key];
+    if (!p) return;
+
+    document.getElementById('modalTitle').textContent = p.title;
+    buildGallery(p.images);
+
+    // Build content
+    const inner = document.getElementById('modalContentInner');
+    inner.innerHTML = '';
+
+    // Description
+    const descSec = document.createElement('div');
+    descSec.className = 'modal-section';
+    descSec.innerHTML = `<div class="modal-section-title font-heading">Descrição</div>
+      <p class="modal-desc">${p.description}</p>`;
+    inner.appendChild(descSec);
+
+    // Sizes + fillings (Naked Cake)
+    if (p.sizes) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      let html = `<div class="modal-section-title font-heading">Tamanhos e Preços</div>`;
+      p.sizes.forEach(s => {
+        html += `<div class="price-item">
+          <div><div class="price-flavor" style="font-weight:600;">${s.size}</div><div style="font-size:0.75rem;color:var(--text-muted);">${s.servings}</div></div>
+          <span class="price-value">${s.price}</span>
+        </div>`;
+      });
+      html += `<div class="label-row">Massas disponíveis</div><div class="tags-wrap">`;
+      p.doughs.forEach(d => { html += `<span class="tag">${d}</span>`; });
+      html += `</div><div class="label-row" style="margin-top:0.75rem;">Recheios disponíveis</div><div class="tags-wrap">`;
+      p.fillings.forEach(f => { html += `<span class="tag">${f}</span>`; });
+      html += `</div><div class="label-row" style="margin-top:0.75rem;">Adicionais</div>`;
+      p.additionals.forEach(a => {
+        html += `<div class="price-item"><span class="price-flavor">${a.name}</span><span class="price-value">${a.price}</span></div>`;
+      });
+      sec.innerHTML = html;
+      inner.appendChild(sec);
+    } else if (p.prices) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      let html = `<div class="modal-section-title font-heading">${p.pricesLabel || 'Preços'}</div>`;
+      p.prices.forEach(item => {
+        if (item.variants) {
+          html += `<div class="price-item-complex">
+            <div class="flavor-name">${item.flavor}</div>
+            ${item.description ? `<div class="flavor-sub">${item.description}</div>` : ''}
+            ${item.variants.map(v => `<div class="variant-row"><span>${v.name}</span><span>${v.price}</span></div>`).join('')}
+          </div>`;
+        } else {
+          html += `<div class="price-item"><span class="price-flavor">${item.flavor}</span><span class="price-value">${item.price}</span></div>`;
+        }
+      });
+      sec.innerHTML = html;
+      inner.appendChild(sec);
+    }
+
+    // Observations
+    if (p.observations) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      sec.innerHTML = `<div class="modal-section-title font-heading">Observações</div>
+        <div class="obs-box">💡 ${p.observations}</div>`;
+      inner.appendChild(sec);
+    }
+
+    // WhatsApp button
+    const btn = document.createElement('a');
+    btn.href = 'https://wa.me/5522996079822';
+    btn.target = '_blank';
+    btn.rel = 'noopener noreferrer';
+    btn.className = 'modal-wpp-btn';
+    btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
+    Fazer encomenda pelo WhatsApp`;
+    inner.appendChild(btn);
+
+    // Open
+    const modal = document.getElementById('productModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ESC key to close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeMenu(); }
+  });
+
+  // Keyboard nav for cards
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+</script>
+</body>
 </html>
