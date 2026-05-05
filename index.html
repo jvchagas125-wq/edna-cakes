@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edna Cakes — Doces feitos com amor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Preconnect to speed up external resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://i.imgur.com">
+  <!-- Non-blocking font load -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -38,11 +44,9 @@
       z-index: -1;
       background-color: var(--cream);
       background-image:
-        radial-gradient(circle at 15% 20%, rgba(232,96,122,0.10) 0%, transparent 40%),
-        radial-gradient(circle at 85% 10%, rgba(200,151,90,0.08) 0%, transparent 35%),
-        radial-gradient(circle at 50% 70%, rgba(232,96,122,0.07) 0%, transparent 45%),
-        radial-gradient(circle at 90% 80%, rgba(200,151,90,0.06) 0%, transparent 30%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23e8607a' opacity='0.12'/%3E%3Ccircle cx='60' cy='10' r='1' fill='%23c8975a' opacity='0.10'/%3E%3Ccircle cx='110' cy='10' r='1.5' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='35' cy='35' r='1' fill='%23c8975a' opacity='0.12'/%3E%3Ccircle cx='85' cy='35' r='1.5' fill='%23e8607a' opacity='0.10'/%3E%3Ccircle cx='10' cy='60' r='1' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='60' cy='60' r='2' fill='%23c8975a' opacity='0.06'/%3E%3Ccircle cx='110' cy='60' r='1' fill='%23e8607a' opacity='0.10'/%3E%3Ccircle cx='35' cy='85' r='1.5' fill='%23e8607a' opacity='0.12'/%3E%3Ccircle cx='85' cy='85' r='1' fill='%23c8975a' opacity='0.08'/%3E%3Ccircle cx='10' cy='110' r='1' fill='%23c8975a' opacity='0.10'/%3E%3Ccircle cx='60' cy='110' r='1.5' fill='%23e8607a' opacity='0.08'/%3E%3Ccircle cx='110' cy='110' r='1' fill='%23e8607a' opacity='0.12'/%3E%3C/svg%3E");
+        radial-gradient(circle at 15% 20%, rgba(232,96,122,0.09) 0%, transparent 40%),
+        radial-gradient(circle at 85% 10%, rgba(200,151,90,0.07) 0%, transparent 35%),
+        radial-gradient(circle at 90% 85%, rgba(232,96,122,0.06) 0%, transparent 35%);
     }
 
     /* ── TYPOGRAPHY ── */
@@ -882,6 +886,15 @@
       opacity: 1;
     }
 
+    .hero-logo { will-change: transform; }
+    .section-brand-logo { will-change: transform; }
+
+    /* Disable heavy animations on slow connections or user preference */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-logo, .section-brand-logo { animation: none; }
+      .hero-title, .hero-subtitle, .hero-divider { animation: none; opacity: 1; transform: none; }
+    }
+
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -956,99 +969,7 @@
     <h2 class="section-title font-heading">Nosso Cardápio</h2>
   </div>
 
-  <div class="cards-grid">
-
-    <!-- Naked Cake -->
-    <div class="product-card" onclick="openModal('cupcakes')" tabindex="0" role="button" aria-label="Ver Bolos Naked Cake">
-      <div class="card-img-wrap img-skeleton">
-        <span class="card-badge">Popular</span>
-        <img src="https://i.imgur.com/uFrFZGHl.png" alt="Bolos Naked Cake" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Bolos Naked Cake</h3>
-        <p class="card-desc">Elegantes, personalizáveis e irresistíveis</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Rocambole -->
-    <div class="product-card" onclick="openModal('bolos')" tabindex="0" role="button" aria-label="Ver Rocambole">
-      <div class="card-img-wrap img-skeleton">
-        <img src="https://i.imgur.com/upiuoy2l.png" alt="Rocambole" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Rocambole</h3>
-        <p class="card-desc">Doce, macio e irresistível</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Brownie -->
-    <div class="product-card" onclick="openModal('brigadeiros')" tabindex="0" role="button" aria-label="Ver Brownie">
-      <div class="card-img-wrap img-skeleton">
-        <img src="https://i.imgur.com/C0x8ygIl.png" alt="Brownie" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Brownie</h3>
-        <p class="card-desc">Sabores exclusivos e tradicionais</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Palha Italiana -->
-    <div class="product-card" onclick="openModal('palhaitaliana')" tabindex="0" role="button" aria-label="Ver Palha Italiana">
-      <div class="card-img-wrap img-skeleton">
-        <img src="https://i.imgur.com/1qsbV8Nl.png" alt="Palha Italiana" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Palha Italiana</h3>
-        <p class="card-desc">Irresistível e deliciosa</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Tortas -->
-    <div class="product-card" onclick="openModal('tortas')" tabindex="0" role="button" aria-label="Ver Tortas">
-      <div class="card-img-wrap img-skeleton">
-        <img src="https://i.imgur.com/ueszqbkl.png" alt="Tortas" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Tortas</h3>
-        <p class="card-desc">Deliciosas e personalizadas</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Pavês -->
-    <div class="product-card" onclick="openModal('minibolos')" tabindex="0" role="button" aria-label="Ver Pavês">
-      <div class="card-img-wrap img-skeleton">
-        <img src="https://i.imgur.com/PbSOqNnl.png" alt="Pavês" loading="lazy" onload="this.classList.add('loaded')">
-      </div>
-      <div class="card-body">
-        <h3 class="card-title font-heading">Pavês</h3>
-        <p class="card-desc">Deliciosos e irresistíveis</p>
-        <button class="card-btn">
-          Ver detalhes
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
+  <div class="cards-grid" id="cardsGrid">
   </div>
 </section>
 
@@ -1092,38 +1013,13 @@
       <h2 class="section-title font-heading">Contatos</h2>
     </div>
     <div class="contatos-inner">
-      <div style="display:flex;flex-direction:column;gap:0.85rem;">
-        <a href="https://wa.me/5522996079822" target="_blank" rel="noopener noreferrer" class="contact-link contact-wpp">
-          <div class="contact-link-icon">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
-          </div>
-          <div>
-            <div style="font-weight:600;margin-bottom:0.1rem;">WhatsApp</div>
-            <div style="font-size:0.8rem;opacity:0.8;">(22) 99607-9822</div>
-          </div>
-        </a>
-        <a href="https://www.instagram.com/edna_cakes024/" target="_blank" rel="noopener noreferrer" class="contact-link contact-ig">
-          <div class="contact-link-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </div>
-          <div>
-            <div style="font-weight:600;margin-bottom:0.1rem;">Instagram</div>
-            <div style="font-size:0.8rem;opacity:0.8;">@edna_cakes024</div>
-          </div>
-        </a>
-      </div>
-
+      <div style="display:flex;flex-direction:column;gap:0.85rem;" id="contactLinksContainer"></div>
       <div class="obs-card">
         <div class="obs-card-title font-heading">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Informações Importantes
         </div>
-        <ul class="obs-list">
-          <li>Encomenda mediante entrada de 50%.</li>
-          <li>Topper não incluso no valor.</li>
-          <li>Taxa de entrega: R$10,00.</li>
-          <li>Encomendas somente pelo WhatsApp.</li>
-        </ul>
+        <ul class="obs-list" id="infoList"></ul>
       </div>
     </div>
   </div>
@@ -1134,7 +1030,128 @@
   <p>© <strong>Edna Cakes</strong> — Feito com ❤️ e muito açúcar</p>
 </footer>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { getFirestore, doc, getDoc, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB07t3jzqRz7kj20HwQ7Qw0A8QhIztDO20",
+    authDomain: "edna-cakes.firebaseapp.com",
+    projectId: "edna-cakes",
+    storageBucket: "edna-cakes.firebasestorage.app",
+    messagingSenderId: "231236226396",
+    appId: "1:231236226396:web:9d2af6ca43d26c91800599"
+  };
+  const fbApp = initializeApp(firebaseConfig);
+  const db    = getFirestore(fbApp);
+
+  // ── DEFAULT DATA (fallback offline) ──
+  const DEFAULT_LOGO = 'https://i.imgur.com/F6PR9Bu.png';
+  const DEFAULT_CONTATOS = { wppNumber:'5522996079822', wppDisplay:'(22) 99607-9822', instagram:'edna_cakes024' };
+  const DEFAULT_INFO = ['Encomenda mediante entrada de 50%.','Topper não incluso no valor.','Taxa de entrega: R$10,00.','Encomendas somente pelo WhatsApp.'];
+  const DEFAULT_PRODUCTS = [
+    { id:'cupcakes', title:'Bolos Naked Cake', badge:'Popular', shortDesc:'Elegantes, personalizáveis e irresistíveis', description:'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!', cardImage:'https://i.imgur.com/uFrFZGHm.png', images:['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg','https://i.imgur.com/cMg4k90.jpeg','https://i.imgur.com/rCBqXbc.jpeg'], type:'simple', pricesLabel:'Tamanhos e Preços', prices:[{flavor:'15 cm (10–12 fatias)',price:'R$ 120,00'},{flavor:'20 cm (25–30 fatias)',price:'R$ 180,00'},{flavor:'25 cm (35–40 fatias)',price:'R$ 240,00'},{flavor:'30 cm (45–50 fatias)',price:'R$ 290,00'}], doughs:['Baunilha','Chocolate'], fillings:['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'], observations:'Pedido mínimo com 48h de antecedência.' },
+    { id:'bolos', title:'Rocambole', badge:'', shortDesc:'Doce, macio e irresistível', description:'Rocambole delicioso e macio, recheado com sabores gourmet!', cardImage:'https://i.imgur.com/upiuoy2m.png', images:['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Doce de Leite Gourmet',price:'R$ 60,00'},{flavor:'Ninho Gourmet',price:'R$ 60,00'},{flavor:'Brigadeiro de Chocolate Gourmet',price:'R$ 60,00'},{flavor:'Beijinho Gourmet',price:'R$ 60,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
+    { id:'brigadeiros', title:'Brownie', badge:'', shortDesc:'Sabores exclusivos e tradicionais', description:'Brownies deliciosos com chocolate belga e sabores exclusivos.', cardImage:'https://i.imgur.com/C0x8ygIm.png', images:['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'], type:'simple', pricesLabel:'Preços e Recheios', prices:[{flavor:'Brigadeiro gourmet',price:'R$ 6,00/unid'},{flavor:'Doce de Leite gourmet',price:'R$ 6,00/unid'},{flavor:'Ninho gourmet',price:'R$ 6,00/unid'}], observations:'Realizar pedidos de no mínimo 5 unidades.' },
+    { id:'palhaitaliana', title:'Palha Italiana', badge:'', shortDesc:'Irresistível e deliciosa', description:'Palha Italiana irresistível e deliciosa, com recheios maravilhosos.', cardImage:'https://i.imgur.com/1qsbV8Nm.png', images:['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Ninho com Brigadeiro',price:'R$ 7,00/unid'},{flavor:'Ninho com Morango',price:'R$ 7,00/unid'},{flavor:'Ninho com Nutella',price:'R$ 10,00/unid'}], observations:'Mínimo de 5 unidades.' },
+    { id:'tortas', title:'Tortas', badge:'', shortDesc:'Deliciosas e personalizadas', description:'Tortas deliciosas com combinações perfeitas de sabores!', cardImage:'https://i.imgur.com/ueszqbkm.png', images:['https://i.imgur.com/5RithSH.jpeg','https://i.imgur.com/ht4QRky.jpeg','https://i.imgur.com/p8SVwdn.jpeg','https://i.imgur.com/8pRb80Q.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Bannofe',price:'R$ 40,00 / R$ 90,00'},{flavor:'Morangoffe',price:'R$ 50,00 / R$ 100,00'},{flavor:'Torta de Limão',price:'R$ 40,00 / R$ 90,00'},{flavor:'Torta Salgada (1kg)',price:'R$ 45,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
+    { id:'minibolos', title:'Pavês', badge:'', shortDesc:'Deliciosos e irresistíveis', description:'Pavês deliciosos com combinações irresistíveis de sabores!', cardImage:'https://i.imgur.com/PbSOqNnm.png', images:['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Pavê trufado – Pequena',price:'R$ 25,00'},{flavor:'Pavê trufado – Média',price:'R$ 50,00'},{flavor:'Pavê trufado – Grande',price:'R$ 70,00'},{flavor:'Pavê de bombom – Pequena',price:'R$ 30,00'},{flavor:'Pavê de bombom – Média',price:'R$ 60,00'},{flavor:'Pavê de bombom – Grande',price:'R$ 80,00'}], observations:'Pedido mínimo: 24h de antecedência.' }
+  ];
+
+  function getSiteData() { return null; } // replaced by Firestore below
+
+  // ── FIRESTORE REAL-TIME ──
+  // Use defaults initially, then apply Firestore data when it loads
+  let _initialized = false;
+
+  onSnapshot(doc(db, 'site', 'dados'), (snap) => {
+    if (!snap.exists()) return;
+    const data = snap.data();
+
+    // Update logo
+    const logo = data.logo;
+    if (logo) {
+      document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
+    }
+
+    // Update cards
+    if (data.products && data.products.length) {
+      renderCards(data.products);
+    }
+
+    // Update contacts
+    if (data.contatos) renderContacts(data.contatos, data.info || DEFAULT_INFO);
+    else if (data.info) renderContacts(siteContatos, data.info);
+
+    _initialized = true;
+  }, (err) => {
+    console.warn('Firestore offline, using defaults.', err);
+    if (!_initialized) { renderCards(siteProducts); renderContacts(siteContatos, siteInfo); _initialized = true; }
+  });
+
+  // Fallback init after 4s in case Firestore is slow
+  setTimeout(() => {
+    if (!_initialized) { renderCards(siteProducts); renderContacts(siteContatos, siteInfo); _initialized = true; }
+  }, 4000);
+
+  // live products reference (updated by Firestore listener)
+  let liveProducts = [...siteProducts];
+  let liveContatos = { ...siteContatos };
+
+  // ── RENDER CARDS ──
+  function renderCards(products) {
+    liveProducts = products;
+    const grid = document.getElementById('cardsGrid');
+    grid.innerHTML = products.map((p, i) => `
+      <div class="product-card" onclick="openModal(${i})" tabindex="0" role="button" aria-label="Ver ${p.title}">
+        <div class="card-img-wrap img-skeleton">
+          ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
+          <img src="${p.cardImage||''}" alt="${p.title}" loading="lazy"
+            onload="this.classList.add('loaded')"
+            onerror="this.parentElement.classList.remove('img-skeleton')">
+        </div>
+        <div class="card-body">
+          <h3 class="card-title font-heading">${p.title}</h3>
+          <p class="card-desc">${p.shortDesc || p.description.substring(0,55) + '…'}</p>
+          <button class="card-btn">
+            Ver detalhes
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); card.click(); } });
+    });
+  }
+
+  // ── RENDER CONTACTS ──
+  function renderContacts(c, info) {
+    liveContatos = c;
+    document.getElementById('contactLinksContainer').innerHTML = `
+      <a href="https://wa.me/${c.wppNumber}" target="_blank" rel="noopener noreferrer" class="contact-link contact-wpp">
+        <div class="contact-link-icon">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:600;margin-bottom:0.1rem;">WhatsApp</div>
+          <div style="font-size:0.8rem;opacity:0.8;">${c.wppDisplay}</div>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/${c.instagram}/" target="_blank" rel="noopener noreferrer" class="contact-link contact-ig">
+        <div class="contact-link-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:600;margin-bottom:0.1rem;">Instagram</div>
+          <div style="font-size:0.8rem;opacity:0.8;">@${c.instagram}</div>
+        </div>
+      </a>
+    `;
+    document.getElementById('infoList').innerHTML = (info||[]).map(item => `<li>${item}</li>`).join('');
+  }
+
   // ── MENU ──
   function openMenu() {
     document.getElementById('menuOverlay').classList.add('open');
@@ -1149,8 +1166,171 @@
     document.body.style.overflow = '';
   }
 
-  // ── PRODUCT DATA ──
-  const products = {
+  // ── GALLERY ──
+  let currentSlide = 0;
+  let totalSlides = 0;
+
+  function imgUrl(url) {
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const slow = conn && (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g');
+    const suffix = slow ? 't' : 'l';
+    if (url && url.match(/i\.imgur\.com\/([a-zA-Z0-9]+)\.(jpeg|jpg|png)/)) {
+      return url.replace(/\.(jpeg|jpg|png)$/, suffix + '.$1');
+    }
+    return url;
+  }
+
+  function buildGallery(images) {
+    const track = document.getElementById('galleryTrack');
+    const dots = document.getElementById('galleryDots');
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    totalSlides = images.length;
+    currentSlide = 0;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target.querySelector('img[data-src]');
+          if (img) {
+            img.src = img.dataset.src;
+            img.onload = () => { img.classList.add('loaded'); entry.target.classList.remove('img-skeleton'); };
+            img.onerror = () => { entry.target.classList.remove('img-skeleton'); };
+            delete img.dataset.src;
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    images.forEach((img, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+      if (img && img.startsWith('http') || img && img.startsWith('data:')) {
+        slide.classList.add('img-skeleton');
+        const image = document.createElement('img');
+        if (i === 0) {
+          image.src = imgUrl(img);
+          image.onload = () => { image.classList.add('loaded'); slide.classList.remove('img-skeleton'); };
+        } else {
+          image.dataset.src = imgUrl(img);
+          observer.observe(slide);
+        }
+        image.alt = 'Produto';
+        image.decoding = 'async';
+        slide.appendChild(image);
+      } else if (img) {
+        slide.style.cssText = 'display:flex;align-items:center;justify-content:center;font-size:5rem;';
+        slide.textContent = img;
+      }
+      track.appendChild(slide);
+
+      const dot = document.createElement('div');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goToSlide(i);
+      dots.appendChild(dot);
+    });
+
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / track.offsetWidth);
+      updateDots(idx);
+    });
+    updateNavBtns();
+  }
+
+  function updateDots(idx) {
+    currentSlide = idx;
+    document.querySelectorAll('.gallery-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    updateNavBtns();
+  }
+  function updateNavBtns() {
+    document.getElementById('galleryPrev').style.opacity = currentSlide === 0 ? '0.4' : '1';
+    document.getElementById('galleryNext').style.opacity = currentSlide >= totalSlides - 1 ? '0.4' : '1';
+  }
+  function goToSlide(idx) {
+    const track = document.getElementById('galleryTrack');
+    track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' });
+  }
+  function galleryScroll(dir) {
+    goToSlide(Math.max(0, Math.min(totalSlides - 1, currentSlide + dir)));
+  }
+
+  // ── MODAL (now by index) ──
+  function openModal(index) {
+    const p = liveProducts[index];
+    if (!p) return;
+
+    document.getElementById('modalTitle').textContent = p.title;
+    buildGallery(p.images || []);
+
+    const inner = document.getElementById('modalContentInner');
+    inner.innerHTML = '';
+
+    // Description
+    const descSec = document.createElement('div');
+    descSec.className = 'modal-section';
+    descSec.innerHTML = `<div class="modal-section-title font-heading">Descrição</div><p class="modal-desc">${p.description}</p>`;
+    inner.appendChild(descSec);
+
+    // Prices / sizes
+    if (p.prices && p.prices.length) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      let html = `<div class="modal-section-title font-heading">${p.pricesLabel || 'Preços'}</div>`;
+      p.prices.forEach(item => {
+        if (item.variants) {
+          html += `<div class="price-item-complex"><div class="flavor-name">${item.flavor}</div>${item.description?`<div class="flavor-sub">${item.description}</div>`:''}<div>${item.variants.map(v=>`<div class="variant-row"><span>${v.name}</span><span>${v.price}</span></div>`).join('')}</div></div>`;
+        } else {
+          html += `<div class="price-item"><span class="price-flavor">${item.flavor}</span><span class="price-value">${item.price}</span></div>`;
+        }
+      });
+      sec.innerHTML = html;
+      inner.appendChild(sec);
+    }
+
+    // Tags
+    if ((p.doughs && p.doughs.length) || (p.fillings && p.fillings.length)) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      let html = '';
+      if (p.doughs && p.doughs.length) {
+        html += `<div class="modal-section-title font-heading">Massas</div><div class="tags-wrap">${p.doughs.map(d=>`<span class="tag">${d}</span>`).join('')}</div>`;
+      }
+      if (p.fillings && p.fillings.length) {
+        html += `<div class="modal-section-title font-heading" style="margin-top:1rem;">Recheios</div><div class="tags-wrap">${p.fillings.map(f=>`<span class="tag">${f}</span>`).join('')}</div>`;
+      }
+      sec.innerHTML = html;
+      inner.appendChild(sec);
+    }
+
+    // Observations
+    if (p.observations) {
+      const sec = document.createElement('div');
+      sec.className = 'modal-section';
+      sec.innerHTML = `<div class="modal-section-title font-heading">Observações</div><div class="obs-box">💡 ${p.observations}</div>`;
+      inner.appendChild(sec);
+    }
+
+    // WhatsApp button
+    const btn = document.createElement('a');
+    btn.href = `https://wa.me/${liveContatos.wppNumber}`;
+    btn.target = '_blank';
+    btn.rel = 'noopener noreferrer';
+    btn.className = 'modal-wpp-btn';
+    btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg> Fazer encomenda pelo WhatsApp`;
+    inner.appendChild(btn);
+
+    document.getElementById('productModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+
     cupcakes: {
       title: 'Bolos Naked Cake',
       description: 'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!',
@@ -1238,205 +1418,5 @@
   let currentSlide = 0;
   let totalSlides = 0;
 
-  function imgUrl(url) {
-    // Use Imgur large thumbnail (h suffix ~1024px) for gallery — good quality, much lighter
-    if (url.match(/i\.imgur\.com\/([a-zA-Z0-9]+)\.(jpeg|jpg|png)/)) {
-      return url.replace(/\.(jpeg|jpg|png)$/, 'h.$1');
-    }
-    return url;
-  }
-
-  function buildGallery(images) {
-    const track = document.getElementById('galleryTrack');
-    const dots = document.getElementById('galleryDots');
-    track.innerHTML = '';
-    dots.innerHTML = '';
-    totalSlides = images.length;
-    currentSlide = 0;
-
-    // IntersectionObserver for lazy loading gallery slides
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target.querySelector('img[data-src]');
-          if (img) {
-            img.src = img.dataset.src;
-            img.onload = () => {
-              img.classList.add('loaded');
-              entry.target.classList.remove('img-skeleton');
-            };
-            img.onerror = () => { entry.target.classList.remove('img-skeleton'); };
-            delete img.dataset.src;
-          }
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    images.forEach((img, i) => {
-      const slide = document.createElement('div');
-      slide.className = 'gallery-slide';
-
-      if (img.startsWith('http')) {
-        slide.classList.add('img-skeleton');
-        const image = document.createElement('img');
-        if (i === 0) {
-          // First slide loads immediately
-          image.src = imgUrl(img);
-          image.onload = () => { image.classList.add('loaded'); slide.classList.remove('img-skeleton'); };
-        } else {
-          // Rest load lazily when scrolled into view
-          image.dataset.src = imgUrl(img);
-          observer.observe(slide);
-        }
-        image.alt = 'Produto';
-        slide.appendChild(image);
-      } else {
-        slide.style.display = 'flex';
-        slide.style.alignItems = 'center';
-        slide.style.justifyContent = 'center';
-        slide.style.fontSize = '5rem';
-        slide.textContent = img;
-      }
-
-      track.appendChild(slide);
-
-      const dot = document.createElement('div');
-      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
-      dot.onclick = () => goToSlide(i);
-      dots.appendChild(dot);
-    });
-
-    track.addEventListener('scroll', () => {
-      const idx = Math.round(track.scrollLeft / track.offsetWidth);
-      updateDots(idx);
-    });
-
-    updateNavBtns();
-  }
-
-  function updateDots(idx) {
-    currentSlide = idx;
-    const dotEls = document.querySelectorAll('.gallery-dot');
-    dotEls.forEach((d, i) => d.classList.toggle('active', i === idx));
-    updateNavBtns();
-  }
-
-  function updateNavBtns() {
-    document.getElementById('galleryPrev').style.opacity = currentSlide === 0 ? '0.4' : '1';
-    document.getElementById('galleryNext').style.opacity = currentSlide >= totalSlides - 1 ? '0.4' : '1';
-  }
-
-  function goToSlide(idx) {
-    const track = document.getElementById('galleryTrack');
-    track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' });
-  }
-
-  function galleryScroll(dir) {
-    const next = Math.max(0, Math.min(totalSlides - 1, currentSlide + dir));
-    goToSlide(next);
-  }
-
-  // ── MODAL ──
-  function openModal(key) {
-    const p = products[key];
-    if (!p) return;
-
-    document.getElementById('modalTitle').textContent = p.title;
-    buildGallery(p.images);
-
-    // Build content
-    const inner = document.getElementById('modalContentInner');
-    inner.innerHTML = '';
-
-    // Description
-    const descSec = document.createElement('div');
-    descSec.className = 'modal-section';
-    descSec.innerHTML = `<div class="modal-section-title font-heading">Descrição</div>
-      <p class="modal-desc">${p.description}</p>`;
-    inner.appendChild(descSec);
-
-    // Sizes + fillings (Naked Cake)
-    if (p.sizes) {
-      const sec = document.createElement('div');
-      sec.className = 'modal-section';
-      let html = `<div class="modal-section-title font-heading">Tamanhos e Preços</div>`;
-      p.sizes.forEach(s => {
-        html += `<div class="price-item">
-          <div><div class="price-flavor" style="font-weight:600;">${s.size}</div><div style="font-size:0.75rem;color:var(--text-muted);">${s.servings}</div></div>
-          <span class="price-value">${s.price}</span>
-        </div>`;
-      });
-      html += `<div class="label-row">Massas disponíveis</div><div class="tags-wrap">`;
-      p.doughs.forEach(d => { html += `<span class="tag">${d}</span>`; });
-      html += `</div><div class="label-row" style="margin-top:0.75rem;">Recheios disponíveis</div><div class="tags-wrap">`;
-      p.fillings.forEach(f => { html += `<span class="tag">${f}</span>`; });
-      html += `</div><div class="label-row" style="margin-top:0.75rem;">Adicionais</div>`;
-      p.additionals.forEach(a => {
-        html += `<div class="price-item"><span class="price-flavor">${a.name}</span><span class="price-value">${a.price}</span></div>`;
-      });
-      sec.innerHTML = html;
-      inner.appendChild(sec);
-    } else if (p.prices) {
-      const sec = document.createElement('div');
-      sec.className = 'modal-section';
-      let html = `<div class="modal-section-title font-heading">${p.pricesLabel || 'Preços'}</div>`;
-      p.prices.forEach(item => {
-        if (item.variants) {
-          html += `<div class="price-item-complex">
-            <div class="flavor-name">${item.flavor}</div>
-            ${item.description ? `<div class="flavor-sub">${item.description}</div>` : ''}
-            ${item.variants.map(v => `<div class="variant-row"><span>${v.name}</span><span>${v.price}</span></div>`).join('')}
-          </div>`;
-        } else {
-          html += `<div class="price-item"><span class="price-flavor">${item.flavor}</span><span class="price-value">${item.price}</span></div>`;
-        }
-      });
-      sec.innerHTML = html;
-      inner.appendChild(sec);
-    }
-
-    // Observations
-    if (p.observations) {
-      const sec = document.createElement('div');
-      sec.className = 'modal-section';
-      sec.innerHTML = `<div class="modal-section-title font-heading">Observações</div>
-        <div class="obs-box">💡 ${p.observations}</div>`;
-      inner.appendChild(sec);
-    }
-
-    // WhatsApp button
-    const btn = document.createElement('a');
-    btn.href = 'https://wa.me/5522996079822';
-    btn.target = '_blank';
-    btn.rel = 'noopener noreferrer';
-    btn.className = 'modal-wpp-btn';
-    btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
-    Fazer encomenda pelo WhatsApp`;
-    inner.appendChild(btn);
-
-    // Open
-    const modal = document.getElementById('productModal');
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('productModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // ESC key to close
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeMenu(); }
-  });
-
-  // Keyboard nav for cards
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
-    });
-  });
-</script>
 </body>
 </html>
