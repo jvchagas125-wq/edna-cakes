@@ -1060,30 +1060,51 @@
   ];
 
   // ── RENDER WITH DEFAULTS IMMEDIATELY ──
-  // Show default content right away — Firestore will update when ready
   let _initialized = false;
 
   function applyData(data) {
-    const logo = data.logo || DEFAULT_LOGO;
-    document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
-    renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
-    const c = data.contatos || DEFAULT_CONTATOS;
-    const i = data.info || DEFAULT_INFO;
-    renderContacts(c, i);
-    _initialized = true;
+    try {
+      const logo = data.logo || DEFAULT_LOGO;
+      document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
+      renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
+      const c = data.contatos || DEFAULT_CONTATOS;
+      const i = data.info || DEFAULT_INFO;
+      renderContacts(c, i);
+      _initialized = true;
+      console.log('[EdnaCakes] applyData OK — products:', (data.products||DEFAULT_PRODUCTS).length);
+    } catch(e) {
+      console.error('[EdnaCakes] applyData error:', e);
+    }
   }
 
-  // Show defaults immediately — no waiting
-  applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
+  // Show defaults immediately — no Firestore needed
+  try {
+    applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
+    console.log('[EdnaCakes] Defaults rendered OK');
+  } catch(e) {
+    console.error('[EdnaCakes] Failed to render defaults:', e);
+  }
 
-  // Then update with Firestore data when it arrives
+  // Try to load from Firestore with getDoc first (faster than onSnapshot)
+  getDoc(doc(db, 'site', 'dados')).then(snap => {
+    if (snap.exists()) {
+      console.log('[EdnaCakes] Firestore doc found, applying data');
+      applyData(snap.data());
+    } else {
+      console.log('[EdnaCakes] Firestore doc does not exist yet — showing defaults');
+    }
+  }).catch(err => {
+    console.warn('[EdnaCakes] getDoc failed:', err.code, err.message);
+  });
+
+  // Also keep real-time listener for live updates
   onSnapshot(doc(db, 'site', 'dados'), (snap) => {
     if (snap.exists()) {
+      console.log('[EdnaCakes] Firestore snapshot update received');
       applyData(snap.data());
     }
-    // If doc doesn't exist yet, defaults are already showing — that's fine
   }, (err) => {
-    console.warn('Firestore error, keeping defaults.', err);
+    console.warn('[EdnaCakes] onSnapshot error:', err.code, err.message);
   });
 
   // live products and contacts — updated by applyData()
