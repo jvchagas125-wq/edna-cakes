@@ -1141,22 +1141,7 @@
     console.warn('[EdnaCakes] Firestore error:', err.code, err.message);
   });
 
-  // Expose to global scope for regular script access
-  window._liveProducts = liveProducts;
-  window._liveContatos = liveContatos;
-
-  // Patch applyData to also update window refs
-  const _origApply = applyData;
-  function applyData(data) {
-    _origApply(data);
-    window._liveProducts = liveProducts;
-    window._liveContatos = liveContatos;
-  }
-
-  // Re-render with defaults using patched version
-  applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
-
-  // ── REAL-TIME UPDATES (replace the earlier call) ──
+  // Real-time updates
   onSnapshot(doc(db, 'site', 'dados'), snap => {
     if (snap.exists()) applyData(snap.data());
   }, err => {
