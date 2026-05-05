@@ -862,6 +862,26 @@
     }
     footer strong { color: var(--rose-light); }
 
+    /* ── IMAGE LOADING ── */
+    .img-skeleton {
+      background: linear-gradient(90deg, var(--rose-pale) 25%, #f5e0e4 50%, var(--rose-pale) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .card-img-wrap img,
+    .gallery-slide img {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .card-img-wrap img.loaded,
+    .gallery-slide img.loaded {
+      opacity: 1;
+    }
+
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -940,9 +960,9 @@
 
     <!-- Naked Cake -->
     <div class="product-card" onclick="openModal('cupcakes')" tabindex="0" role="button" aria-label="Ver Bolos Naked Cake">
-      <div class="card-img-wrap">
+      <div class="card-img-wrap img-skeleton">
         <span class="card-badge">Popular</span>
-        <img src="https://i.imgur.com/uFrFZGH.png" alt="Bolos Naked Cake" loading="lazy">
+        <img src="https://i.imgur.com/uFrFZGHl.png" alt="Bolos Naked Cake" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Bolos Naked Cake</h3>
@@ -956,8 +976,8 @@
 
     <!-- Rocambole -->
     <div class="product-card" onclick="openModal('bolos')" tabindex="0" role="button" aria-label="Ver Rocambole">
-      <div class="card-img-wrap">
-        <img src="https://i.imgur.com/upiuoy2.png" alt="Rocambole" loading="lazy">
+      <div class="card-img-wrap img-skeleton">
+        <img src="https://i.imgur.com/upiuoy2l.png" alt="Rocambole" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Rocambole</h3>
@@ -971,8 +991,8 @@
 
     <!-- Brownie -->
     <div class="product-card" onclick="openModal('brigadeiros')" tabindex="0" role="button" aria-label="Ver Brownie">
-      <div class="card-img-wrap">
-        <img src="https://i.imgur.com/C0x8ygI.png" alt="Brownie" loading="lazy">
+      <div class="card-img-wrap img-skeleton">
+        <img src="https://i.imgur.com/C0x8ygIl.png" alt="Brownie" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Brownie</h3>
@@ -986,8 +1006,8 @@
 
     <!-- Palha Italiana -->
     <div class="product-card" onclick="openModal('palhaitaliana')" tabindex="0" role="button" aria-label="Ver Palha Italiana">
-      <div class="card-img-wrap">
-        <img src="https://i.imgur.com/1qsbV8N.png" alt="Palha Italiana" loading="lazy">
+      <div class="card-img-wrap img-skeleton">
+        <img src="https://i.imgur.com/1qsbV8Nl.png" alt="Palha Italiana" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Palha Italiana</h3>
@@ -1001,8 +1021,8 @@
 
     <!-- Tortas -->
     <div class="product-card" onclick="openModal('tortas')" tabindex="0" role="button" aria-label="Ver Tortas">
-      <div class="card-img-wrap">
-        <img src="https://i.imgur.com/ueszqbk.png" alt="Tortas" loading="lazy">
+      <div class="card-img-wrap img-skeleton">
+        <img src="https://i.imgur.com/ueszqbkl.png" alt="Tortas" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Tortas</h3>
@@ -1016,8 +1036,8 @@
 
     <!-- Pavês -->
     <div class="product-card" onclick="openModal('minibolos')" tabindex="0" role="button" aria-label="Ver Pavês">
-      <div class="card-img-wrap">
-        <img src="https://i.imgur.com/PbSOqNn.png" alt="Pavês" loading="lazy">
+      <div class="card-img-wrap img-skeleton">
+        <img src="https://i.imgur.com/PbSOqNnl.png" alt="Pavês" loading="lazy" onload="this.classList.add('loaded')">
       </div>
       <div class="card-body">
         <h3 class="card-title font-heading">Pavês</h3>
@@ -1218,6 +1238,14 @@
   let currentSlide = 0;
   let totalSlides = 0;
 
+  function imgUrl(url) {
+    // Use Imgur large thumbnail (h suffix ~1024px) for gallery — good quality, much lighter
+    if (url.match(/i\.imgur\.com\/([a-zA-Z0-9]+)\.(jpeg|jpg|png)/)) {
+      return url.replace(/\.(jpeg|jpg|png)$/, 'h.$1');
+    }
+    return url;
+  }
+
   function buildGallery(images) {
     const track = document.getElementById('galleryTrack');
     const dots = document.getElementById('galleryDots');
@@ -1226,14 +1254,42 @@
     totalSlides = images.length;
     currentSlide = 0;
 
+    // IntersectionObserver for lazy loading gallery slides
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target.querySelector('img[data-src]');
+          if (img) {
+            img.src = img.dataset.src;
+            img.onload = () => {
+              img.classList.add('loaded');
+              entry.target.classList.remove('img-skeleton');
+            };
+            img.onerror = () => { entry.target.classList.remove('img-skeleton'); };
+            delete img.dataset.src;
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
     images.forEach((img, i) => {
       const slide = document.createElement('div');
       slide.className = 'gallery-slide';
+
       if (img.startsWith('http')) {
+        slide.classList.add('img-skeleton');
         const image = document.createElement('img');
-        image.src = img;
+        if (i === 0) {
+          // First slide loads immediately
+          image.src = imgUrl(img);
+          image.onload = () => { image.classList.add('loaded'); slide.classList.remove('img-skeleton'); };
+        } else {
+          // Rest load lazily when scrolled into view
+          image.dataset.src = imgUrl(img);
+          observer.observe(slide);
+        }
         image.alt = 'Produto';
-        image.loading = 'lazy';
         slide.appendChild(image);
       } else {
         slide.style.display = 'flex';
@@ -1242,6 +1298,7 @@
         slide.style.fontSize = '5rem';
         slide.textContent = img;
       }
+
       track.appendChild(slide);
 
       const dot = document.createElement('div');
@@ -1250,7 +1307,6 @@
       dots.appendChild(dot);
     });
 
-    // Update dots on scroll
     track.addEventListener('scroll', () => {
       const idx = Math.round(track.scrollLeft / track.offsetWidth);
       updateDots(idx);
