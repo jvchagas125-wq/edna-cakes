@@ -1046,75 +1046,34 @@
   const fbApp = initializeApp(firebaseConfig);
   const db    = getFirestore(fbApp);
 
-  // ── DEFAULT DATA (fallback offline) ──
   const DEFAULT_LOGO = 'https://i.imgur.com/F6PR9Bu.png';
   const DEFAULT_CONTATOS = { wppNumber:'5522996079822', wppDisplay:'(22) 99607-9822', instagram:'edna_cakes024' };
   const DEFAULT_INFO = ['Encomenda mediante entrada de 50%.','Topper não incluso no valor.','Taxa de entrega: R$10,00.','Encomendas somente pelo WhatsApp.'];
   const DEFAULT_PRODUCTS = [
-    { id:'cupcakes', title:'Bolos Naked Cake', badge:'Popular', shortDesc:'Elegantes, personalizáveis e irresistíveis', description:'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!', cardImage:'https://i.imgur.com/uFrFZGHm.png', images:['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg','https://i.imgur.com/cMg4k90.jpeg','https://i.imgur.com/rCBqXbc.jpeg'], type:'simple', pricesLabel:'Tamanhos e Preços', prices:[{flavor:'15 cm (10–12 fatias)',price:'R$ 120,00'},{flavor:'20 cm (25–30 fatias)',price:'R$ 180,00'},{flavor:'25 cm (35–40 fatias)',price:'R$ 240,00'},{flavor:'30 cm (45–50 fatias)',price:'R$ 290,00'}], doughs:['Baunilha','Chocolate'], fillings:['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'], observations:'Pedido mínimo com 48h de antecedência.' },
-    { id:'bolos', title:'Rocambole', badge:'', shortDesc:'Doce, macio e irresistível', description:'Rocambole delicioso e macio, recheado com sabores gourmet!', cardImage:'https://i.imgur.com/upiuoy2m.png', images:['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Doce de Leite Gourmet',price:'R$ 60,00'},{flavor:'Ninho Gourmet',price:'R$ 60,00'},{flavor:'Brigadeiro de Chocolate Gourmet',price:'R$ 60,00'},{flavor:'Beijinho Gourmet',price:'R$ 60,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
-    { id:'brigadeiros', title:'Brownie', badge:'', shortDesc:'Sabores exclusivos e tradicionais', description:'Brownies deliciosos com chocolate belga e sabores exclusivos.', cardImage:'https://i.imgur.com/C0x8ygIm.png', images:['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'], type:'simple', pricesLabel:'Preços e Recheios', prices:[{flavor:'Brigadeiro gourmet',price:'R$ 6,00/unid'},{flavor:'Doce de Leite gourmet',price:'R$ 6,00/unid'},{flavor:'Ninho gourmet',price:'R$ 6,00/unid'}], observations:'Realizar pedidos de no mínimo 5 unidades.' },
-    { id:'palhaitaliana', title:'Palha Italiana', badge:'', shortDesc:'Irresistível e deliciosa', description:'Palha Italiana irresistível e deliciosa, com recheios maravilhosos.', cardImage:'https://i.imgur.com/1qsbV8Nm.png', images:['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Ninho com Brigadeiro',price:'R$ 7,00/unid'},{flavor:'Ninho com Morango',price:'R$ 7,00/unid'},{flavor:'Ninho com Nutella',price:'R$ 10,00/unid'}], observations:'Mínimo de 5 unidades.' },
-    { id:'tortas', title:'Tortas', badge:'', shortDesc:'Deliciosas e personalizadas', description:'Tortas deliciosas com combinações perfeitas de sabores!', cardImage:'https://i.imgur.com/ueszqbkm.png', images:['https://i.imgur.com/5RithSH.jpeg','https://i.imgur.com/ht4QRky.jpeg','https://i.imgur.com/p8SVwdn.jpeg','https://i.imgur.com/8pRb80Q.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Bannofe',price:'R$ 40,00 / R$ 90,00'},{flavor:'Morangoffe',price:'R$ 50,00 / R$ 100,00'},{flavor:'Torta de Limão',price:'R$ 40,00 / R$ 90,00'},{flavor:'Torta Salgada (1kg)',price:'R$ 45,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
-    { id:'minibolos', title:'Pavês', badge:'', shortDesc:'Deliciosos e irresistíveis', description:'Pavês deliciosos com combinações irresistíveis de sabores!', cardImage:'https://i.imgur.com/PbSOqNnm.png', images:['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'], type:'simple', pricesLabel:'Preços e Sabores', prices:[{flavor:'Pavê trufado – Pequena',price:'R$ 25,00'},{flavor:'Pavê trufado – Média',price:'R$ 50,00'},{flavor:'Pavê trufado – Grande',price:'R$ 70,00'},{flavor:'Pavê de bombom – Pequena',price:'R$ 30,00'},{flavor:'Pavê de bombom – Média',price:'R$ 60,00'},{flavor:'Pavê de bombom – Grande',price:'R$ 80,00'}], observations:'Pedido mínimo: 24h de antecedência.' }
+    { id:'cupcakes', title:'Bolos Naked Cake', badge:'Popular', shortDesc:'Elegantes, personalizáveis e irresistíveis', description:'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista.', cardImage:'https://i.imgur.com/uFrFZGHm.png', images:['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg'], pricesLabel:'Tamanhos e Preços', prices:[{flavor:'15 cm (10–12 fatias)',price:'R$ 120,00'},{flavor:'20 cm (25–30 fatias)',price:'R$ 180,00'},{flavor:'25 cm (35–40 fatias)',price:'R$ 240,00'},{flavor:'30 cm (45–50 fatias)',price:'R$ 290,00'}], doughs:['Baunilha','Chocolate'], fillings:['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'], observations:'Pedido mínimo com 48h de antecedência.' },
+    { id:'bolos', title:'Rocambole', badge:'', shortDesc:'Doce, macio e irresistível', description:'Rocambole delicioso e macio, recheado com sabores gourmet!', cardImage:'https://i.imgur.com/upiuoy2m.png', images:['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Doce de Leite Gourmet',price:'R$ 60,00'},{flavor:'Ninho Gourmet',price:'R$ 60,00'},{flavor:'Brigadeiro de Chocolate Gourmet',price:'R$ 60,00'},{flavor:'Beijinho Gourmet',price:'R$ 60,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
+    { id:'brigadeiros', title:'Brownie', badge:'', shortDesc:'Sabores exclusivos e tradicionais', description:'Brownies deliciosos com chocolate belga e sabores exclusivos.', cardImage:'https://i.imgur.com/C0x8ygIm.png', images:['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'], pricesLabel:'Preços e Recheios', prices:[{flavor:'Brigadeiro gourmet',price:'R$ 6,00/unid'},{flavor:'Doce de Leite gourmet',price:'R$ 6,00/unid'},{flavor:'Ninho gourmet',price:'R$ 6,00/unid'}], observations:'Realizar pedidos de no mínimo 5 unidades.' },
+    { id:'palhaitaliana', title:'Palha Italiana', badge:'', shortDesc:'Irresistível e deliciosa', description:'Palha Italiana irresistível e deliciosa, com recheios maravilhosos.', cardImage:'https://i.imgur.com/1qsbV8Nm.png', images:['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Ninho com Brigadeiro',price:'R$ 7,00/unid'},{flavor:'Ninho com Morango',price:'R$ 7,00/unid'},{flavor:'Ninho com Nutella',price:'R$ 10,00/unid'}], observations:'Mínimo de 5 unidades.' },
+    { id:'tortas', title:'Tortas', badge:'', shortDesc:'Deliciosas e personalizadas', description:'Tortas deliciosas com combinações perfeitas de sabores!', cardImage:'https://i.imgur.com/ueszqbkm.png', images:['https://i.imgur.com/5RithSH.jpeg','https://i.imgur.com/ht4QRky.jpeg','https://i.imgur.com/p8SVwdn.jpeg','https://i.imgur.com/8pRb80Q.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Bannofe',price:'R$ 40,00 / R$ 90,00'},{flavor:'Morangoffe',price:'R$ 50,00 / R$ 100,00'},{flavor:'Torta de Limão',price:'R$ 40,00 / R$ 90,00'},{flavor:'Torta Salgada (1kg)',price:'R$ 45,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
+    { id:'minibolos', title:'Pavês', badge:'', shortDesc:'Deliciosos e irresistíveis', description:'Pavês deliciosos com combinações irresistíveis de sabores!', cardImage:'https://i.imgur.com/PbSOqNnm.png', images:['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Pavê trufado – Pequena',price:'R$ 25,00'},{flavor:'Pavê trufado – Média',price:'R$ 50,00'},{flavor:'Pavê trufado – Grande',price:'R$ 70,00'},{flavor:'Pavê de bombom – Pequena',price:'R$ 30,00'},{flavor:'Pavê de bombom – Média',price:'R$ 60,00'},{flavor:'Pavê de bombom – Grande',price:'R$ 80,00'}], observations:'Pedido mínimo: 24h de antecedência.' }
   ];
 
-  // ── RENDER WITH DEFAULTS IMMEDIATELY ──
-  let _initialized = false;
-
-  function applyData(data) {
-    try {
-      const logo = data.logo || DEFAULT_LOGO;
-      document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
-      renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
-      const c = data.contatos || DEFAULT_CONTATOS;
-      const i = data.info || DEFAULT_INFO;
-      renderContacts(c, i);
-      _initialized = true;
-      console.log('[EdnaCakes] applyData OK — products:', (data.products||DEFAULT_PRODUCTS).length);
-    } catch(e) {
-      console.error('[EdnaCakes] applyData error:', e);
-    }
-  }
-
-  // Show defaults immediately — no Firestore needed
-  try {
-    applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
-    console.log('[EdnaCakes] Defaults rendered OK');
-  } catch(e) {
-    console.error('[EdnaCakes] Failed to render defaults:', e);
-  }
-
-  // Try to load from Firestore with getDoc first (faster than onSnapshot)
-  getDoc(doc(db, 'site', 'dados')).then(snap => {
-    if (snap.exists()) {
-      console.log('[EdnaCakes] Firestore doc found, applying data');
-      applyData(snap.data());
-    } else {
-      console.log('[EdnaCakes] Firestore doc does not exist yet — showing defaults');
-    }
-  }).catch(err => {
-    console.warn('[EdnaCakes] getDoc failed:', err.code, err.message);
-  });
-
-  // Also keep real-time listener for live updates
-  onSnapshot(doc(db, 'site', 'dados'), (snap) => {
-    if (snap.exists()) {
-      console.log('[EdnaCakes] Firestore snapshot update received');
-      applyData(snap.data());
-    }
-  }, (err) => {
-    console.warn('[EdnaCakes] onSnapshot error:', err.code, err.message);
-  });
-
-  // live products and contacts — updated by applyData()
+  // Live references updated by applyData
   let liveProducts = [...DEFAULT_PRODUCTS];
   let liveContatos = { ...DEFAULT_CONTATOS };
 
-  // ── RENDER CARDS ──
+  function applyData(data) {
+    const logo = data.logo || DEFAULT_LOGO;
+    document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
+    renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
+    renderContacts(data.contatos || DEFAULT_CONTATOS, data.info || DEFAULT_INFO);
+  }
+
   function renderCards(products) {
     liveProducts = [...products];
+    window._liveProducts = liveProducts;
     const grid = document.getElementById('cardsGrid');
+    if (!grid) return;
     grid.innerHTML = products.map((p, i) => `
       <div class="product-card" onclick="openModal(${i})" tabindex="0" role="button" aria-label="Ver ${p.title}">
         <div class="card-img-wrap img-skeleton">
@@ -1138,10 +1097,11 @@
     });
   }
 
-  // ── RENDER CONTACTS ──
   function renderContacts(c, info) {
     liveContatos = { ...c };
-    document.getElementById('contactLinksContainer').innerHTML = `
+    window._liveContatos = liveContatos;
+    const cl = document.getElementById('contactLinksContainer');
+    if (cl) cl.innerHTML = `
       <a href="https://wa.me/${c.wppNumber}" target="_blank" rel="noopener noreferrer" class="contact-link contact-wpp">
         <div class="contact-link-icon">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
@@ -1161,9 +1121,50 @@
         </div>
       </a>
     `;
-    document.getElementById('infoList').innerHTML = (info||[]).map(item => `<li>${item}</li>`).join('');
+    const il = document.getElementById('infoList');
+    if (il) il.innerHTML = (info||[]).map(item => `<li>${item}</li>`).join('');
   }
 
+  // Render defaults immediately
+  applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
+  console.log('[EdnaCakes] Defaults rendered');
+
+  // Load from Firestore
+  getDoc(doc(db, 'site', 'dados')).then(snap => {
+    if (snap.exists()) {
+      console.log('[EdnaCakes] Firestore data loaded');
+      applyData(snap.data());
+    } else {
+      console.log('[EdnaCakes] No Firestore doc yet, using defaults');
+    }
+  }).catch(err => {
+    console.warn('[EdnaCakes] Firestore error:', err.code, err.message);
+  });
+
+  // Expose to global scope for regular script access
+  window._liveProducts = liveProducts;
+  window._liveContatos = liveContatos;
+
+  // Patch applyData to also update window refs
+  const _origApply = applyData;
+  function applyData(data) {
+    _origApply(data);
+    window._liveProducts = liveProducts;
+    window._liveContatos = liveContatos;
+  }
+
+  // Re-render with defaults using patched version
+  applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
+
+  // ── REAL-TIME UPDATES (replace the earlier call) ──
+  onSnapshot(doc(db, 'site', 'dados'), snap => {
+    if (snap.exists()) applyData(snap.data());
+  }, err => {
+    console.warn('[EdnaCakes] Snapshot error:', err.code);
+  });
+</script>
+
+<script>
   // ── MENU ──
   function openMenu() {
     document.getElementById('menuOverlay').classList.add('open');
@@ -1195,11 +1196,8 @@
   function buildGallery(images) {
     const track = document.getElementById('galleryTrack');
     const dots = document.getElementById('galleryDots');
-    track.innerHTML = '';
-    dots.innerHTML = '';
-    totalSlides = images.length;
-    currentSlide = 0;
-
+    track.innerHTML = ''; dots.innerHTML = '';
+    totalSlides = images.length; currentSlide = 0;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1218,7 +1216,7 @@
     images.forEach((img, i) => {
       const slide = document.createElement('div');
       slide.className = 'gallery-slide';
-      if (img && img.startsWith('http') || img && img.startsWith('data:')) {
+      if (img && (img.startsWith('http') || img.startsWith('data:'))) {
         slide.classList.add('img-skeleton');
         const image = document.createElement('img');
         if (i === 0) {
@@ -1228,25 +1226,16 @@
           image.dataset.src = imgUrl(img);
           observer.observe(slide);
         }
-        image.alt = 'Produto';
-        image.decoding = 'async';
+        image.alt = 'Produto'; image.decoding = 'async';
         slide.appendChild(image);
-      } else if (img) {
-        slide.style.cssText = 'display:flex;align-items:center;justify-content:center;font-size:5rem;';
-        slide.textContent = img;
       }
       track.appendChild(slide);
-
       const dot = document.createElement('div');
       dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
       dot.onclick = () => goToSlide(i);
       dots.appendChild(dot);
     });
-
-    track.addEventListener('scroll', () => {
-      const idx = Math.round(track.scrollLeft / track.offsetWidth);
-      updateDots(idx);
-    });
+    track.addEventListener('scroll', () => { updateDots(Math.round(track.scrollLeft / track.offsetWidth)); });
     updateNavBtns();
   }
 
@@ -1267,24 +1256,20 @@
     goToSlide(Math.max(0, Math.min(totalSlides - 1, currentSlide + dir)));
   }
 
-  // ── MODAL (now by index) ──
+  // ── MODAL ──
   function openModal(index) {
-    const p = liveProducts[index];
+    const p = window._liveProducts ? window._liveProducts[index] : null;
     if (!p) return;
-
     document.getElementById('modalTitle').textContent = p.title;
     buildGallery(p.images || []);
-
     const inner = document.getElementById('modalContentInner');
     inner.innerHTML = '';
 
-    // Description
     const descSec = document.createElement('div');
     descSec.className = 'modal-section';
     descSec.innerHTML = `<div class="modal-section-title font-heading">Descrição</div><p class="modal-desc">${p.description}</p>`;
     inner.appendChild(descSec);
 
-    // Prices / sizes
     if (p.prices && p.prices.length) {
       const sec = document.createElement('div');
       sec.className = 'modal-section';
@@ -1300,35 +1285,25 @@
       inner.appendChild(sec);
     }
 
-    // Tags
     if ((p.doughs && p.doughs.length) || (p.fillings && p.fillings.length)) {
-      const sec = document.createElement('div');
-      sec.className = 'modal-section';
+      const sec = document.createElement('div'); sec.className = 'modal-section';
       let html = '';
-      if (p.doughs && p.doughs.length) {
-        html += `<div class="modal-section-title font-heading">Massas</div><div class="tags-wrap">${p.doughs.map(d=>`<span class="tag">${d}</span>`).join('')}</div>`;
-      }
-      if (p.fillings && p.fillings.length) {
-        html += `<div class="modal-section-title font-heading" style="margin-top:1rem;">Recheios</div><div class="tags-wrap">${p.fillings.map(f=>`<span class="tag">${f}</span>`).join('')}</div>`;
-      }
+      if (p.doughs && p.doughs.length) html += `<div class="modal-section-title font-heading">Massas</div><div class="tags-wrap">${p.doughs.map(d=>`<span class="tag">${d}</span>`).join('')}</div>`;
+      if (p.fillings && p.fillings.length) html += `<div class="modal-section-title font-heading" style="margin-top:1rem;">Recheios</div><div class="tags-wrap">${p.fillings.map(f=>`<span class="tag">${f}</span>`).join('')}</div>`;
       sec.innerHTML = html;
       inner.appendChild(sec);
     }
 
-    // Observations
     if (p.observations) {
-      const sec = document.createElement('div');
-      sec.className = 'modal-section';
+      const sec = document.createElement('div'); sec.className = 'modal-section';
       sec.innerHTML = `<div class="modal-section-title font-heading">Observações</div><div class="obs-box">💡 ${p.observations}</div>`;
       inner.appendChild(sec);
     }
 
-    // WhatsApp button
+    const wppNumber = window._liveContatos ? window._liveContatos.wppNumber : '5522996079822';
     const btn = document.createElement('a');
-    btn.href = `https://wa.me/${liveContatos.wppNumber}`;
-    btn.target = '_blank';
-    btn.rel = 'noopener noreferrer';
-    btn.className = 'modal-wpp-btn';
+    btn.href = `https://wa.me/${wppNumber}`;
+    btn.target = '_blank'; btn.rel = 'noopener noreferrer'; btn.className = 'modal-wpp-btn';
     btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg> Fazer encomenda pelo WhatsApp`;
     inner.appendChild(btn);
 
@@ -1343,92 +1318,10 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
 
-    cupcakes: {
-      title: 'Bolos Naked Cake',
-      description: 'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista. Personalize escolhendo massa, recheio e adicionais conforme seu gosto!',
-      images: ['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg','https://i.imgur.com/cMg4k90.jpeg','https://i.imgur.com/rCBqXbc.jpeg'],
-      sizes: [
-        { size: '15 cm', servings: '10–12 fatias', price: 'R$ 120,00' },
-        { size: '20 cm', servings: '25–30 fatias', price: 'R$ 180,00' },
-        { size: '25 cm', servings: '35–40 fatias', price: 'R$ 240,00' },
-        { size: '30 cm', servings: '45–50 fatias', price: 'R$ 290,00' }
-      ],
-      doughs: ['Baunilha','Chocolate'],
-      fillings: ['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'],
-      additionals: [
-        { name: 'Morango', price: 'a partir de R$ 7,00' },
-        { name: 'Nutella', price: 'a partir de R$ 10,00' },
-        { name: 'Nozes', price: 'a partir de R$ 10,00' },
-        { name: 'Docinhos gourmet', price: 'R$ 1,00 a unidade' }
-      ],
-      observations: 'Pedido mínimo com 48h de antecedência. Consulte-nos para criar seu Naked Cake perfeito!'
-    },
-    bolos: {
-      title: 'Rocambole',
-      description: 'Rocambole delicioso e macio, recheado com sabores gourmet! Uma combinação perfeita de massa macia com recheios saborosos.',
-      images: ['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'],
-      prices: [
-        { flavor: 'Doce de Leite Gourmet', price: 'R$ 60,00' },
-        { flavor: 'Ninho Gourmet', price: 'R$ 60,00' },
-        { flavor: 'Brigadeiro de Chocolate Gourmet', price: 'R$ 60,00' },
-        { flavor: 'Beijinho Gourmet', price: 'R$ 60,00' }
-      ],
-      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para sabores especiais!',
-      pricesLabel: 'Preços e Sabores'
-    },
-    brigadeiros: {
-      title: 'Brownie',
-      description: 'Brownies deliciosos com chocolate belga e sabores exclusivos. Perfeitos para sua festa ou como presente especial.',
-      images: ['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'],
-      prices: [
-        { flavor: 'Brigadeiro gourmet', price: 'R$ 6,00/unid' },
-        { flavor: 'Doce de Leite gourmet', price: 'R$ 6,00/unid' },
-        { flavor: 'Ninho gourmet', price: 'R$ 6,00/unid' }
-      ],
-      observations: 'Realizar pedidos de no mínimo 5 unidades.',
-      pricesLabel: 'Preços e Recheios'
-    },
-    palhaitaliana: {
-      title: 'Palha Italiana',
-      description: 'Palha Italiana irresistível e deliciosa, com recheios maravilhosos. Uma combinação perfeita de sabores!',
-      images: ['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'],
-      prices: [
-        { flavor: 'Ninho com Brigadeiro', price: 'R$ 7,00/unid' },
-        { flavor: 'Ninho com Morango', price: 'R$ 7,00/unid' },
-        { flavor: 'Ninho com Nutella', price: 'R$ 10,00/unid' }
-      ],
-      observations: 'Mínimo de 5 unidades. Para Ninho com Nutella, mínimo de 10 unidades.',
-      pricesLabel: 'Preços e Sabores'
-    },
-    tortas: {
-      title: 'Tortas',
-      description: 'Tortas deliciosas com combinações perfeitas de sabores! Escolha entre nossas opções de tortas doces e salgadas.',
-      images: ['https://i.imgur.com/5RithSH.jpeg','https://i.imgur.com/ht4QRky.jpeg','https://i.imgur.com/p8SVwdn.jpeg','https://i.imgur.com/8pRb80Q.jpeg'],
-      prices: [
-        { flavor: 'Bannofe', description: 'Farofa de biscoito, doce de leite gourmet, chantninho e banana', variants: [{name:'Travessa pequena',price:'R$ 40,00'},{name:'Travessa grande',price:'R$ 90,00'}] },
-        { flavor: 'Morangoffe', description: 'Farofa de biscoito, creme de ninho, chantininho e morangos', variants: [{name:'Travessa pequena',price:'R$ 50,00'},{name:'Travessa grande',price:'R$ 100,00'}] },
-        { flavor: 'Torta de Limão', description: 'Farofa de biscoito, mousse de limão, chantininho e raspas de limão', variants: [{name:'Travessa pequena',price:'R$ 40,00'},{name:'Travessa grande',price:'R$ 90,00'}] },
-        { flavor: 'Torta Salgada (1kg)', price: 'R$ 45,00' }
-      ],
-      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
-      pricesLabel: 'Preços e Sabores'
-    },
-    minibolos: {
-      title: 'Pavês',
-      description: 'Pavês deliciosos com combinações irresistíveis de sabores! Perfeito para suas festas e celebrações.',
-      images: ['https://i.imgur.com/gFys2Mf.jpeg','https://i.imgur.com/UOl5OpH.jpeg','https://i.imgur.com/UDDC6Fv.jpeg','https://i.imgur.com/0UPtbAD.jpeg'],
-      prices: [
-        { flavor: 'Pavê trufado', description: 'Biscoito de Maisena, creme Belga, creme de chocolate gourmet e ganache.', variants: [{name:'Travessa pequena',price:'R$ 25,00'},{name:'Travessa média',price:'R$ 50,00'},{name:'Travessa grande',price:'R$ 70,00'}] },
-        { flavor: 'Pavê de bombom', description: 'Biscoito de Maisena, creme ninho gourmet, creme de chocolate 50% e bombons.', variants: [{name:'Travessa pequena',price:'R$ 30,00'},{name:'Travessa média',price:'R$ 60,00'},{name:'Travessa grande',price:'R$ 80,00'}] }
-      ],
-      observations: 'Pedido mínimo: 24h de antecedência. Consulte-nos para personalizações!',
-      pricesLabel: 'Preços e Sabores'
-    }
-  };
-
-  // ── GALLERY ──
-  let currentSlide = 0;
-  let totalSlides = 0;
-
+  // Bridge: make module-scope vars accessible to regular script
+  // (set by the module script after Firebase loads)
+  window._liveProducts = null;
+  window._liveContatos = null;
+</script>
 </body>
 </html>
