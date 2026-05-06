@@ -1,0 +1,24 @@
+{
+  "name": "Edna Cakes",
+  "short_name": "Edna Cakes",
+  "description": "Doces feitos com amor 🎂",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6f0",
+  "theme_color": "#e8607a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://i.imgur.com/F6PR9Bu.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://i.imgur.com/F6PR9Bu.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
