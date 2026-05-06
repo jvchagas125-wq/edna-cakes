@@ -905,7 +905,7 @@
     /* Especial banner items area */
     /* Especial items: side-by-side grid */
     .especial-itens {
-      padding: .75rem 1.25rem 1rem;
+      padding: 1rem 1.25rem 1.1rem;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 1.1rem;
@@ -918,19 +918,21 @@
       background: rgba(255,255,255,0.97);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      box-shadow: 0 3px 16px rgba(0,0,0,0.12);
       min-height: 130px;
       transition: transform .2s, box-shadow .2s;
+      border: 1.5px solid rgba(255,255,255,0.6);
     }
-    .especial-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+    .especial-item:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
 
     .especial-item-body {
       flex: 1;
-      padding: 1rem 1.1rem;
+      padding: 1rem 1.25rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-width: 0;
+      gap: .15rem;
     }
     .especial-item-nome {
       font-family: 'Playfair Display', serif;
@@ -1239,8 +1241,8 @@
     red:    'linear-gradient(135deg,#dc2626,#b91c1c)'
   };
   const COR_ACCENT = {
-    rose:'rgba(232,96,122,0.08)', gold:'rgba(200,151,90,0.08)',
-    green:'rgba(22,163,74,0.08)', purple:'rgba(124,58,237,0.08)', red:'rgba(220,38,38,0.08)'
+    rose:'rgba(201,64,96,0.18)', gold:'rgba(180,120,50,0.18)',
+    green:'rgba(18,140,60,0.18)', purple:'rgba(100,40,200,0.18)', red:'rgba(200,30,30,0.18)'
   };
 
   function applyData(data) {
