@@ -867,6 +867,69 @@
     }
     footer strong { color: var(--rose-light); }
 
+    /* ── ESPECIAL BANNER ── */
+    .especial-banner {
+      margin: 0 1.25rem 2.5rem;
+      max-width: 1200px;
+      margin-left: auto; margin-right: auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      display: none;
+    }
+    .especial-banner.visible { display: block; animation: fadeUp 0.6s ease; }
+    .especial-banner-header {
+      padding: 1.5rem 1.75rem 1.25rem;
+      color: white;
+      position: relative;
+    }
+    .especial-banner-tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,0.2); border-radius: 50px;
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; padding: .3rem .85rem;
+      margin-bottom: .75rem; color: rgba(255,255,255,.9);
+    }
+    .especial-banner-tag svg { width:12px; height:12px; }
+    .especial-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      font-weight: 700; line-height: 1.2; margin-bottom: .4rem;
+    }
+    .especial-banner-desc { font-size: .88rem; opacity: .88; }
+    .especial-banner-validade {
+      font-size: .75rem; opacity: .75; margin-top: .5rem;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .especial-banner-validade svg { width: 12px; height: 12px; }
+    .especial-itens {
+      padding: 1.25rem 1.75rem 1.5rem;
+    }
+    .especial-item {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: .75rem 1rem;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px; margin-bottom: .5rem;
+      gap: 1rem;
+    }
+    .especial-item:last-child { margin-bottom: 0; }
+    .especial-item-info { flex: 1; }
+    .especial-item-nome { font-weight: 600; font-size: .9rem; color: var(--text); }
+    .especial-item-desc { font-size: .78rem; color: var(--text-muted); margin-top: .15rem; }
+    .especial-item-preco { font-weight: 700; font-size: .9rem; white-space: nowrap; flex-shrink: 0; }
+    .especial-wpp-btn {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      margin: 1rem 1.75rem 1.5rem;
+      padding: .85rem;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 14px;
+      color: white; font-size: .88rem; font-weight: 600;
+      text-decoration: none; transition: background .2s;
+    }
+    .especial-wpp-btn:hover { background: rgba(255,255,255,0.25); }
+    .especial-wpp-btn svg { width: 16px; height: 16px; }
+
     /* ── IMAGE LOADING ── */
     .img-skeleton {
       background: linear-gradient(90deg, var(--rose-pale) 25%, #f5e0e4 50%, var(--rose-pale) 75%);
@@ -964,6 +1027,27 @@
 </section>
 
 <!-- ── CARDÁPIO ── -->
+<!-- ── ESPECIAL BANNER ── -->
+<div class="especial-banner" id="especialBanner">
+  <div class="especial-banner-header" id="especialBannerHeader">
+    <div class="especial-banner-tag">
+      <svg fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Edição Especial
+    </div>
+    <div class="especial-banner-title" id="especialBannerTitle"></div>
+    <div class="especial-banner-desc" id="especialBannerDesc"></div>
+    <div class="especial-banner-validade" id="especialBannerValidade" style="display:none;">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span></span>
+    </div>
+  </div>
+  <div class="especial-itens" id="especialBannerItens"></div>
+  <a id="especialWppBtn" href="#" target="_blank" class="especial-wpp-btn">
+    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.007C6.477 2.007 2 6.477 2 11.993c0 1.946.535 3.763 1.461 5.32L2 22l4.811-1.437A9.977 9.977 0 0 0 12 21.979c5.522 0 10-4.47 10-9.986 0-5.517-4.478-9.986-10.001-9.986zm0 18.186a8.185 8.185 0 0 1-4.177-1.14l-.3-.178-3.098.925.926-3.07-.197-.317A8.173 8.173 0 0 1 3.82 12.003c0-4.52 3.677-8.196 8.18-8.196 4.506 0 8.182 3.676 8.182 8.196 0 4.519-3.676 8.19-8.183 8.19z"/></svg>
+    Fazer encomenda pelo WhatsApp
+  </a>
+</div>
+
 <section id="cardapio" class="cardapio-section">
   <div class="section-header">
     <div class="section-tag">✦ Nosso menu</div>
@@ -1063,6 +1147,18 @@
   let liveProducts = [...DEFAULT_PRODUCTS];
   let liveContatos = { ...DEFAULT_CONTATOS };
 
+  const COR_MAP = {
+    rose:   'linear-gradient(135deg,#e8607a,#c94060)',
+    gold:   'linear-gradient(135deg,#c8975a,#a0722a)',
+    green:  'linear-gradient(135deg,#16a34a,#15803d)',
+    purple: 'linear-gradient(135deg,#7c3aed,#5b21b6)',
+    red:    'linear-gradient(135deg,#dc2626,#b91c1c)'
+  };
+  const COR_ACCENT = {
+    rose:'rgba(232,96,122,0.08)', gold:'rgba(200,151,90,0.08)',
+    green:'rgba(22,163,74,0.08)', purple:'rgba(124,58,237,0.08)', red:'rgba(220,38,38,0.08)'
+  };
+
   function applyData(data) {
     const logo = data.logo || DEFAULT_LOGO;
     document.querySelectorAll('img.hero-logo, img.header-logo, img.menu-brand-logo').forEach(el => { el.src = logo; });
@@ -1071,10 +1167,55 @@
     let faviconEl = document.getElementById('faviconTag');
     if (!faviconEl) { faviconEl = document.createElement('link'); faviconEl.rel = 'icon'; faviconEl.id = 'faviconTag'; document.head.appendChild(faviconEl); }
     faviconEl.href = favicon;
-    // Update title
     if (data.siteTitle) document.title = data.siteTitle;
     renderCards(data.products && data.products.length ? data.products : DEFAULT_PRODUCTS);
     renderContacts(data.contatos || DEFAULT_CONTATOS, data.info || DEFAULT_INFO);
+    renderEspecialBanner(data.especial);
+  }
+
+  function renderEspecialBanner(e) {
+    const banner = document.getElementById('especialBanner');
+    if (!banner || !e || !e.ativo || !e.titulo) { if (banner) banner.classList.remove('visible'); return; }
+    // Check if expired
+    if (e.validade) {
+      const exp = new Date(e.validade + 'T23:59:59');
+      if (exp < new Date()) { banner.classList.remove('visible'); return; }
+    }
+    const cor = e.cor || 'rose';
+    const bg = COR_MAP[cor] || COR_MAP.rose;
+    const accent = COR_ACCENT[cor] || COR_ACCENT.rose;
+    // Apply styles
+    const header = document.getElementById('especialBannerHeader');
+    if (header) header.style.background = bg;
+    const itensEl = document.getElementById('especialBannerItens');
+    if (itensEl) itensEl.style.background = accent;
+    document.getElementById('especialBannerTitle').textContent = e.titulo;
+    document.getElementById('especialBannerDesc').textContent = e.descricao || '';
+    // Validade
+    const valEl = document.getElementById('especialBannerValidade');
+    if (e.validade && valEl) {
+      const d = new Date(e.validade + 'T12:00:00');
+      valEl.style.display = 'flex';
+      valEl.querySelector('span').textContent = 'Válido até ' + d.toLocaleDateString('pt-BR', {day:'2-digit',month:'long'});
+    } else if (valEl) { valEl.style.display = 'none'; }
+    // Items
+    if (itensEl) {
+      itensEl.innerHTML = (e.itens || []).map(item => `
+        <div class="especial-item">
+          <div class="especial-item-info">
+            <div class="especial-item-nome">${item.nome}</div>
+            ${item.descricao ? `<div class="especial-item-desc">${item.descricao}</div>` : ''}
+          </div>
+          <div class="especial-item-preco" style="color:${cor === 'gold' ? '#a0722a' : cor === 'green' ? '#15803d' : cor === 'purple' ? '#5b21b6' : cor === 'red' ? '#b91c1c' : 'var(--rose-dark)'};">${item.preco}</div>
+        </div>`).join('');
+    }
+    // WhatsApp
+    const wppBtn = document.getElementById('especialWppBtn');
+    if (wppBtn) {
+      wppBtn.href = 'https://wa.me/' + (liveContatos.wppNumber || DEFAULT_CONTATOS.wppNumber);
+      wppBtn.style.background = 'rgba(0,0,0,0.15)';
+    }
+    banner.classList.add('visible');
   }
 
   function renderCards(products) {
