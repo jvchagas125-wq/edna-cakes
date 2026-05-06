@@ -1763,7 +1763,7 @@
     document.getElementById('pwaConfirmOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
     // Wire up install button inside dialog
-    document.getElementById('pwaConfirmInstall').onclick = triggerInstall;
+    const _ci = document.getElementById('pwaConfirmInstall'); if (_ci) _ci.onclick = triggerInstall;
   }
 
   // Close confirm dialog
@@ -1793,9 +1793,12 @@
   }
 
   // Close confirm on backdrop click
-  document.getElementById('pwaConfirmOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closePWAConfirm();
-  });
+  const _pwaOverlay = document.getElementById('pwaConfirmOverlay');
+  if (_pwaOverlay) {
+    _pwaOverlay.addEventListener('click', function(e) {
+      if (e.target === this) closePWAConfirm();
+    });
+  }
 
   // Update icon when logo changes
   const _origApplyForPWA = applyData;
