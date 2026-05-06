@@ -902,44 +902,80 @@
       display: flex; align-items: center; gap: .3rem;
     }
     .especial-banner-validade svg { width: 12px; height: 12px; }
+    /* Especial banner items area */
     .especial-itens {
-      padding: 1.25rem 1.75rem 1.5rem;
+      padding: .75rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
     }
+
+    /* Each item: info left, photo right */
     .especial-item {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      padding: .75rem 1rem;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px; margin-bottom: .5rem;
-      gap: 1rem;
+      display: flex;
+      align-items: stretch;
+      background: rgba(255,255,255,0.95);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      min-height: 100px;
+      max-width: 560px; /* keeps card compact, left-aligned */
     }
-    .especial-item:last-child { margin-bottom: 0; }
-    .especial-item-info { flex: 1; }
-    .especial-item-nome { font-weight: 600; font-size: .9rem; color: var(--text); }
-    .especial-item-desc { font-size: .78rem; color: var(--text-muted); margin-top: .15rem; }
-    .especial-item-preco { font-weight: 700; font-size: .9rem; white-space: nowrap; flex-shrink: 0; }
+    .especial-item-body {
+      flex: 1;
+      padding: .85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+    .especial-item-nome {
+      font-weight: 700; font-size: .95rem;
+      color: var(--text); margin-bottom: .2rem;
+    }
+    .especial-item-desc {
+      font-size: .78rem; color: var(--text-muted);
+      line-height: 1.45; margin-bottom: .35rem;
+    }
+    .especial-item-preco {
+      font-weight: 700; font-size: .92rem;
+      white-space: nowrap;
+    }
+    .especial-variant-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .8rem; color: var(--text-muted);
+      padding: .12rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .especial-variant-row:last-child { border-bottom: none; }
+    .especial-variant-row span:last-child { font-weight: 700; }
+
+    /* Photo on the RIGHT, taller and bigger */
+    .especial-item-foto {
+      width: 110px;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 0;
+      display: block;
+    }
+    @media (max-width: 480px) {
+      .especial-item-foto { width: 90px; }
+      .especial-item { max-width: 100%; }
+    }
+
     .especial-wpp-btn {
       display: flex; align-items: center; justify-content: center; gap: .5rem;
-      margin: 1rem 1.75rem 1.5rem;
+      margin: .5rem 1.25rem 1.25rem;
       padding: .85rem;
       background: rgba(255,255,255,0.15);
       border: 2px solid rgba(255,255,255,0.4);
       border-radius: 14px;
       color: white; font-size: .88rem; font-weight: 600;
       text-decoration: none; transition: background .2s;
+      max-width: 560px;
     }
     .especial-wpp-btn:hover { background: rgba(255,255,255,0.25); }
     .especial-wpp-btn svg { width: 16px; height: 16px; }
-
-    .especial-item-foto {
-      width: 52px; height: 52px; object-fit: cover;
-      border-radius: 10px; flex-shrink: 0;
-      border: 2px solid rgba(255,255,255,0.3);
-    }
-    .especial-variant-row {
-      display: flex; justify-content: space-between;
-      font-size: .78rem; color: var(--text-muted);
-      padding: .15rem 0;
-    }
 
     /* ── IMAGE LOADING ── */
     .img-skeleton {
@@ -1242,17 +1278,18 @@
                   <span style="font-weight:700;color:${priceColor};">${v.price||v.preco||''}</span>
                 </div>`).join('')}</div>`
             : '';
-          const precoHtml = preco ? `<div class="especial-item-preco" style="color:${priceColor};flex-shrink:0;">${preco}</div>` : '';
+          const precoHtml = preco ? `<div class="especial-item-preco" style="color:${priceColor};margin-top:.2rem;">${preco}</div>` : '';
           const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}">` : '';
 
+          // Foto goes on the RIGHT
           return `<div class="especial-item">
-            ${fotoHtml}
-            <div class="especial-item-info" style="flex:1;">
+            <div class="especial-item-body">
               <div class="especial-item-nome">${nome}</div>
               ${desc ? `<div class="especial-item-desc">${desc}</div>` : ''}
               ${variantHtml}
+              ${precoHtml}
             </div>
-            ${precoHtml}
+            ${fotoHtml}
           </div>`;
         }).join('');
       }
