@@ -1102,6 +1102,66 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── PWA CONFIRM DIALOG ── */
+    .pwa-confirm-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(45,27,30,0.6);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; justify-content: center;
+      padding: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .pwa-confirm-overlay.open { opacity: 1; pointer-events: all; }
+    .pwa-confirm-box {
+      background: var(--white);
+      border-radius: 24px 24px 0 0;
+      padding: 2rem 1.75rem 2.5rem;
+      width: 100%; max-width: 480px;
+      text-align: center;
+      transform: translateY(30px);
+      transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+      box-shadow: 0 -8px 40px rgba(45,27,30,0.2);
+    }
+    .pwa-confirm-overlay.open .pwa-confirm-box { transform: translateY(0); }
+    .pwa-confirm-logo {
+      width: 72px; height: 72px;
+      object-fit: contain; border-radius: 18px;
+      border: 2px solid var(--rose-light);
+      margin: 0 auto 1rem; display: block;
+      box-shadow: 0 4px 16px rgba(232,96,122,0.2);
+    }
+    .pwa-confirm-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--text); margin-bottom: .5rem;
+    }
+    .pwa-confirm-text {
+      font-size: .88rem; color: var(--text-muted);
+      line-height: 1.6; margin-bottom: 1.5rem;
+    }
+    .pwa-confirm-install {
+      width: 100%; padding: .95rem;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+      color: white; border: none; border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: .5rem;
+      box-shadow: 0 4px 16px rgba(232,96,122,0.35);
+      transition: opacity .2s, transform .15s;
+      margin-bottom: .75rem;
+    }
+    .pwa-confirm-install:hover { opacity: .92; transform: translateY(-1px); }
+    .pwa-confirm-cancel {
+      width: 100%; padding: .75rem;
+      background: none; border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem; color: var(--text-muted);
+      cursor: pointer; transition: color .2s;
+    }
+    .pwa-confirm-cancel:hover { color: var(--text); }
+
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -1278,7 +1338,7 @@
   const DEFAULT_CONTATOS = { wppNumber:'5522996079822', wppDisplay:'(22) 99607-9822', instagram:'edna_cakes024' };
   const DEFAULT_INFO = ['Encomenda mediante entrada de 50%.','Topper não incluso no valor.','Taxa de entrega: R$10,00.','Encomendas somente pelo WhatsApp.'];
   const DEFAULT_PRODUCTS = [
-    { id:'cupcakes', mensagemWpp:'Olá, eu desejo realizar uma encomenda de Bolo Naked Cake! 🎂', title:'Bolos Naked Cake', badge:'Popular', shortDesc:'Elegantes, personalizáveis e irresistíveis', description:'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista.', cardImage:'https://i.imgur.com/uFrFZGHm.png', images:['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg'], pricesLabel:'Tamanhos e Preços', prices:[{flavor:'15 cm (10–12 fatias)',price:'R$ 120,00'},{flavor:'20 cm (25–30 fatias)',price:'R$ 180,00'},{flavor:'25 cm (35–40 fatias)',price:'R$ 240,00'},{flavor:'30 cm (45–50 fatias)',price:'R$ 290,00'}], doughs:['Baunilha','Chocolate'], fillings:['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'], observations:'Pedido mínimo com 48h de antecedência.' },
+    { id:'cupcakes', mensagemWpp:'Olá, eu desejo realizar uma encomenda de Bolo Naked Cake! 🎂', title:'Bolos Naked Cake', badge:'Popular', shortDesc:'Elegantes, personalizáveis e irresistíveis', description:'Bolos elegantes e sofisticados com camadas de bolo e recheio à vista.', cardImage:'https://i.imgur.com/uFrFZGHm.png', images:['https://i.imgur.com/mJ6Krcx.jpeg','https://i.imgur.com/VOE52K6.jpeg','https://i.imgur.com/qI2w05l.jpeg','https://i.imgur.com/0b5QDSW.jpeg','https://i.imgur.com/k91fmpf.jpeg','https://i.imgur.com/EDCtl46.jpeg'], pricesLabel:'Tamanhos e Preços', prices:[{flavor:'15 cm (10–12 fatias)',price:'R$ 120,00'},{flavor:'20 cm (25–30 fatias)',price:'R$ 180,00'},{flavor:'25 cm (35–40 fatias)',price:'R$ 240,00'},{flavor:'30 cm (45–50 fatias)',price:'R$ 290,00'}], doughs:['Baunilha','Chocolate'], fillings:['Ninho gourmet','Brigadeiro de chocolate gourmet','Beijinho gourmet','Doce de leite gourmet','Prestígio','Ninho com Nutella','Ninho com Ouro Branco'], additionals:[{name:'Morango',price:'a partir de R$ 7,00'},{name:'Nutella',price:'a partir de R$ 10,00'},{name:'Nozes',price:'a partir de R$ 10,00'},{name:'Docinhos gourmet',price:'R$ 1,00 a unidade'}], observations:'Pedido mínimo com 48h de antecedência.' },
     { id:'bolos', mensagemWpp:'Olá, eu desejo realizar uma encomenda de Rocambole! 🍰', title:'Rocambole', badge:'', shortDesc:'Doce, macio e irresistível', description:'Rocambole delicioso e macio, recheado com sabores gourmet!', cardImage:'https://i.imgur.com/upiuoy2m.png', images:['https://i.imgur.com/3DHYo7Q.jpeg','https://i.imgur.com/tBAfCzp.jpeg','https://i.imgur.com/hmLo7K6.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Doce de Leite Gourmet',price:'R$ 60,00'},{flavor:'Ninho Gourmet',price:'R$ 60,00'},{flavor:'Brigadeiro de Chocolate Gourmet',price:'R$ 60,00'},{flavor:'Beijinho Gourmet',price:'R$ 60,00'}], observations:'Pedido mínimo: 24h de antecedência.' },
     { id:'brigadeiros', mensagemWpp:'Olá, eu desejo realizar uma encomenda de Brownies! 🍫', title:'Brownie', badge:'', shortDesc:'Sabores exclusivos e tradicionais', description:'Brownies deliciosos com chocolate belga e sabores exclusivos.', cardImage:'https://i.imgur.com/C0x8ygIm.png', images:['https://i.imgur.com/KvXeI1D.jpeg','https://i.imgur.com/XcukGOY.jpeg'], pricesLabel:'Preços e Recheios', prices:[{flavor:'Brigadeiro gourmet',price:'R$ 6,00/unid'},{flavor:'Doce de Leite gourmet',price:'R$ 6,00/unid'},{flavor:'Ninho gourmet',price:'R$ 6,00/unid'}], observations:'Realizar pedidos de no mínimo 5 unidades.' },
     { id:'palhaitaliana', mensagemWpp:'Olá, eu desejo realizar uma encomenda de Palha Italiana! 🍬', title:'Palha Italiana', badge:'', shortDesc:'Irresistível e deliciosa', description:'Palha Italiana irresistível e deliciosa, com recheios maravilhosos.', cardImage:'https://i.imgur.com/1qsbV8Nm.png', images:['https://i.imgur.com/KGE6F4j.jpeg','https://i.imgur.com/fUCRZP9.jpeg','https://i.imgur.com/5y0UeOo.jpeg'], pricesLabel:'Preços e Sabores', prices:[{flavor:'Ninho com Brigadeiro',price:'R$ 7,00/unid'},{flavor:'Ninho com Morango',price:'R$ 7,00/unid'},{flavor:'Ninho com Nutella',price:'R$ 10,00/unid'}], observations:'Mínimo de 5 unidades.' },
@@ -1623,6 +1683,16 @@
       sec.innerHTML = html;
       inner.appendChild(sec);
     }
+    // Adicionais
+    if (p.additionals && p.additionals.length) {
+      const sec = document.createElement('div'); sec.className = 'modal-section';
+      let html = `<div class="modal-section-title font-heading">Adicionais</div>`;
+      p.additionals.forEach(a => {
+        html += `<div class="price-item"><span class="price-flavor">${a.name}</span><span class="price-value">${a.price}</span></div>`;
+      });
+      sec.innerHTML = html;
+      inner.appendChild(sec);
+    }
 
     if (p.observations) {
       const sec = document.createElement('div'); sec.className = 'modal-section';
@@ -1662,11 +1732,7 @@
     });
   }
 
-  // The browser fires 'beforeinstallprompt' when:
-  // - App is NOT installed, OR
-  // - App was uninstalled and user returned to the site
-  // So we simply show the button whenever this event fires — no suppression needed.
-  // The event does NOT fire when the app is already installed.
+  // Capture install prompt — fires when app is NOT installed
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     _deferredPrompt = e;
@@ -1674,42 +1740,69 @@
     if (btn) btn.classList.add('visible');
   });
 
-  // When app is successfully installed — hide button permanently for this session
+  // Hide button after app is installed
   window.addEventListener('appinstalled', () => {
     _deferredPrompt = null;
     const btn = document.getElementById('pwaInstallBtn');
     if (btn) btn.classList.remove('visible');
+    closePWAConfirm();
   });
 
-  // Handle install button click
-  document.getElementById('pwaInstallBtn').addEventListener('click', async function(e) {
+  // Floating button click — show confirm dialog
+  function handlePWAClick(e) {
     if (e.target.closest('.pwa-install-close')) return;
+    openPWAConfirm();
+  }
+
+  // Open confirm dialog
+  function openPWAConfirm() {
+    document.getElementById('pwaConfirmOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Wire up install button inside dialog
+    document.getElementById('pwaConfirmInstall').onclick = triggerInstall;
+  }
+
+  // Close confirm dialog
+  function closePWAConfirm() {
+    document.getElementById('pwaConfirmOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Actually trigger the browser install prompt
+  async function triggerInstall() {
     if (!_deferredPrompt) return;
+    closePWAConfirm();
     _deferredPrompt.prompt();
     const { outcome } = await _deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      // User accepted — hide button (appinstalled event also fires)
-      document.getElementById('pwaInstallBtn').classList.remove('visible');
-    }
-    // If dismissed, keep button visible so they can try again
     _deferredPrompt = null;
-  });
+    if (outcome === 'accepted') {
+      const btn = document.getElementById('pwaInstallBtn');
+      if (btn) btn.classList.remove('visible');
+    }
+  }
 
-  // X button — hides for current session only, comes back next visit
+  // ✕ button — hides for session, returns next visit
   function dismissPWA(e) {
     e.stopPropagation();
     const btn = document.getElementById('pwaInstallBtn');
     if (btn) btn.classList.remove('visible');
-    // Do NOT save to localStorage — button must return on next visit
   }
+
+  // Close confirm on backdrop click
+  document.getElementById('pwaConfirmOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closePWAConfirm();
+  });
 
   // Update icon when logo changes
   const _origApplyForPWA = applyData;
   function applyData(data) {
     _origApplyForPWA(data);
-    const icon = document.getElementById('pwaInstallIcon');
-    if (icon && (data.favicon || data.logo)) {
-      icon.src = data.favicon || data.logo;
+    const logoSrc = data.favicon || data.logo;
+    if (logoSrc) {
+      const i1 = document.getElementById('pwaInstallIcon');
+      const i2 = document.getElementById('pwaConfirmIcon');
+      if (i1) i1.src = logoSrc;
+      if (i2) i2.src = logoSrc;
     }
   }
   applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
@@ -1733,14 +1826,28 @@
   window._liveContatos = null;
 </script>
 <!-- PWA INSTALL BUTTON -->
-<button class="pwa-install-btn" id="pwaInstallBtn" aria-label="Instalar app Edna Cakes">
+<div class="pwa-install-btn" id="pwaInstallBtn" role="button" aria-label="Instalar app Edna Cakes" onclick="handlePWAClick(event)">
   <img class="pwa-install-icon" id="pwaInstallIcon" src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes">
   <div class="pwa-install-text">
     Instalar app
     <small>Acesso rápido na tela inicial</small>
   </div>
-  <button class="pwa-install-close" onclick="dismissPWA(event)" aria-label="Fechar">✕</button>
-</button>
+  <span class="pwa-install-close" onclick="dismissPWA(event)" role="button" aria-label="Fechar">✕</span>
+</div>
+
+<!-- PWA CONFIRM DIALOG -->
+<div class="pwa-confirm-overlay" id="pwaConfirmOverlay">
+  <div class="pwa-confirm-box">
+    <img id="pwaConfirmIcon" src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="pwa-confirm-logo">
+    <h3 class="pwa-confirm-title">Instalar Edna Cakes</h3>
+    <p class="pwa-confirm-text">Adicione o app à sua tela inicial para acessar o cardápio rapidamente, sem abrir o navegador.</p>
+    <button class="pwa-confirm-install" id="pwaConfirmInstall">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Instalar agora
+    </button>
+    <button class="pwa-confirm-cancel" onclick="closePWAConfirm()">Agora não</button>
+  </div>
+</div>
 
 <!-- FOTO LIGHTBOX -->
 <div class="foto-lightbox" id="fotoLightbox" onclick="closeLightbox()">
