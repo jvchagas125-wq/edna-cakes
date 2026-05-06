@@ -903,79 +903,116 @@
     }
     .especial-banner-validade svg { width: 12px; height: 12px; }
     /* Especial banner items area */
+    /* Especial items: side-by-side grid */
     .especial-itens {
-      padding: .75rem 1.25rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
+      padding: .75rem 1.25rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: .75rem;
     }
 
-    /* Each item: info left, photo right */
+    /* Each item card: info left, photo right */
     .especial-item {
       display: flex;
       align-items: stretch;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.97);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      min-height: 100px;
-      max-width: 560px; /* keeps card compact, left-aligned */
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      min-height: 120px;
+      transition: transform .2s, box-shadow .2s;
     }
+    .especial-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+
     .especial-item-body {
       flex: 1;
-      padding: .85rem 1rem;
+      padding: 1rem 1.1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-width: 0;
     }
     .especial-item-nome {
-      font-weight: 700; font-size: .95rem;
-      color: var(--text); margin-bottom: .2rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 1rem;
+      color: var(--text); margin-bottom: .25rem;
+      line-height: 1.2;
     }
     .especial-item-desc {
-      font-size: .78rem; color: var(--text-muted);
-      line-height: 1.45; margin-bottom: .35rem;
+      font-size: .8rem; color: var(--text-muted);
+      line-height: 1.5; margin-bottom: .4rem;
     }
     .especial-item-preco {
-      font-weight: 700; font-size: .92rem;
-      white-space: nowrap;
+      font-weight: 700; font-size: .95rem;
+      white-space: nowrap; margin-top: .2rem;
     }
     .especial-variant-row {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: .8rem; color: var(--text-muted);
-      padding: .12rem 0;
+      font-size: .82rem; color: var(--text-muted);
+      padding: .15rem 0;
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
     .especial-variant-row:last-child { border-bottom: none; }
     .especial-variant-row span:last-child { font-weight: 700; }
 
-    /* Photo on the RIGHT, taller and bigger */
+    /* Photo on the RIGHT */
     .especial-item-foto {
-      width: 110px;
+      width: 120px;
       flex-shrink: 0;
       object-fit: cover;
-      border-radius: 0;
       display: block;
+      cursor: zoom-in;
+      transition: opacity .2s;
     }
-    @media (max-width: 480px) {
-      .especial-item-foto { width: 90px; }
-      .especial-item { max-width: 100%; }
+    .especial-item-foto:hover { opacity: .88; }
+    @media (max-width: 400px) {
+      .especial-item-foto { width: 95px; }
     }
 
+    /* WhatsApp button — green */
     .especial-wpp-btn {
-      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      display: flex; align-items: center; justify-content: center; gap: .6rem;
       margin: .5rem 1.25rem 1.25rem;
-      padding: .85rem;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.4);
+      padding: .9rem 1.5rem;
+      background: #25D366;
+      border: none;
       border-radius: 14px;
-      color: white; font-size: .88rem; font-weight: 600;
-      text-decoration: none; transition: background .2s;
-      max-width: 560px;
+      color: white; font-size: .9rem; font-weight: 600;
+      text-decoration: none; transition: background .2s, transform .15s;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
     }
-    .especial-wpp-btn:hover { background: rgba(255,255,255,0.25); }
-    .especial-wpp-btn svg { width: 16px; height: 16px; }
+    .especial-wpp-btn:hover { background: #1ebe5d; transform: translateY(-1px); }
+    .especial-wpp-btn svg { width: 18px; height: 18px; }
+
+    /* Lightbox */
+    .foto-lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.88);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .foto-lightbox.open { opacity: 1; pointer-events: all; }
+    .foto-lightbox img {
+      max-width: min(90vw, 600px);
+      max-height: 85vh;
+      border-radius: 16px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transform: scale(.92);
+      transition: transform .25s ease;
+    }
+    .foto-lightbox.open img { transform: scale(1); }
+    .foto-lightbox-close {
+      position: fixed; top: 1rem; right: 1rem;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+      color: white; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .foto-lightbox-close:hover { background: rgba(255,255,255,0.28); }
 
     /* ── IMAGE LOADING ── */
     .img-skeleton {
@@ -1279,7 +1316,7 @@
                 </div>`).join('')}</div>`
             : '';
           const precoHtml = preco ? `<div class="especial-item-preco" style="color:${priceColor};margin-top:.2rem;">${preco}</div>` : '';
-          const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}">` : '';
+          const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}" onclick="openLightbox(\'${foto}\')">` : '';
 
           // Foto goes on the RIGHT
           return `<div class="especial-item">
@@ -1297,9 +1334,8 @@
 
     const wppBtn = document.getElementById('especialWppBtn');
     if (wppBtn) {
-      const eMsg = encodeURIComponent('Olá, eu desejo realizar uma encomenda do ' + e.titulo + '! 🎉');
-      wppBtn.href = 'https://wa.me/' + (liveContatos.wppNumber || DEFAULT_CONTATOS.wppNumber) + '?text=' + eMsg;
-      wppBtn.style.cssText += ';background:rgba(0,0,0,0.15)!important;';
+      const prefix = (e.mensagemWpp && e.mensagemWpp.trim()) ? e.mensagemWpp.trim() : 'Olá, eu desejo realizar uma encomenda do ' + e.titulo + '!';
+      wppBtn.href = 'https://wa.me/' + (liveContatos.wppNumber || DEFAULT_CONTATOS.wppNumber) + '?text=' + encodeURIComponent(prefix);
     }
     banner.classList.add('visible');
   }
@@ -1540,12 +1576,30 @@
     document.body.style.overflow = '';
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); closeLightbox(); } });
+
+  // ── FOTO LIGHTBOX ──
+  function openLightbox(src) {
+    const lb = document.getElementById('fotoLightbox');
+    const img = document.getElementById('fotoLightboxImg');
+    img.src = src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('fotoLightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
   // Bridge: make module-scope vars accessible to regular script
   // (set by the module script after Firebase loads)
   window._liveProducts = null;
   window._liveContatos = null;
 </script>
+<!-- FOTO LIGHTBOX -->
+<div class="foto-lightbox" id="fotoLightbox" onclick="closeLightbox()">
+  <button class="foto-lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="fotoLightboxImg" src="" alt="Foto ampliada">
+</div>
 </body>
 </html>
