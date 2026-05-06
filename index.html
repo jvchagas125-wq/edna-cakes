@@ -1186,55 +1186,83 @@
 
   function renderEspecialBanner(e) {
     const banner = document.getElementById('especialBanner');
-    if (!banner || !e || !e.ativo || !e.titulo) { if (banner) banner.classList.remove('visible'); return; }
+    console.log('[EdnaCakes] especial data:', JSON.stringify(e));
+    if (!banner || !e || !e.ativo || !e.titulo) {
+      console.log('[EdnaCakes] especial not shown — ativo:', e?.ativo, 'titulo:', e?.titulo);
+      if (banner) banner.classList.remove('visible');
+      return;
+    }
     // Check if expired
     if (e.validade) {
       const exp = new Date(e.validade + 'T23:59:59');
-      if (exp < new Date()) { banner.classList.remove('visible'); return; }
+      if (exp < new Date()) {
+        console.log('[EdnaCakes] especial expired');
+        banner.classList.remove('visible');
+        return;
+      }
     }
     const cor = e.cor || 'rose';
     const bg = COR_MAP[cor] || COR_MAP.rose;
     const accent = COR_ACCENT[cor] || COR_ACCENT.rose;
-    // Apply styles
     const header = document.getElementById('especialBannerHeader');
     if (header) header.style.background = bg;
     const itensEl = document.getElementById('especialBannerItens');
     if (itensEl) itensEl.style.background = accent;
     document.getElementById('especialBannerTitle').textContent = e.titulo;
     document.getElementById('especialBannerDesc').textContent = e.descricao || '';
-    // Validade
     const valEl = document.getElementById('especialBannerValidade');
     if (e.validade && valEl) {
       const d = new Date(e.validade + 'T12:00:00');
       valEl.style.display = 'flex';
       valEl.querySelector('span').textContent = 'Válido até ' + d.toLocaleDateString('pt-BR', {day:'2-digit',month:'long'});
     } else if (valEl) { valEl.style.display = 'none'; }
-    // Items
+
     const priceColor = cor === 'gold' ? '#a0722a' : cor === 'green' ? '#15803d' : cor === 'purple' ? '#5b21b6' : cor === 'red' ? '#b91c1c' : 'var(--rose-dark)';
+    const itens = e.itens || [];
+    console.log('[EdnaCakes] especial itens count:', itens.length, itens);
+
     if (itensEl) {
-      itensEl.innerHTML = (e.itens || []).map(item => {
-        const variantHtml = item.variants && item.variants.length
-          ? item.variants.map(v => `<div class="especial-variant-row"><span>${v.name}</span><span style="font-weight:700;color:${priceColor};">${v.price}</span></div>`).join('')
-          : '';
-        const precoHtml = item.preco ? `<div class="especial-item-preco" style="color:${priceColor};">${item.preco}</div>` : '';
-        const fotoHtml = item.foto ? `<img src="${item.foto}" class="especial-item-foto" alt="${item.nome}">` : '';
-        return `<div class="especial-item">
-          ${fotoHtml}
-          <div class="especial-item-info">
-            <div class="especial-item-nome">${item.nome}</div>
-            ${item.descricao ? `<div class="especial-item-desc">${item.descricao}</div>` : ''}
-            ${variantHtml}
-          </div>
-          ${precoHtml}
-        </div>`;
-      }).join('');
+      if (!itens.length) {
+        itensEl.innerHTML = '';
+        itensEl.style.display = 'none';
+      } else {
+        itensEl.style.display = 'block';
+        itensEl.innerHTML = itens.map(item => {
+          // Support both field names (nome/name, descricao/description, preco/price)
+          const nome = item.nome || item.name || '';
+          const desc = item.descricao || item.description || '';
+          const preco = item.preco || item.price || '';
+          const foto = item.foto || item.image || '';
+          const variants = item.variants || [];
+
+          const variantHtml = variants.length
+            ? `<div style="margin-top:.35rem;">${variants.map(v =>
+                `<div class="especial-variant-row">
+                  <span style="color:var(--text-muted);">${v.name||v.nome||''}</span>
+                  <span style="font-weight:700;color:${priceColor};">${v.price||v.preco||''}</span>
+                </div>`).join('')}</div>`
+            : '';
+          const precoHtml = preco ? `<div class="especial-item-preco" style="color:${priceColor};flex-shrink:0;">${preco}</div>` : '';
+          const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}">` : '';
+
+          return `<div class="especial-item">
+            ${fotoHtml}
+            <div class="especial-item-info" style="flex:1;">
+              <div class="especial-item-nome">${nome}</div>
+              ${desc ? `<div class="especial-item-desc">${desc}</div>` : ''}
+              ${variantHtml}
+            </div>
+            ${precoHtml}
+          </div>`;
+        }).join('');
+      }
     }
-    // WhatsApp
+
     const wppBtn = document.getElementById('especialWppBtn');
     if (wppBtn) {
       const eMsg = encodeURIComponent('Olá, eu desejo realizar uma encomenda do ' + e.titulo + '! 🎉');
       wppBtn.href = 'https://wa.me/' + (liveContatos.wppNumber || DEFAULT_CONTATOS.wppNumber) + '?text=' + eMsg;
-      wppBtn.style.background = 'rgba(0,0,0,0.15)';
+      wppBtn.style.cssText += ';background:rgba(0,0,0,0.15)!important;';
     }
     banner.classList.add('visible');
   }
