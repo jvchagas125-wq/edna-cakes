@@ -1332,6 +1332,21 @@
       }
     }
 
+    // Observações
+    let obsEl = document.getElementById('especialBannerObs');
+    if (e.observacoes && e.observacoes.trim()) {
+      if (!obsEl) {
+        obsEl = document.createElement('div');
+        obsEl.id = 'especialBannerObs';
+        obsEl.style.cssText = 'margin:.25rem 1.25rem .75rem;padding:.75rem 1rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5;display:flex;gap:.5rem;align-items:flex-start;';
+        const wppBtn = document.getElementById('especialWppBtn');
+        wppBtn.parentNode.insertBefore(obsEl, wppBtn);
+      }
+      obsEl.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px;flex-shrink:0;margin-top:.15rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>' + e.observacoes + '</span>';
+    } else if (obsEl) {
+      obsEl.remove();
+    }
+
     const wppBtn = document.getElementById('especialWppBtn');
     if (wppBtn) {
       const prefix = (e.mensagemWpp && e.mensagemWpp.trim()) ? e.mensagemWpp.trim() : 'Olá, eu desejo realizar uma encomenda do ' + e.titulo + '!';
