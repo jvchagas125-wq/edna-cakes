@@ -930,6 +930,17 @@
     .especial-wpp-btn:hover { background: rgba(255,255,255,0.25); }
     .especial-wpp-btn svg { width: 16px; height: 16px; }
 
+    .especial-item-foto {
+      width: 52px; height: 52px; object-fit: cover;
+      border-radius: 10px; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .especial-variant-row {
+      display: flex; justify-content: space-between;
+      font-size: .78rem; color: var(--text-muted);
+      padding: .15rem 0;
+    }
+
     /* ── IMAGE LOADING ── */
     .img-skeleton {
       background: linear-gradient(90deg, var(--rose-pale) 25%, #f5e0e4 50%, var(--rose-pale) 75%);
@@ -1199,15 +1210,24 @@
       valEl.querySelector('span').textContent = 'Válido até ' + d.toLocaleDateString('pt-BR', {day:'2-digit',month:'long'});
     } else if (valEl) { valEl.style.display = 'none'; }
     // Items
+    const priceColor = cor === 'gold' ? '#a0722a' : cor === 'green' ? '#15803d' : cor === 'purple' ? '#5b21b6' : cor === 'red' ? '#b91c1c' : 'var(--rose-dark)';
     if (itensEl) {
-      itensEl.innerHTML = (e.itens || []).map(item => `
-        <div class="especial-item">
+      itensEl.innerHTML = (e.itens || []).map(item => {
+        const variantHtml = item.variants && item.variants.length
+          ? item.variants.map(v => `<div class="especial-variant-row"><span>${v.name}</span><span style="font-weight:700;color:${priceColor};">${v.price}</span></div>`).join('')
+          : '';
+        const precoHtml = item.preco ? `<div class="especial-item-preco" style="color:${priceColor};">${item.preco}</div>` : '';
+        const fotoHtml = item.foto ? `<img src="${item.foto}" class="especial-item-foto" alt="${item.nome}">` : '';
+        return `<div class="especial-item">
+          ${fotoHtml}
           <div class="especial-item-info">
             <div class="especial-item-nome">${item.nome}</div>
             ${item.descricao ? `<div class="especial-item-desc">${item.descricao}</div>` : ''}
+            ${variantHtml}
           </div>
-          <div class="especial-item-preco" style="color:${cor === 'gold' ? '#a0722a' : cor === 'green' ? '#15803d' : cor === 'purple' ? '#5b21b6' : cor === 'red' ? '#b91c1c' : 'var(--rose-dark)'};">${item.preco}</div>
-        </div>`).join('');
+          ${precoHtml}
+        </div>`;
+      }).join('');
     }
     // WhatsApp
     const wppBtn = document.getElementById('especialWppBtn');
