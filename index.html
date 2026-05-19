@@ -16,6 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://i.imgur.com">
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
   <!-- Non-blocking font load -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap"></noscript>
@@ -44,18 +46,8 @@
       overflow-x: hidden;
     }
 
-    /* ── BACKGROUND PATTERN ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-color: var(--cream);
-      background-image:
-        radial-gradient(circle at 15% 20%, rgba(232,96,122,0.09) 0%, transparent 40%),
-        radial-gradient(circle at 85% 10%, rgba(200,151,90,0.07) 0%, transparent 35%),
-        radial-gradient(circle at 90% 85%, rgba(232,96,122,0.06) 0%, transparent 35%);
-    }
+    /* ── BACKGROUND — static for performance ── */
+    body { background-color: var(--cream); }
 
     /* ── TYPOGRAPHY ── */
     .font-heading { font-family: 'Playfair Display', serif; }
@@ -66,8 +58,7 @@
       top: 0;
       z-index: 100;
       background: rgba(253,246,240,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      /* backdrop-filter removed for mobile perf */
       border-bottom: 1px solid rgba(232,96,122,0.12);
       padding: 0 1.25rem;
       height: 64px;
@@ -231,9 +222,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,96,122,0.13) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,151,90,0.08) 0%, transparent 60%);
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,96,122,0.10) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -378,6 +367,9 @@
 
     /* ── CARDÁPIO ── */
     .cardapio-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 0 600px;
+
       padding: 5rem 1.25rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -400,9 +392,11 @@
       cursor: pointer;
       border: 1px solid rgba(232,96,122,0.07);
     }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 36px rgba(232,96,122,0.18);
+    @media (hover: hover) {
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 36px rgba(232,96,122,0.18);
+      }
     }
 
     .card-img-wrap {
@@ -503,7 +497,7 @@
       position: fixed;
       inset: 0;
       background: rgba(45,27,30,0.55);
-      backdrop-filter: blur(6px);
+
     }
 
     .modal-box {
@@ -1050,7 +1044,14 @@
     .hero-logo { will-change: transform; }
     .section-brand-logo { will-change: transform; }
 
-    /* Disable heavy animations on slow connections or user preference */
+    /* Disable heavy animations on mobile and slow connections */
+    @media (max-width: 768px) {
+      .hero-logo { animation: none !important; }
+      .section-brand-logo { animation: none !important; }
+      .hero-ring { display: none !important; }
+      .product-card { transition: none !important; }
+      .card-img-wrap img { transition: none !important; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .hero-logo, .section-brand-logo { animation: none; }
       .hero-title, .hero-subtitle, .hero-divider { animation: none; opacity: 1; transform: none; }
@@ -1110,7 +1111,7 @@
     .pwa-confirm-overlay {
       position: fixed; inset: 0; z-index: 9000;
       background: rgba(45,27,30,0.6);
-      backdrop-filter: blur(6px);
+
       display: flex; align-items: flex-end; justify-content: center;
       padding: 0;
       opacity: 0; pointer-events: none;
@@ -1214,11 +1215,9 @@
 
 <!-- ── HERO ── -->
 <section id="inicio" class="hero">
-  <div class="hero-ring" style="width:300px;height:300px;"></div>
-  <div class="hero-ring" style="width:500px;height:500px;opacity:0.5;"></div>
-  <div class="hero-ring" style="width:700px;height:700px;opacity:0.3;"></div>
 
-  <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="hero-logo"
+
+  <img src="https://i.imgur.com/F6PR9Bu.png" alt="Edna Cakes" class="hero-logo" fetchpriority="high"
        onerror="this.style.display='none'">
   <h1 class="hero-title font-heading" id="heroTitle">
     Doces feitos<br><span>com amor</span>
@@ -1322,7 +1321,7 @@
   <p>© <strong>Edna Cakes</strong> — Feito com ❤️ e muito açúcar</p>
 </footer>
 
-<script type="module">
+<script type="module" defer>
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
   import { getFirestore, doc, getDoc, onSnapshot }
     from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
