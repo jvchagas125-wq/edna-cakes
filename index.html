@@ -1061,21 +1061,30 @@
     /* Lightbox */
     .foto-lightbox {
       position: fixed; inset: 0; z-index: 9000;
-      background: rgba(0,0,0,0.88);
+      background: rgba(0,0,0,0.92);
       display: flex; align-items: center; justify-content: center;
-      padding: 1rem;
       opacity: 0; pointer-events: none;
       transition: opacity .25s ease;
+      touch-action: pan-y;
     }
     .foto-lightbox.open { opacity: 1; pointer-events: all; }
+    .foto-lightbox-img-wrap {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      max-width: min(92vw, 640px);
+      width: 100%;
+    }
     .foto-lightbox img {
-      max-width: min(90vw, 600px);
-      max-height: 85vh;
-      border-radius: 16px;
+      max-width: 100%;
+      max-height: 82vh;
+      border-radius: 14px;
       object-fit: contain;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      transform: scale(.92);
+      transform: scale(.93);
       transition: transform .25s ease;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
     }
     .foto-lightbox.open img { transform: scale(1); }
     .foto-lightbox-close {
@@ -1084,9 +1093,29 @@
       background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
       color: white; font-size: 20px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background .2s;
+      transition: background .2s; z-index: 2;
     }
     .foto-lightbox-close:hover { background: rgba(255,255,255,0.28); }
+    .foto-lightbox-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+      color: white; cursor: pointer; z-index: 2;
+      display: none; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .foto-lightbox-nav:hover { background: rgba(255,255,255,0.28); }
+    .foto-lightbox-nav svg { width: 18px; height: 18px; }
+    .foto-lightbox-nav.prev { left: .75rem; }
+    .foto-lightbox-nav.next { right: .75rem; }
+    .foto-lightbox-nav.visible { display: flex; }
+    .foto-lightbox-counter {
+      position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,.7); font-size: .78rem;
+      background: rgba(0,0,0,.35); padding: .3rem .85rem;
+      border-radius: 50px; display: none;
+    }
+    .foto-lightbox-counter.visible { display: block; }
 
     /* ── IMAGE LOADING ── */
     .img-skeleton {
@@ -1523,7 +1552,8 @@
               <button class="especial-gallery-nav next" onclick="espGalScroll('${galleryId}',1)">
                 <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
               </button>` : '';
-            const zoomBtn = `<button class="especial-zoom-btn" onclick="openLightbox('${firstFoto}')">
+            const fotosJson = JSON.stringify(fotosArr).replace(/'/g, "\\'");
+            const zoomBtn = `<button class="especial-zoom-btn" onclick="openLightbox('${firstFoto}', ${fotosJson})">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 Clique aqui para ampliar a foto
               </button>`;
@@ -1912,13 +1942,63 @@
   applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
 
   // ── FOTO LIGHTBOX ──
-  function openLightbox(src) {
-    const lb = document.getElementById('fotoLightbox');
-    const img = document.getElementById('fotoLightboxImg');
-    img.src = src;
-    lb.classList.add('open');
+  // Lightbox state
+  let _lbFotos = [];
+  let _lbIdx = 0;
+
+  function openLightbox(src, fotos) {
+    // fotos: optional array for navigation; if not passed, single image mode
+    _lbFotos = fotos && fotos.length ? fotos : [src];
+    _lbIdx = _lbFotos.indexOf(src);
+    if (_lbIdx < 0) _lbIdx = 0;
+    lbRender();
+    document.getElementById('fotoLightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
+
+  function lbRender() {
+    const img = document.getElementById('fotoLightboxImg');
+    const prev = document.getElementById('lbPrev');
+    const next = document.getElementById('lbNext');
+    const counter = document.getElementById('lbCounter');
+    img.src = _lbFotos[_lbIdx];
+    const multi = _lbFotos.length > 1;
+    prev.classList.toggle('visible', multi && _lbIdx > 0);
+    next.classList.toggle('visible', multi && _lbIdx < _lbFotos.length - 1);
+    counter.classList.toggle('visible', multi);
+    if (multi) counter.textContent = (_lbIdx + 1) + ' / ' + _lbFotos.length;
+  }
+
+  function lbNav(dir) {
+    _lbIdx = Math.max(0, Math.min(_lbFotos.length - 1, _lbIdx + dir));
+    lbRender();
+  }
+
+  // Touch swipe support for lightbox
+  let _lbTouchX = null;
+  document.getElementById('fotoLightbox').addEventListener('touchstart', e => {
+    _lbTouchX = e.touches[0].clientX;
+  }, { passive: true });
+  document.getElementById('fotoLightbox').addEventListener('touchend', e => {
+    if (_lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - _lbTouchX;
+    if (Math.abs(dx) > 40) lbNav(dx < 0 ? 1 : -1);
+    _lbTouchX = null;
+  }, { passive: true });
+  // Click backdrop to close (but not nav buttons or img)
+  document.getElementById('fotoLightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('fotoLightbox') ||
+        e.target === document.getElementById('fotoLightboxImg')) {
+      if (e.target === document.getElementById('fotoLightboxImg') && _lbFotos.length > 1) return;
+      closeLightbox();
+    }
+  });
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('fotoLightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
   // ── ESPECIAL GALLERY ──
   function espGalScroll(id, dir) {
     const track = document.getElementById(id + '_track');
@@ -1944,7 +2024,8 @@
     const slides = track.querySelectorAll('.especial-gallery-slide img');
     const zoomBtn = container.querySelector('.especial-zoom-btn');
     if (zoomBtn && slides[idx]) {
-      zoomBtn.onclick = () => openLightbox(slides[idx].src);
+      const allSrcs = Array.from(slides).map(s => s.src);
+      zoomBtn.onclick = () => openLightbox(slides[idx].src, allSrcs);
     }
   }
 
@@ -1983,9 +2064,18 @@
 </div>
 
 <!-- FOTO LIGHTBOX -->
-<div class="foto-lightbox" id="fotoLightbox" onclick="closeLightbox()">
+<div class="foto-lightbox" id="fotoLightbox">
   <button class="foto-lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="fotoLightboxImg" src="" alt="Foto ampliada">
+  <button class="foto-lightbox-nav prev" id="lbPrev" onclick="lbNav(-1)">
+    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="foto-lightbox-img-wrap" id="lbImgWrap">
+    <img id="fotoLightboxImg" src="" alt="Foto ampliada">
+  </div>
+  <button class="foto-lightbox-nav next" id="lbNext" onclick="lbNav(1)">
+    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div class="foto-lightbox-counter" id="lbCounter"></div>
 </div>
 </body>
 </html>
