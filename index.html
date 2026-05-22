@@ -1694,6 +1694,10 @@
 </script>
 
 <script>
+  // Lightbox state — declared at top to avoid TDZ issues
+  var _lbFotos = [];
+  var _lbIdx = 0;
+
   // ── MENU ──
   function openMenu() {
     document.getElementById('menuOverlay').classList.add('open');
@@ -1950,10 +1954,6 @@
   applyData({ logo: DEFAULT_LOGO, products: DEFAULT_PRODUCTS, contatos: DEFAULT_CONTATOS, info: DEFAULT_INFO });
 
   // ── FOTO LIGHTBOX ──
-  // Lightbox state
-  let _lbFotos = [];
-  let _lbIdx = 0;
-
   function openLightbox(src, fotos) {
     _lbFotos = fotos && fotos.length ? fotos : [src];
     _lbIdx = _lbFotos.indexOf(src);
