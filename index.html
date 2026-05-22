@@ -1441,10 +1441,15 @@
           const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}" onclick="openLightbox(\'${foto}\')">` : '';
 
           // Foto goes on the RIGHT
+          const recheios = item.recheios || [];
+          const recheiosHtml = recheios.length
+            ? `<div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.35rem;">${recheios.map(r=>`<span style="background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.35);border-radius:50px;font-size:.7rem;padding:.15rem .55rem;color:var(--text);font-weight:500;">${r}</span>`).join('')}</div>`
+            : '';
           return `<div class="especial-item">
             <div class="especial-item-body">
               <div class="especial-item-nome">${nome}</div>
               ${desc ? `<div class="especial-item-desc">${desc}</div>` : ''}
+              ${recheiosHtml}
               ${variantHtml}
               ${precoHtml}
             </div>
