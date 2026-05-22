@@ -1552,8 +1552,10 @@
               <button class="especial-gallery-nav next" onclick="espGalScroll('${galleryId}',1)">
                 <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
               </button>` : '';
-            const fotosJson = JSON.stringify(fotosArr).replace(/'/g, "\\'");
-            const zoomBtn = `<button class="especial-zoom-btn" onclick="openLightbox('${firstFoto}', ${fotosJson})">
+            // Store fotos in registry, reference by id
+            window._espGalFotos = window._espGalFotos || {};
+            window._espGalFotos[galleryId] = fotosArr;
+            const zoomBtn = `<button class="especial-zoom-btn" onclick="openLightboxGal('${galleryId}')">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 Clique aqui para ampliar a foto
               </button>`;
@@ -1579,6 +1581,12 @@
             </div>
           </div>`;
         }).join('');
+        // Register fotos for each item AFTER innerHTML is set (so onclick can find them)
+        window._espGalFotos = window._espGalFotos || {};
+        itens.forEach((item, i) => {
+          const fotosArr = item.fotos && item.fotos.length ? item.fotos : (item.foto ? [item.foto] : []);
+          if (fotosArr.length) window._espGalFotos['espGal_' + i] = fotosArr;
+        });
       }
     }
 
@@ -1947,13 +1955,24 @@
   let _lbIdx = 0;
 
   function openLightbox(src, fotos) {
-    // fotos: optional array for navigation; if not passed, single image mode
     _lbFotos = fotos && fotos.length ? fotos : [src];
     _lbIdx = _lbFotos.indexOf(src);
     if (_lbIdx < 0) _lbIdx = 0;
     lbRender();
     document.getElementById('fotoLightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
+  }
+
+  function openLightboxGal(galleryId) {
+    // Get fotos from registry
+    const fotos = (window._espGalFotos && window._espGalFotos[galleryId]) || [];
+    // Get current visible slide
+    const track = document.getElementById(galleryId + '_track');
+    let idx = 0;
+    if (track) idx = Math.round(track.scrollLeft / (track.offsetWidth || 1));
+    const src = fotos[idx] || fotos[0] || '';
+    if (!src) return;
+    openLightbox(src, fotos);
   }
 
   function lbRender() {
@@ -2023,9 +2042,9 @@
     // Update zoom btn to show current slide's image
     const slides = track.querySelectorAll('.especial-gallery-slide img');
     const zoomBtn = container.querySelector('.especial-zoom-btn');
-    if (zoomBtn && slides[idx]) {
-      const allSrcs = Array.from(slides).map(s => s.src);
-      zoomBtn.onclick = () => openLightbox(slides[idx].src, allSrcs);
+    if (zoomBtn) {
+      // Update onclick to open current slide
+      zoomBtn.onclick = () => openLightboxGal(id);
     }
   }
 
