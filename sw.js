@@ -1,4 +1,4 @@
-const CACHE = 'edna-cakes-v2';
+const CACHE = 'edna-cakes-v3';
 const PRECACHE = ['/', '/manifest.json'];
 
 self.addEventListener('install', e => {
@@ -15,27 +15,31 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
-  // Skip external APIs — always fetch fresh
   if (url.hostname.includes('firebase') || url.hostname.includes('firestore') ||
       url.hostname.includes('cloudinary') || url.hostname.includes('imgur') ||
       url.hostname.includes('googleapis') || url.hostname.includes('gstatic')) {
     return;
   }
-  // HTML: network first, fallback cache
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request).then(res => {
-        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
         return res;
       }).catch(() => caches.match(e.request))
     );
     return;
   }
-  // Assets: cache first
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
-      if (res.ok) caches.open(CACHE).then(c => c.put(e.request, res.clone()));
-      return res;
-    }))
+    caches.match(e.request).then(cached => {
+      if (cached) return cached;
+      return fetch(e.request).then(res => {
+        if (res && res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      });
+    })
   );
 });
