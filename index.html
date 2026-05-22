@@ -1489,7 +1489,7 @@
         itensEl.style.display = 'none';
       } else {
         itensEl.style.display = 'block';
-        itensEl.innerHTML = itens.map(item => {
+        itensEl.innerHTML = itens.map((item, i) => {
           // Support both field names (nome/name, descricao/description, preco/price)
           const nome = item.nome || item.name || '';
           const desc = item.descricao || item.description || '';
