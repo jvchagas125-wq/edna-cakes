@@ -928,14 +928,73 @@
       .especial-item:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
     }
 
-    /* Foto no topo — grande */
-    .especial-item-foto {
+    /* Galeria de fotos no topo */
+    .especial-item-gallery {
+      position: relative;
       width: 100%;
       height: 170px;
-      object-fit: cover;
-      display: block;
-      cursor: zoom-in;
       flex-shrink: 0;
+      overflow: hidden;
+      background: var(--rose-pale);
+    }
+    .especial-gallery-track {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .especial-gallery-track::-webkit-scrollbar { display: none; }
+    .especial-gallery-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      position: relative;
+    }
+    .especial-gallery-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .especial-gallery-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.88);
+      border: none; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose); box-shadow: 0 2px 8px rgba(0,0,0,.15);
+      z-index: 2; transition: background .2s;
+    }
+    .especial-gallery-nav:hover { background: white; }
+    .especial-gallery-nav svg { width: 12px; height: 12px; }
+    .especial-gallery-nav.prev { left: .4rem; }
+    .especial-gallery-nav.next { right: .4rem; }
+    .especial-gallery-dots {
+      position: absolute; bottom: .4rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 4px; z-index: 2;
+    }
+    .especial-gallery-dot {
+      width: 5px; height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,.55); transition: background .2s, width .25s;
+      cursor: pointer;
+    }
+    .especial-gallery-dot.active { background: white; width: 14px; }
+    /* Zoom button */
+    .especial-zoom-btn {
+      position: absolute; bottom: .45rem; right: .45rem;
+      background: rgba(0,0,0,.42); color: white;
+      border: none; border-radius: 8px;
+      font-size: .65rem; padding: .28rem .55rem;
+      cursor: pointer; z-index: 2; display: flex;
+      align-items: center; gap: .3rem;
+      transition: background .2s;
+    }
+    .especial-zoom-btn:hover { background: rgba(0,0,0,.62); }
+    .especial-zoom-btn svg { width: 10px; height: 10px; }
+    @media (max-width: 400px) {
+      .especial-item-gallery { height: 145px; }
     }
 
     /* Corpo do card */
@@ -1446,7 +1505,33 @@
                 </div>`).join('')}</div>`
             : '';
           const precoHtml = preco ? `<div class="especial-item-preco">${preco}</div>` : '';
-          const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}" onclick="openLightbox(\'${foto}\')">` : '';
+          // Build fotos array (support legacy single foto)
+          const fotosArr = item.fotos && item.fotos.length ? item.fotos : (foto ? [foto] : []);
+          let fotoHtml = '';
+          if (fotosArr.length) {
+            const galleryId = 'espGal_' + i;
+            const firstFoto = fotosArr[0];
+            const slides = fotosArr.map((f, fi) =>
+              `<div class="especial-gallery-slide"><img src="${f}" alt="${nome}" loading="lazy"></div>`).join('');
+            const dots = fotosArr.length > 1
+              ? `<div class="especial-gallery-dots">${fotosArr.map((_,fi)=>`<div class="especial-gallery-dot${fi===0?' active':''}" onclick="espGalGo('${galleryId}',${fi})"></div>`).join('')}</div>`
+              : '';
+            const navBtns = fotosArr.length > 1 ? `
+              <button class="especial-gallery-nav prev" onclick="espGalScroll('${galleryId}',-1)">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button class="especial-gallery-nav next" onclick="espGalScroll('${galleryId}',1)">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+              </button>` : '';
+            const zoomBtn = `<button class="especial-zoom-btn" onclick="openLightbox('${firstFoto}')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                Clique aqui para ampliar a foto
+              </button>`;
+            fotoHtml = `<div class="especial-item-gallery" id="${galleryId}">
+              <div class="especial-gallery-track" id="${galleryId}_track" onscroll="espGalUpdateDots('${galleryId}',${fotosArr.length})">${slides}</div>
+              ${navBtns}${dots}${zoomBtn}
+            </div>`;
+          }
 
           // Foto goes on the RIGHT
           const recheios = item.recheios || [];
@@ -1834,6 +1919,35 @@
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
+  // ── ESPECIAL GALLERY ──
+  function espGalScroll(id, dir) {
+    const track = document.getElementById(id + '_track');
+    if (!track) return;
+    const w = track.offsetWidth;
+    track.scrollBy({ left: dir * w, behavior: 'smooth' });
+  }
+  function espGalGo(id, idx) {
+    const track = document.getElementById(id + '_track');
+    if (!track) return;
+    track.scrollTo({ left: idx * track.offsetWidth, behavior: 'smooth' });
+  }
+  function espGalUpdateDots(id, total) {
+    const track = document.getElementById(id + '_track');
+    if (!track) return;
+    const idx = Math.round(track.scrollLeft / track.offsetWidth);
+    const container = document.getElementById(id);
+    if (!container) return;
+    container.querySelectorAll('.especial-gallery-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+    // Update zoom btn to show current slide's image
+    const slides = track.querySelectorAll('.especial-gallery-slide img');
+    const zoomBtn = container.querySelector('.especial-zoom-btn');
+    if (zoomBtn && slides[idx]) {
+      zoomBtn.onclick = () => openLightbox(slides[idx].src);
+    }
+  }
+
   function closeLightbox() {
     document.getElementById('fotoLightbox').classList.remove('open');
     document.body.style.overflow = '';
