@@ -905,75 +905,83 @@
       display: flex; align-items: center; gap: .3rem;
     }
     .especial-banner-validade svg { width: 12px; height: 12px; }
-    /* Especial banner items area */
-    /* Especial items: side-by-side grid */
+    /* ── ESPECIAL ITEMS GRID ── */
     .especial-itens {
-      padding: 1rem 1.25rem 1.1rem;
+      padding: 1.1rem 1.25rem 1rem;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
-      padding: 1.25rem;
+      gap: 1rem;
     }
 
-    /* Each item card: info left, photo right */
+    /* Card: foto no topo, info embaixo — igual ao modal */
     .especial-item {
-      display: flex;
-      align-items: stretch;
       background: rgba(255,255,255,0.97);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.14);
-      min-height: 130px;
-      transition: transform .2s, box-shadow .2s;
-      border: 2px solid rgba(255,255,255,0.7);
-      margin-bottom: .25rem;
-    }
-    .especial-item:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.17); }
-
-    .especial-item-body {
-      flex: 1;
-      padding: 1rem 1.25rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.11);
+      border: 1.5px solid rgba(255,255,255,0.7);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-      gap: .15rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    @media (hover: hover) {
+      .especial-item:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    }
+
+    /* Foto no topo — grande */
+    .especial-item-foto {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+      flex-shrink: 0;
+    }
+
+    /* Corpo do card */
+    .especial-item-body {
+      padding: .9rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
     .especial-item-nome {
       font-family: 'Playfair Display', serif;
       font-weight: 700; font-size: 1rem;
-      color: var(--text); margin-bottom: .25rem;
+      color: var(--text); margin-bottom: .35rem;
       line-height: 1.2;
     }
     .especial-item-desc {
-      font-size: .8rem; color: var(--text-muted);
-      line-height: 1.5; margin-bottom: .4rem;
+      font-size: .78rem; color: var(--text-muted);
+      line-height: 1.45; margin-bottom: .4rem;
     }
-    .especial-item-preco {
-      font-weight: 700; font-size: .95rem;
-      white-space: nowrap; margin-top: .2rem;
+    /* Recheios como tags */
+    .especial-recheios-wrap {
+      display: flex; flex-wrap: wrap; gap: .3rem;
+      margin-bottom: .5rem;
     }
+    .especial-recheio-tag {
+      background: var(--rose-pale);
+      color: var(--rose-dark);
+      border: 1px solid rgba(232,96,122,.18);
+      font-size: .72rem; padding: .22rem .65rem;
+      border-radius: 50px; font-weight: 500;
+    }
+    /* Preços */
     .especial-variant-row {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: .82rem; color: var(--text-muted);
-      padding: .15rem 0;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      font-size: .83rem; color: var(--text-muted);
+      padding: .35rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
     .especial-variant-row:last-child { border-bottom: none; }
-    .especial-variant-row span:last-child { font-weight: 700; }
-
-    /* Photo on the RIGHT */
-    .especial-item-foto {
-      width: 120px;
-      flex-shrink: 0;
-      object-fit: cover;
-      display: block;
-      cursor: zoom-in;
-      transition: opacity .2s;
+    .especial-variant-row span:last-child { font-weight: 700; color: var(--text); }
+    .especial-item-preco {
+      font-weight: 700; font-size: .9rem;
+      color: var(--rose-dark); margin-top: .3rem;
     }
-    .especial-item-foto:hover { opacity: .88; }
     @media (max-width: 400px) {
-      .especial-item-foto { width: 95px; }
+      .especial-item-foto { height: 140px; }
     }
 
     /* WhatsApp button — green */
@@ -1431,21 +1439,22 @@
           const variants = item.variants || [];
 
           const variantHtml = variants.length
-            ? `<div style="margin-top:.35rem;">${variants.map(v =>
+            ? `<div style="margin-top:.3rem;">${variants.map(v =>
                 `<div class="especial-variant-row">
-                  <span style="color:var(--text-muted);">${v.name||v.nome||''}</span>
-                  <span style="font-weight:700;color:${priceColor};">${v.price||v.preco||''}</span>
+                  <span>${v.name||v.nome||''}</span>
+                  <span>${v.price||v.preco||''}</span>
                 </div>`).join('')}</div>`
             : '';
-          const precoHtml = preco ? `<div class="especial-item-preco" style="color:${priceColor};margin-top:.2rem;">${preco}</div>` : '';
+          const precoHtml = preco ? `<div class="especial-item-preco">${preco}</div>` : '';
           const fotoHtml = foto ? `<img src="${foto}" class="especial-item-foto" alt="${nome}" onclick="openLightbox(\'${foto}\')">` : '';
 
           // Foto goes on the RIGHT
           const recheios = item.recheios || [];
           const recheiosHtml = recheios.length
-            ? `<div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.35rem;">${recheios.map(r=>`<span style="background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.35);border-radius:50px;font-size:.7rem;padding:.15rem .55rem;color:var(--text);font-weight:500;">${r}</span>`).join('')}</div>`
+            ? `<div class="especial-recheios-wrap">${recheios.map(r=>`<span class="especial-recheio-tag">${r}</span>`).join('')}</div>`
             : '';
           return `<div class="especial-item">
+            ${fotoHtml}
             <div class="especial-item-body">
               <div class="especial-item-nome">${nome}</div>
               ${desc ? `<div class="especial-item-desc">${desc}</div>` : ''}
@@ -1453,7 +1462,6 @@
               ${variantHtml}
               ${precoHtml}
             </div>
-            ${fotoHtml}
           </div>`;
         }).join('');
       }
