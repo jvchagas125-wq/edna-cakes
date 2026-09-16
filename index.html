@@ -861,6 +861,110 @@
     .obs-list li::before { content: '✦'; color: var(--rose); font-size: 0.55rem; margin-top: 0.22rem; flex-shrink: 0; }
 
     /* ── FOOTER ── */
+    /* ── SOBRE O SITE ── */
+    .sobre-section {
+      padding: 5rem 1.25rem;
+      background: linear-gradient(180deg, var(--cream) 0%, #fff5f7 100%);
+      border-top: 1px solid rgba(232,96,122,0.08);
+    }
+    .sobre-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .sobre-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .sobre-card {
+      background: var(--white);
+      border: 1px solid rgba(232,96,122,0.12);
+      border-radius: 18px;
+      padding: 1.75rem;
+    }
+    .sobre-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--rose-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .sobre-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+    .sobre-card p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .dev-card {
+      background: var(--white);
+      border: 1px solid rgba(232,96,122,0.14);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .dev-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: white; flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(232,96,122,0.3);
+    }
+    .dev-info { flex: 1; min-width: 180px; }
+    .dev-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: .3rem;
+    }
+    .dev-role {
+      font-size: .8rem; color: var(--text-muted);
+      margin-bottom: .85rem; line-height: 1.5;
+    }
+    .dev-links { display: flex; gap: .65rem; flex-wrap: wrap; }
+    .dev-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .45rem 1rem;
+      border-radius: 50px;
+      font-size: .78rem; font-weight: 600;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      border: 1.5px solid;
+    }
+    .dev-link:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+    .dev-link-ig {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white; border-color: transparent;
+    }
+    .dev-link-portfolio {
+      background: var(--white);
+      color: var(--rose-dark);
+      border-color: rgba(232,96,122,0.35);
+    }
+    .dev-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .sobre-divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--rose), var(--rose-dark));
+      border-radius: 2px;
+      margin: .75rem 0 1.1rem;
+    }
+
     footer {
       background: linear-gradient(135deg, #2d1b1e 0%, #3d2227 100%);
       color: rgba(255,255,255,0.75);
@@ -1295,6 +1399,10 @@
       <svg class="menu-nav-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .27.92z"/></svg>
       Contatos
     </a>
+    <a href="#sobre" onclick="closeMenu()">
+      <svg class="menu-nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Sobre
+    </a>
   </div>
   <div class="menu-footer">© Edna Cakes — Feito com ❤️</div>
 </nav>
@@ -1413,8 +1521,71 @@
 </section>
 
 <!-- ── FOOTER ── -->
+<!-- ── SOBRE O SITE ── -->
+<section class="sobre-section" id="sobre">
+  <div class="sobre-inner">
+    <div class="section-header">
+      <div class="section-tag">✦ Sobre</div>
+      <h2 class="section-title font-heading">Sobre o Site</h2>
+    </div>
+
+    <div class="sobre-grid">
+      <div class="sobre-card">
+        <div class="sobre-card-icon">🎂</div>
+        <h3>O que é este site?</h3>
+        <div class="sobre-divider"></div>
+        <p>Este é o cardápio digital da <strong>Edna Cakes</strong> — uma plataforma completa onde você pode conhecer todos os produtos artesanais, visualizar fotos, conferir preços e fazer sua encomenda diretamente pelo WhatsApp, tudo de forma simples e rápida.</p>
+      </div>
+
+      <div class="sobre-card">
+        <div class="sobre-card-icon">📲</div>
+        <h3>Instale como app</h3>
+        <div class="sobre-divider"></div>
+        <p>O site funciona como um aplicativo! Ao acessar pelo celular, você pode instalá-lo na tela inicial e ter acesso rápido ao cardápio a qualquer momento, sem precisar abrir o navegador — e funciona mesmo com internet lenta.</p>
+      </div>
+
+      <div class="sobre-card">
+        <div class="sobre-card-icon">🛒</div>
+        <h3>Como fazer uma encomenda?</h3>
+        <div class="sobre-divider"></div>
+        <p>Clique no produto desejado, veja todos os detalhes como recheios, tamanhos e preços, e depois toque em <em>"Fazer encomenda pelo WhatsApp"</em>. A mensagem já vai pré-preenchida com o produto escolhido, facilitando tudo!</p>
+      </div>
+
+      <div class="sobre-card">
+        <div class="sobre-card-icon">✨</div>
+        <h3>Cardápios especiais</h3>
+        <div class="sobre-divider"></div>
+        <p>Em datas comemorativas como Natal, Páscoa e Dia das Mães, um cardápio especial pode aparecer em destaque com produtos exclusivos da temporada. Fique de olho para não perder as novidades!</p>
+      </div>
+    </div>
+
+    <!-- Dev card -->
+    <div class="dev-card">
+      <div class="dev-avatar">JV</div>
+      <div class="dev-info">
+        <h3>Desenvolvido por João Victor</h3>
+        <p class="dev-role">
+          Site criado com HTML, CSS e JavaScript puro, com banco de dados em tempo real via Firebase Firestore,
+          upload de imagens pelo Cloudinary, hospedagem na Vercel e instalação como PWA — tudo feito com atenção
+          a cada detalhe para que a Edna possa gerenciar seu negócio de forma simples e independente. 🎂
+        </p>
+        <div class="dev-links">
+          <a href="https://www.instagram.com/jv.dev2026" target="_blank" rel="noopener noreferrer" class="dev-link dev-link-ig">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @jv.dev2026
+          </a>
+          <a href="https://jv-dev2026.vercel.app" target="_blank" rel="noopener noreferrer" class="dev-link dev-link-portfolio">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Ver portfólio
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <p>© <strong>Edna Cakes</strong> — Feito com ❤️ e muito açúcar</p>
+  <p>© <strong>Edna Cakes</strong> — Feito com ❤️ e muito açúcar &nbsp;·&nbsp; Desenvolvido por <a href="https://www.instagram.com/jv.dev2026" target="_blank" rel="noopener noreferrer" style="color:var(--rose-light);text-decoration:none;font-weight:600;">@jv.dev2026</a></p>
 </footer>
 
 <script type="module" defer>
